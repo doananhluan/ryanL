@@ -49,7 +49,7 @@ img {
     --textcolor: #131313;
     --graybg: #0d0d0d;
     /* --main-bg: #0d0d0d; */
-    --main-bg: #eeeae6;
+    --main-bg: #ffffff;
 }
 
 mark {
@@ -132,15 +132,15 @@ mark {
 @keyframes ring {
     0% {
         transform: rotate(0deg);
-        box-shadow: 1px 1px 1px #f1c40f;
+        box-shadow: 1px 1px 1px #181818;
     }
     50% {
         transform: rotate(180deg);
-        box-shadow: 1px 1px 1px #2ecc71;
+        box-shadow: 1px 1px 1px #726c6c;
     }
     100% {
         transform: rotate(360deg);
-        box-shadow: 1px 1px 1px #3498db;
+        box-shadow: 1px 1px 1px #ffffff;
     }
 }
 
@@ -175,7 +175,7 @@ mark {
 }
 
 .main-bg {
-    background-color: #c9dee1;
+    background-color: #eeeae6;
 }
 
 .deep_blue-bg {
@@ -1089,15 +1089,15 @@ filter: grayscale(20%); */
     font-weight: 400;
     letter-spacing: 2px;
     color: rgb(255, 255, 255);
-    font-family: "Playfair Display";
+    font-family: "Amatic SC", cursive;
 }
 
 .image-data h2 {
-    font-size: 45px;
+    font-size: 80px;
     font-weight: 400;
     letter-spacing: 3px;
     color: #fff;
-    font-family: "Playfair Display";
+    font-family: "Amatic SC", cursive;
 }
 
 a.button {
@@ -1230,14 +1230,32 @@ a.button:hover {
     margin-top: 50px;
     margin-bottom: 150px;
 }
-
+/* heart animation */
+.heart{
+    background-color: var(--main-bg);
+    border: none;
+}
+.heart i{
+    font-size: 25px;
+    padding: 20px;
+    color: #660303;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-animation: pulse 0.9s ease infinite;
+    animation: pulse 0.9s ease infinite;
+}
+.fa-heart::before {
+    transform: scale(1.1);
+    
+}
 
 /* demo_picture*/
 
 .demo_picture {
     width: auto;
     height: auto;
-    padding-top: 100px;
+    padding-top: 90px;
     background-color: var(--main-bg);
 }
 
@@ -1438,6 +1456,7 @@ a.button:hover {
 /* PERSONAL */
 
 .personal-frame {
+    margin-top: 100px;
     height: auto;
     background-color: var(--main-bg);
     padding: 150px, 0px;
@@ -1447,9 +1466,10 @@ a.button:hover {
 /* Personal interactive effect */
 
 .personal-pic {
+    margin-top: 300px;
     position: relative;
     width: 100%;
-    height: 470px;
+    /* height: 470px; */
     overflow: hidden;
     margin: 150px 0;
     box-shadow: 0 px 15px rgb(0 0 0 / 20%);
@@ -1462,6 +1482,7 @@ a.button:hover {
 }
 
 .personal-pic .content {
+    
     position: absolute;
     bottom: -160px;
     width: 100%;
@@ -1476,13 +1497,14 @@ a.button:hover {
     transition: bottom 0.5s;
 }
 
-.personal-pic:hover .content {
+/* .personal-pic:hover .content {
     bottom: 0px;
     cursor: pointer;
-}
+} */
 
 .personal-pic .content .contentxt h5 {
     color: #fff;
+    
     text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: 500;
@@ -1498,11 +1520,11 @@ a.button:hover {
     transition-delay: 0.4s;
 }
 
-.personal-pic:hover .content .contentxt h5 {
+/* .personal-pic:hover .content .contentxt h5 {
     opacity: 1;
     transform: translateY(0px);
     cursor: pointer;
-}
+} */
 
 .personal-pic .content .contentxt h5 span {
     font-size: 15px;
@@ -1531,11 +1553,11 @@ a.button:hover {
     transition-delay: calc(0.2s * var(--i));
 }
 
-.personal-pic:hover .content .sci li {
+/* .personal-pic:hover .content .sci li {
     opacity: 1;
     transform: translateY(0px);
     cursor: pointer;
-}
+} */
 
 .personal-pic .content .sci li a {
     font-size: 20px;
@@ -1713,8 +1735,10 @@ padding-top: 8px;
 }
 
 .about_text p {
-    margin: 30px;
+    margin-top: 20px;
+    text-align: left;
     line-height: 2;
+    font-size: 20px;
     font-family: "open sans"sans-serif;
 }
 
