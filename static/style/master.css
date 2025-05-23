@@ -49,7 +49,8 @@ img {
     --textcolor: #131313;
     --graybg: #0d0d0d;
     /* --main-bg: #0d0d0d; */
-    --main-bg: #ffffff;
+    /* --main-bg: #ffffff; */
+    --main-bg:#F1F2F0;
 }
 
 mark {
@@ -1207,8 +1208,13 @@ a.button:hover {
 /* Quote frame */
 
 .quote_frame {
-    background-color: var(--main-bg);
+    /* background-color: var(--main-bg); */
+    background-image:url(../img/15695.jpg);
     border: none;
+    justify-content: center;
+    display: flex;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .note_quote h2 {
@@ -1230,24 +1236,47 @@ a.button:hover {
     margin-top: 50px;
     margin-bottom: 150px;
 }
-/* heart animation */
+/* heartbeat animation */
 .heart{
-    background-color: var(--main-bg);
+    margin-bottom: 100px;
+    /* background-color: var(--main-bg); */
     border: none;
 }
-.heart i{
+.heartbeat-icon {
     font-size: 25px;
     padding: 20px;
     color: #660303;
     display: flex;
     justify-content: center;
     align-items: center;
-    -webkit-animation: pulse 0.9s ease infinite;
-    animation: pulse 0.9s ease infinite;
+    animation: heartbeat 2.5s ease infinite; /* Tên animation, thời lượng, lặp vô hạn */
+    transform-origin: center; /* Đảm bảo animation từ tâm */
 }
-.fa-heart::before {
-    transform: scale(1.1);
-    
+@keyframes heartbeat {
+    0% {
+        transform: scale(1); /* Kích thước ban đầu */
+    }
+    15% {
+        transform: scale(1.1); /* Phóng to nhẹ */
+    }
+    30% {
+        transform: scale(1); /* Trở về kích thước ban đầu */
+    }
+    45% {
+        transform: scale(1.1); /* Phóng to nhẹ lần nữa */
+    }
+    60% {
+        transform: scale(1); /* Trở về kích thước ban đầu */
+    }
+    75% {
+        transform: scale(1.05); /* Phóng to rất nhẹ */
+    }
+    100% {
+        transform: scale(1); /* Kết thúc ở kích thước ban đầu */
+    }
+}
+.heartbeat-icon:hover {
+    animation: heartbeat 0.8s infinite /*Khi rê chuột vào thì nhịp đập nhanh hơn/mạnh hơn */
 }
 
 /* demo_picture*/
@@ -1338,6 +1367,7 @@ a.button:hover {
 }
 
 .demo_3 {
+    margin-top: 100px;
     position: relative;
     width: 100%;
     height: 470px;
@@ -1350,22 +1380,16 @@ a.button:hover {
     display: flex;
     background-repeat: no-repeat;
     background-size: cover;
-    /* height: fit-content;
-    width: fit-content;
-    transition: transform .5s, filter 1s ease-in-out;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed; */
-    /* filter: grayscale(100); */
+
 }
 
-.demo_3_info {
+/* .demo_3_info {
     margin-top: 5px; 
     width: auto;
     height: auto;
     text-align: center;
     padding: 10px 0px;
-}
+} */
 
 .demo_3_info p {
     font-size: 16px;
@@ -1374,7 +1398,7 @@ a.button:hover {
     padding: 5px 0px;
     font-family: "open sans", sans-serif;
     padding: 5px 0px;
-    text-align: left;
+    text-align: right;
 }
 
 .demo_4 {
@@ -1456,7 +1480,7 @@ a.button:hover {
 /* PERSONAL */
 
 .personal-frame {
-    margin-top: 100px;
+    /* margin-top: 100px; */
     height: auto;
     background-color: var(--main-bg);
     padding: 150px, 0px;
@@ -1714,8 +1738,9 @@ padding-top: 8px;
 } */
 
 .about_tittle h2 {
+    margin-top: 100px;
     font-family: "Playfair Display";
-    font-size: 45px;
+    font-size: 30px;
     color: #131313;
     font-weight: 500;
     text-align: left;
@@ -1729,7 +1754,7 @@ padding-top: 8px;
 }
 
 .personal-text {
-    margin-top: 150px;
+    /* margin-top: 150px; */
     color: var(--textcolor);
     /* justify-content: space-between; */
 }
@@ -1738,7 +1763,7 @@ padding-top: 8px;
     margin-top: 20px;
     text-align: left;
     line-height: 2;
-    font-size: 20px;
+    font-size: 16px;
     font-family: "open sans"sans-serif;
 }
 
@@ -1748,7 +1773,7 @@ padding-top: 8px;
 
 @media (max-width: 767px) {
     .personal-text {
-        margin-top: -80px;
+        margin-top: -20px;
     }
 }
 
