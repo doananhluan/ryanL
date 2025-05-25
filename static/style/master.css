@@ -1090,7 +1090,7 @@ filter: grayscale(20%); */
     font-weight: 400;
     letter-spacing: 2px;
     color: rgb(255, 255, 255);
-    font-family: "Amatic SC", cursive;
+    font-family: 'Playfair Display', serif;
 }
 
 .image-data h2 {
@@ -1098,7 +1098,8 @@ filter: grayscale(20%); */
     font-weight: 400;
     letter-spacing: 3px;
     color: #fff;
-    font-family: "Amatic SC", cursive;
+    /* font-family: 'Playfair Display', serif; */
+    font-family: "Sail", system-ui;
 }
 
 a.button {
@@ -1210,6 +1211,7 @@ a.button:hover {
 .quote_frame {
     /* background-color: var(--main-bg); */
     background-image:url(../img/15695.jpg);
+    height: auto;
     border: none;
     justify-content: center;
     display: flex;
@@ -1223,7 +1225,7 @@ a.button:hover {
     text-align: center;
     letter-spacing: 3px;
     color: #131313;
-    margin-top: 300px;
+    margin-top: 100px;
 }
 
 .note_quote h3 {
@@ -1234,11 +1236,11 @@ a.button:hover {
     /* line-height: 25px; */
     color: #131313;
     margin-top: 50px;
-    margin-bottom: 150px;
+    margin-bottom: 50px;
 }
 /* heartbeat animation */
 .heart{
-    margin-bottom: 100px;
+    margin-bottom: 140px;
     /* background-color: var(--main-bg); */
     border: none;
 }
@@ -1278,28 +1280,35 @@ a.button:hover {
 .heartbeat-icon:hover {
     animation: heartbeat 0.8s infinite /*Khi rê chuột vào thì nhịp đập nhanh hơn/mạnh hơn */
 }
+/*quote_picture*/
+.quote_picture{
+   width: 350px;
+  height: auto;
+  margin: 100px auto 0; /* Căn giữa ngang */
+  display: block;
+}
 
-/* demo_picture*/
+/* groom brial_picture*/
 
 .demo_picture {
     width: auto;
-    height: auto;
+    /* height: auto; */
     padding-top: 90px;
     background-color: var(--main-bg);
 }
 
-.demo_picture h5 {
+/* .demo_picture h5 {
     font-size: 25px;
     font-family: 'Playfair Display';
     color: #131313;
     letter-spacing: 3px;
     text-align: center;
-}
+} */
 
-.demo_1 {
+.groom_pic {
     position: relative;
     width: 100%;
-    height: 470px;
+    height: 450px;
     overflow: hidden;
     margin: 20px 0;
     box-shadow: 0 px 15px rgb(0 0 0 / 20%);
@@ -1321,7 +1330,7 @@ a.button:hover {
     overflow: hidden; */
 }
 
-.demo_1_info {
+.groom_info {
     /* margin-top: 5px;  */
     width: 100%;
     height: 100%;
@@ -1329,16 +1338,70 @@ a.button:hover {
     padding: 10px 0px;
 }
 
-.demo_1_info p {
-    font-size: 16px;
+.groom_tittle h2 {
+    /* margin-top: 200px; */
+    font-family: "Playfair Display";
+    font-size: 30px;
     color: #131313;
-    line-height: 2;
-    padding: 5px 0px;
-    font-family: "open sans", sans-serif;
-    padding: 5px 0px;
+    font-weight: 500;
     text-align: left;
 }
+.groom_text p {
+    margin-top: 20px;
+    text-align: left;
+    line-height: 2;
+    font-size: 16px;
+    font-family: "open sans"sans-serif;
+}
 
+.brial_pic {
+    position: relative;
+    width: 100%;
+    height: 450px;
+    overflow: hidden;
+    margin: 20px 0;
+    box-shadow: 0 px 15px rgb(0 0 0 / 20%);
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* height: 470px;
+    width: auto; */
+    /* border:3px solid#000000 ; */
+    /* transition: transform .5s, filter 1s ease-in-out; */
+    /* background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; */
+    /* filter: grayscale(100); */
+    /* position: relative;
+    overflow: hidden; */
+}
+
+.brial_info {
+    /* margin-top: 5px;  */
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    padding: 10px 0px;
+}
+
+.brial_tittle h2 {
+    /* margin-top: 200px; */
+    font-family: "Playfair Display";
+    font-size: 30px;
+    color: #131313;
+    font-weight: 500;
+    text-align: left;
+}
+.brial_text p {
+    margin-top: 20px;
+    text-align: left;
+    line-height: 2;
+    font-size: 16px;
+    font-family: "open sans"sans-serif;
+}
 .demo_2 {
     transition: transform .5s, filter 1s ease-in-out;
     background-position: center;
@@ -1347,11 +1410,11 @@ a.button:hover {
     filter: grayscale(100);
 }
 
-.demo_2_info {
+/* .demo_2_info {
     margin-top: 30px;
     width: auto;
     height: auto;
-    /* background-color: #24e10f; */
+    background-color: #24e10f;
     text-align: center;
     padding: 10px 0px;
 }
@@ -1364,24 +1427,8 @@ a.button:hover {
     font-family: "open sans", sans-serif;
     padding: 5px 0px;
     text-align: left;
-}
+} */
 
-.demo_3 {
-    margin-top: 100px;
-    position: relative;
-    width: 100%;
-    height: 470px;
-    overflow: hidden;
-    margin: 20px 0;
-    box-shadow: 0 px 15px rgb(0 0 0 / 20%);
-    border-radius: 5px;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    background-repeat: no-repeat;
-    background-size: cover;
-
-}
 
 /* .demo_3_info {
     margin-top: 5px; 
@@ -1391,7 +1438,7 @@ a.button:hover {
     padding: 10px 0px;
 } */
 
-.demo_3_info p {
+/* .demo_3_info p {
     font-size: 16px;
     color: #131313;
     line-height: 2;
@@ -1413,7 +1460,7 @@ a.button:hover {
     margin-top: 30px;
     width: auto;
     height: auto;
-    /* background-color: #24e10f; */
+    background-color: #24e10f; 
     text-align: center;
     padding: 10px 0px;
 }
@@ -1425,7 +1472,7 @@ a.button:hover {
     padding: 5px 0px;
     font-family: "open sans", sans-serif;
     padding: 5px 0px;
-}
+} */
 
 .demo_1:hover {
     
@@ -1479,25 +1526,43 @@ a.button:hover {
 
 /* PERSONAL */
 
-.personal-frame {
-    /* margin-top: 100px; */
+.couple-frame {
     height: auto;
     background-color: var(--main-bg);
-    padding: 150px, 0px;
+    /* padding: 150px, 0px; */
 }
-
+/*personal story*/
+.personal-story{
+    margin-top: 180px;
+    text-align: center;
+}
+.personal-story span{
+    font-size: 25px;
+    display: block;
+    font-style: normal;
+    text-align: center;  
+    font-family: "Playfair Display";
+}
+.personal-story h2{
+    margin-top: 10px;
+    font-size: 50px;
+    display: block;
+    font-style: normal;
+    font-weight: 100;
+    text-align: center;  
+    font-family: "Sail", system-ui;
+    font-style: normal;
+}
 
 /* Personal interactive effect */
 
-.personal-pic {
-    margin-top: 300px;
+.couple_1 {
+    /* margin-top: 400px; */
     position: relative;
     width: 100%;
-    /* height: 470px; */
+    height: 470px;
     overflow: hidden;
     margin: 150px 0;
-    box-shadow: 0 px 15px rgb(0 0 0 / 20%);
-    border-radius: 5px;
     align-items: center;
     justify-content: center;
     display: flex;
@@ -1505,7 +1570,7 @@ a.button:hover {
     background-size: cover;
 }
 
-.personal-pic .content {
+/* .couple_1 .content {
     
     position: absolute;
     bottom: -160px;
@@ -1519,16 +1584,15 @@ a.button:hover {
     backdrop-filter: blur(15px);
     box-shadow: 0 -10px 10px rgba(0, 0, 0, 0.1);
     transition: bottom 0.5s;
-}
+} */
 
-/* .personal-pic:hover .content {
+/* .couple_1:hover .content {
     bottom: 0px;
     cursor: pointer;
 } */
 
-.personal-pic .content .contentxt h5 {
-    color: #fff;
-    
+/* .couple_1 .content .contentxt h5 {
+    color: #fff; 
     text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: 500;
@@ -1542,15 +1606,15 @@ a.button:hover {
     opacity: 0;
     transform: translateY(-20px);
     transition-delay: 0.4s;
-}
+} */
 
-/* .personal-pic:hover .content .contentxt h5 {
+/* .couple_1:hover .content .contentxt h5 {
     opacity: 1;
     transform: translateY(0px);
     cursor: pointer;
 } */
 
-.personal-pic .content .contentxt h5 span {
+/* .couple_1 .content .contentxt h5 span {
     font-size: 15px;
     font-weight: 200;
     text-transform: initial;
@@ -1559,7 +1623,7 @@ a.button:hover {
     letter-spacing: 2px;
 }
 
-.personal-pic .content .sci {
+.couple_1 .content .sci {
     position: relative;
     bottom: 10px;
     display: flex;
@@ -1568,25 +1632,25 @@ a.button:hover {
     margin-right: 50px;
 }
 
-.personal-pic .content .sci li {
+.couple_1 .content .sci li {
     list-style: none;
     margin: 0 10px;
     transform: translateY(40px);
     transition: 0.5s;
     opacity: 0;
     transition-delay: calc(0.2s * var(--i));
-}
+} */
 
-/* .personal-pic:hover .content .sci li {
+/* .couple_1:hover .content .sci li {
     opacity: 1;
     transform: translateY(0px);
     cursor: pointer;
 } */
 
-.personal-pic .content .sci li a {
+/* .couple_1 .content .sci li a {
     font-size: 20px;
     color: #fff;
-}
+} */
 
 
 /* End Personal interactive effect */
@@ -1595,7 +1659,7 @@ a.button:hover {
 /* Personal interactive effect mobile*/
 
 @media (max-width: 767px) {
-    .personal-pic {
+    .couple_1 {
         position: relative;
         width: 100%;
         height: 300px;
@@ -1609,7 +1673,7 @@ a.button:hover {
         background-repeat: no-repeat;
         background-size: cover;
     }
-    .personal-pic .content {
+    /* .couple_1 .content {
         position: absolute;
         bottom: -160px;
         width: 100%;
@@ -1623,7 +1687,7 @@ a.button:hover {
         box-shadow: 0 -10px 10px rgba(0, 0, 0, 0.1);
         transition: bottom 0.5s;
     }
-    .personal-pic .content .contentxt h5 {
+    .couple_1 .content .contentxt h5 {
         color: #fff;
         text-transform: uppercase;
         letter-spacing: 1px;
@@ -1639,7 +1703,7 @@ a.button:hover {
         transform: translateY(-20px);
         transition-delay: 0.4s;
     }
-    .personal-pic .content .contentxt h5 span {
+    .couple_1 .content .contentxt h5 span {
         font-size: 10px;
         font-weight: 200;
         text-transform: initial;
@@ -1647,7 +1711,7 @@ a.button:hover {
         justify-content: center;
         letter-spacing: 2px;
     }
-    .personal-pic .content .sci {
+    .couple_1 .content .sci {
         position: relative;
         bottom: 20px;
         display: flex;
@@ -1655,17 +1719,17 @@ a.button:hover {
         justify-content: center;
         margin-right: 50px;
     }
-    .personal-pic .content .sci li a {
+    .couple_1 .content .sci li a {
         font-size: 15px;
         color: #fff;
-    }
+    } */
 }
 
 
 /* End Personal interactive effect mobile*/
 
 @media (max-width: 1024px) {
-    .personal-pic {
+    .couple_1 {
         position: relative;
         width: 100%;
         height: 290px;
@@ -1679,7 +1743,7 @@ a.button:hover {
         background-repeat: no-repeat;
         background-size: cover;
     }
-    .personal-pic .content {
+    /* .couple_1 .content {
         position: absolute;
         bottom: -160px;
         width: 100%;
@@ -1693,7 +1757,7 @@ a.button:hover {
         box-shadow: 0 -10px 10px rgba(0, 0, 0, 0.1);
         transition: bottom 0.5s;
     }
-    .personal-pic .content .contentxt h5 {
+    .couple_1 .content .contentxt h5 {
         color: #fff;
         text-transform: uppercase;
         letter-spacing: 1px;
@@ -1709,7 +1773,7 @@ a.button:hover {
         transform: translateY(-20px);
         transition-delay: 0.4s;
     }
-    .personal-pic .content .contentxt h5 span {
+    .couple_1 .content .contentxt h5 span {
         font-size: 10px;
         font-weight: 200;
         text-transform: initial;
@@ -1717,14 +1781,14 @@ a.button:hover {
         justify-content: center;
         letter-spacing: 2px;
     }
-    .personal-pic .content .sci {
+    .couple_1 .content .sci {
         position: relative;
         bottom: 20px;
         display: flex;
         text-align: center;
         justify-content: center;
         margin-right: 50px;
-    }
+    } */
 }
 
 
@@ -1737,8 +1801,22 @@ margin: 30px 30px;
 padding-top: 8px;
 } */
 
-.about_tittle h2 {
-    margin-top: 100px;
+/*Couple Text*/
+
+.couple_text_1{
+/* margin-top: 400px; */
+    position: relative;
+    width: 100%;
+    /* height: 470px; */
+    overflow: hidden;
+    /* margin: 150px 0; */
+    /* align-items: center;
+    justify-content: center; */
+    /* display: flex; */
+
+}
+.couple_tittle h2 {
+    /* margin-top: 200px; */
     font-family: "Playfair Display";
     font-size: 30px;
     color: #131313;
@@ -1746,41 +1824,43 @@ padding-top: 8px;
     text-align: left;
 }
 
-.about_fr p {
+/* .about_fr p {
     font-size: 30px;
     color: black;
     font-weight: 500;
     text-align: left;
-}
+} */
 
-.personal-text {
+.couple_text {
+    position: relative;
     /* margin-top: 150px; */
     color: var(--textcolor);
     /* justify-content: space-between; */
 }
 
-.about_text p {
-    margin-top: 20px;
+.couple_text p {
+    /* margin-top: 20px; */
     text-align: left;
     line-height: 2;
     font-size: 16px;
     font-family: "open sans"sans-serif;
 }
 
-.personal-text p {
+.couple_text p {
     color: var(--textcolor);
 }
 
 @media (max-width: 767px) {
-    .personal-text {
-        margin-top: -20px;
+    .couple_text span{
+        margin-top: -10px;
     }
 }
 
 @media (max-width: 767px) {
-    .personal-text h2 {
+    .couple_text h2 {
         font-weight: 300;
         font-size: 25px;
+        margin-top: -10px;
     }
 }
 
