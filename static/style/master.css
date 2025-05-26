@@ -1440,7 +1440,7 @@ a.button:hover {
     width: 100%;
     height: 100%;
     /* text-align: right; */
-    padding: 10px 0px;
+    padding: 150px 0px 0px 0px;
 }
 .couple-story span{
     font-size: 25px;
@@ -1518,8 +1518,8 @@ a.button:hover {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
   padding-top: 180px;
 }
 
@@ -1602,12 +1602,12 @@ a.button:hover {
   z-index: -1;
 }
 
-.wpo-story-section .wpo-story-item .wpo-story-img-wrap .clip-shape svg {
+/* .wpo-story-section .wpo-story-item .wpo-story-img-wrap .clip-shape svg {
   width: 382px;
   height: 440px;
-}
+} */
 
-@media (max-width: 1199px) {
+/* @media (max-width: 1199px) {
   .wpo-story-section .wpo-story-item .wpo-story-img-wrap .clip-shape svg {
     width: 285px;
     height: 349px;
@@ -1616,11 +1616,11 @@ a.button:hover {
 
 .wpo-story-section .wpo-story-item .wpo-story-img-wrap .clip-shape svg path {
   fill: #fff;
-}
+} */
 
 .wpo-story-section .wpo-story-item .wpo-story-img-wrap .wpo-img-shape {
   position: absolute;
-  width: 100%;
+  width: 80%;
   left: 50%;
   top: 50%;
   z-index: -11;
@@ -1765,9 +1765,6 @@ a.button:hover {
     padding-top: 20px;
   }
 }
-
-
-
 .wpo-story-section .wpo-story-item:nth-child(even) .wpo-story-img-wrap {
   -webkit-box-ordinal-group: 3;
       -ms-flex-order: 2;
