@@ -52,7 +52,8 @@
     <script src="static/js/custom.js"></script>
     <script src="static/js/mail_send.js"></script>
     <script src="https://smtpjs.com/v3/smtp.js"></script>
-    <script src='https://cdn.rawgit.com/matthieua/WOW/1.0.1/dist/wow.min.js'></script>
+    <!-- <script src='https://cdn.rawgit.com/matthieua/WOW/1.0.1/dist/wow.min.js'></script> -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
 
@@ -63,6 +64,10 @@
 
     <!-- theme css -->
     <link href="static/style/master.css" rel="stylesheet">
+
+<link rel="stylesheet" href="static/style/wow.css">
+
+
 </head>
 <!-- Body Start -->
 
@@ -156,8 +161,6 @@
 
 </section>
 
-
-
 <!--
             <div class="wrapper swiper-wrapper">
                 <div class="slide swiper-slide">
@@ -250,31 +253,48 @@
             </div>
         </section>
        
-        <!--Groom , Brial picture-->
-        <div class="groom_brial_frame">
+        <!--Groom , Brial -->
+
+         <section class="groom_brial_section" id="story">   
             <div class="container">
-                <div class="row">
-                    <div class="col-12 col-lg-6">
-                        <div class="groom_pic" >
-                            <img src="Images/demo2.jpg" title="" alt="" >
-                        </div>                       
-                    </div>
-                        <div class="col-12 col-lg-6">
-                            <div class="groom_info">
-                                <div class="groom_tittle">
-                                    <h2>Failure is a great teacher and, if you are open to it, every mistake has a lesson to offer
-                                    </h2>
-                                </div>
-                                <div class="groom_text">
-                                    <p>
-                                    a way to reach continuously toward a better self. The journey doesn’t end</p>
-                                </div>
+            <div class="groom_brial_wrap"> 
+                <div class="groom_brial_item">
+                        <div class="groom_brial_img-wrap">
+                            <div class="groom_brial_story_img wow zoomIn" data-wow-duration="1000ms">
+                                <img src="Images/bruno-nascimento-9XTyIiFceKM-unsplash.jpg" alt="">
                             </div>
-                    </div>                    
-                </div>
-            </div>         
-        </div>
-        <div class="groom_brial_frame">
+                        </div>
+                        <div class="groom_brial_content">
+                            <div class="groom_brial_content_inner wow fadeInRightSlow" data-wow-duration="1700ms">
+                                <span>15 June, 2014</span>
+                                <h2>How we meet</h2>
+                                <p>Consectetur adipiscing elit. Fringilla at risus orci, tempus facilisi sed. Enim
+                                    tortor, faucibus netus orci donec volutpat adipiscing. Sit condimentum elit
+                                    convallis libero. Nunc in eu tellus ipsum placerat.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="groom_brial_item">
+                        <div class="groom_brial_img-wrap">
+                            <div class="groom_brial_story_img wow zoomIn" data-wow-duration="1000ms">
+                                <img src="Images/bruno-nascimento-9XTyIiFceKM-unsplash.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="groom_brial_content">
+                            <div class="groom_brial_content_inner wow fadeInRightSlow" data-wow-duration="1700ms">
+                                <span>15 June, 2014</span>
+                                <h2>How we meet</h2>
+                                <p>Consectetur adipiscing elit. Fringilla at risus orci, tempus facilisi sed. Enim
+                                    tortor, faucibus netus orci donec volutpat adipiscing. Sit condimentum elit
+                                    convallis libero. Nunc in eu tellus ipsum placerat.</p>
+                            </div>
+                        </div>
+                    </div>
+               </div>       
+        </div> 
+        </section>
+        
+        <!-- <div class="groom_brial_frame">
                 <div class="container">
                 <div class="row">
                 <div class="col-12 col-lg-6">
@@ -298,58 +318,11 @@
             </div>
             </div>
 
-        </div>
-        <!--Couple story-->
-         <!-- <section id="personal"> 
-            <div class="couple-frame">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 col-lg-12">
-                            <div class="couple-story" >
-                                <div class="story">
-                                    <span>The simple things</span>
-                                    <h2>Live in the sunshine, swim the sea</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="row">                   
-                        <div class=" col-12 col-lg-6">                           
-                            <div class="couple_image_stack" >
-                                 <img class="foreground-image"src="static/img/ryan.jpg" title="" alt=""></img>
-                                 <img class="background-image" src="Images/shape.png" title="" alt=""></img>
-                            </div>
-                                 <div class="couple_pic_1">
-                                    
-                                </div>      
-                             
-                                              
-                        <div class="col-12 col-lg-6">
-                            <div class="couple_text_1">
-                                <div class="couple_tittle">
-                                    <span>Day and Night </span>
-                                    <h2>You’ve got to be in it to win it</h2>
-                                </div>
-                                <div class="couple_text">
-                                    <p>For me, becoming isn’t about arriving somewhere or achieving a certain aim.
-                                        I see it instead as forward motion, a means of evolving, </br>a way to reach continuously toward a better self. The journey doesn’t end</p>
-                                </div>
-                                <div class="info-fr" id="abc">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>     
-            </div>
-            </section> -->
-<!-- start wpo-story-section -->
-        <section class="wpo-story-section section-padding" id="story">
+        </div>  -->
+       
+<!-- couple section -->
+        <section class="couple_story_section section-padding" id="story">
             <div class="container">
-                <!-- <div class="wpo-section-title">
-                    <span>Our Story</span>
-                    <h2>How it Happened</h2>
-                </div> -->
                 <div class="row">
                         <div class="col-12 col-lg-12">
                             <div class="couple-story" >
@@ -360,18 +333,18 @@
                             </div>
                         </div>
                     </div>
-                <div class="wpo-story-wrap">
-                    <div class="wpo-story-item">
-                        <div class="wpo-story-img-wrap">
-                            <div class="wpo-story-img wow zoomIn" data-wow-duration="1000ms">
+                <div class="couple_story_wrap">
+                    <div class="couple_story_item">
+                        <div class="couple_img_wrap">
+                            <div class="couple_story_img wow zoomIn" data-wow-duration="1000ms">
                                 <img src="static/img/ryan.jpg" alt="">
                             </div>
-                            <div class="wpo-img-shape">
-                                <img src="static/img/bg-shape.png" alt="">
+                            <div class="couple_img_shape">
+                                <img src="static/img/shape.png" alt="">
                             </div>
                         </div>
-                        <div class="wpo-story-content">
-                            <div class="wpo-story-content-inner wow fadeInRightSlow" data-wow-duration="1700ms">
+                        <div class="couple_story_content">
+                            <div class="couple_story_content_inner wow fadeInRightSlow" data-wow-duration="1700ms">
                                 <span>15 June, 2014</span>
                                 <h2>How we meet</h2>
                                 <p>Consectetur adipiscing elit. Fringilla at risus orci, tempus facilisi sed. Enim
@@ -380,22 +353,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="wpo-story-item">
-                        <div class="wpo-story-img-wrap">
-                            <div class="wpo-story-img wow zoomIn" data-wow-duration="1000ms">
+                    <div class="couple_story_item">
+                        <div class="couple_img_wrap">
+                            <div class="couple_story_img wow zoomIn" data-wow-duration="1000ms">
                                 <img src="static/img/ryan.jpg" alt="">
-                            </div>
-                            <!-- <div class="clip-shape">
-                                <svg viewBox="0 0 382 440" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M191 0L381.526 110V330L191 440L0.474411 330V110L191 0Z" />
-                                </svg>
-                            </div> -->
-                            <div class="wpo-img-shape">
+                            </div>                         
+                            <div class="couple_img_shape">
                                 <img src="static/img/shape.png" alt="">
                             </div>
                         </div>
-                        <div class="wpo-story-content">
-                            <div class="wpo-story-content-inner wow fadeInLeftSlow" data-wow-duration="1700ms">
+                        <div class="couple_story_content">
+                            <div class="couple_story_content_inner wow fadeInLeftSlow" data-wow-duration="1700ms">
                                 <span>02 Nov, 2020</span>
                                 <h2>He proposed, I said yes</h2>
                                 <p>Consectetur adipiscing elit. Fringilla at risus orci, tempus facilisi sed. Enim
@@ -404,17 +372,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="wpo-story-item">
-                        <div class="wpo-story-img-wrap">
-                            <div class="wpo-story-img wow zoomIn" data-wow-duration="1000ms">
+                    <div class="couple_story_item">
+                        <div class="couple_img_wrap">
+                            <div class="couple_story_img wow zoomIn" data-wow-duration="1000ms">
                                 <img src="static/img/ryan.jpg" alt="">
                             </div>
-                            <div class="wpo-img-shape">
+                            <div class="couple_img_shape">
                                 <img src="static/img/shape2.png" alt="">
                             </div>
                         </div>
-                        <div class="wpo-story-content">
-                            <div class="wpo-story-content-inner wow fadeInRightSlow" data-wow-duration="1700ms">
+                        <div class="couple_story_content">
+                            <div class="couple_story_content_inner wow fadeInRightSlow" data-wow-duration="1700ms">
                                 <span>15 Apr, 2021</span>
                                 <h2>Our Engagement Day</h2>
                                 <p>Consectetur adipiscing elit. Fringilla at risus orci, tempus facilisi sed. Enim
@@ -424,23 +392,9 @@
                         </div>
                     </div>
                 </div>
-            </div> <!-- end container -->
-            <!-- <div class="flower-shape-1">
-                <img src="assets/images/story/flower-shape1.svg" alt="">
-            </div>
-            <div class="flower-shape-2">
-                <img src="assets/images/story/flower-shape2.svg" alt="">
-            </div>
-            <div class="flower-shape-3">
-                <img src="assets/images/story/flower-shape3.svg" alt="">
-            </div>
-            <div class="flower-shape-4">
-                <img src="assets/images/story/flower-shape4.svg" alt="">
-            </div> -->
+            </div> 
         </section>
-        <!-- end story-section -->
-
-
+        <!-- end couple section -->
 
         <!-- </section> -->
         <!--KHUNG 1-->
