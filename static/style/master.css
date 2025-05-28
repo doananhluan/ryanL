@@ -1210,10 +1210,10 @@ a.button:hover {
 .quote_frame {
     /* background-color: var(--main-bg); */
     background-image:url(../img/15695.jpg);
-    height: auto;
+    /* height: auto; */
     border: none;
     justify-content: center;
-    display: flex;
+    /* display: flex; */
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -1289,11 +1289,38 @@ a.button:hover {
 
 /* groom brial_picture*/
 .groom_brial_section {
-  /* background: #F1F3EE; */
+  background: #F1F3EE;
   position: relative;
   z-index: 1;
   overflow: hidden;
-  margin-bottom: 100px;
+  padding-bottom: 80px;
+}
+@media (max-width: 768px) {
+  .groom_brial_section {
+    padding-bottom: 40px;
+  }
+}
+
+/* Media Query cho màn hình rất nhỏ (chỉ điện thoại) */
+@media (max-width: 480px) {
+  .groom_brial_section {
+    padding-bottom: 20px; 
+  }
+}
+.couple_shape{
+    position: absolute; /* Định vị tuyệt đối */
+    /* Điều chỉnh vị trí theo ý muốn */
+    bottom: 5px; /* Ví dụ: căn giữa theo chiều dọc của phần tử cha */
+    right: -5px; /* Di chuyển sang phải, có thể là giá trị âm để đẩy ra ngoài */
+     /* transform: translateY(-50%);Căn giữa hoàn hảo theo chiều dọc nếu dùng top: 50% */
+    z-index: -10; /* Đặt z-index thấp hơn để nó nằm phía sau ảnh cặp đôi (nếu ảnh cặp đôi có z-index cao hơn hoặc auto) */
+    /* Nếu bạn muốn nó xuất hiện bên trên ảnh cặp đôi, hãy tăng z-index */
+}
+
+.couple_shape img {
+    max-width: 300px; /* Đảm bảo hình ảnh không bị tràn */
+    height: auto;
+    opacity: 0.3;
 }
 
 .groom_brial_section .groom_brial_item {
@@ -1701,7 +1728,7 @@ a.button:hover {
   overflow: visible;
   /* padding-bottom: 200px */
 }
-
+/* canh khoảng cách giữa các hình couple */
 .couple_story_section .couple_story_item {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1709,7 +1736,7 @@ a.button:hover {
   -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-  padding-top: 180px;
+  padding-top: 120px;
 }
 
 @media (max-width: 1199px) {
@@ -2309,7 +2336,7 @@ left: 100%;
     height: 550px;
     width: auto;
     text-align: center;
-    background-image: url('../img/andrew-winkler-A_JJqMgd9R0-unsplash.jpg');
+    background-image: url('../img/chill3.jpg');
     background-size: cover;
     margin-top: 10px;
     /* border: 10px solid #ffffff; */
@@ -2321,7 +2348,7 @@ left: 100%;
     .khung_chu {
         height: 550px;
         width: auto;
-        background-image: url('../img/bruno-nascimento-9XTyIiFceKM-unsplash.jpg');
+        background-image: url('../img/chill3.jpg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
