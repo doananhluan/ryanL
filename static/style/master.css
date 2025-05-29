@@ -1284,9 +1284,18 @@ a.button:hover {
    width: 350px;
   height: auto;
   margin: 100px auto 0;
-  display: block;
+  /* display: block; */
+  text-align: center;
 }
-
+@media (max-width: 768px) {
+  .guote_picture {
+    width: auto;
+    height: auto;
+    margin: 80px auto 0;
+  /* display: block; */
+  text-align: center;
+  }
+}
 /* groom brial_picture*/
 .groom_brial_section {
   background: #F1F3EE;
@@ -1318,7 +1327,7 @@ a.button:hover {
 }
 
 .couple_shape img {
-    max-width: 300px; /* Đảm bảo hình ảnh không bị tràn */
+    max-width: 300px;
     height: auto;
     opacity: 0.3;
 }
@@ -1401,7 +1410,7 @@ a.button:hover {
 
 @media (max-width: 1199px) {
   .groom_brial_section .groom_brial_item .groom_brial_img-wrap .groom_brial_story_img {
-    max-width: 260px;
+    max-width: 100%;
   }
 }
 
@@ -1717,10 +1726,14 @@ a.button:hover {
     font-family: "Sail", system-ui;
     font-style: normal;
 }
+@media (max-width: 480px) {
+  .couple-story h2 {
+    font-size: 40px; 
+  }
+}
 
+/* couple_story_section */
 
-/* Test couple story*/
-/* 3.3 couple_story_section */
 .couple_story_section {
   background: #F1F3EE;
   position: relative;
@@ -1841,7 +1854,7 @@ a.button:hover {
 
 @media (max-width: 450px) {
   .couple_story_section .couple_story_item .couple_img_wrap .couple_img_shape {
-    width: 130%;
+    width: 100%;
   }
 }
 
@@ -1989,7 +2002,7 @@ a.button:hover {
   }
 }
 
-/* end test couple story */
+/* end  couple story */
 /* Personal interactive effect mobile*/
 
 @media (max-width: 767px) {
@@ -2186,53 +2199,213 @@ a.button:hover {
 }
 
 
-/* Heading 1 */
+/* couple memmory */
 
-.khung1 {
-    height: auto;
+.couple_memmory_section {
+  background: #F1F3EE;
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+  /* padding-bottom: 200px */
+}
+.couple_memmory{
+    /* margin-top: 5px; */
     width: 100%;
-    background-color: #4F797D;
-    z-index: 100;
+    height: 100%;
+    text-align: center; 
+    padding: 100px 0px 0px 0px;
 }
+.couple_memmory span{
+    font-size: 25px;
+    display: block;
+    font-style: normal;
+    text-align: center;  
+    font-family: "Playfair Display";
+}
+.couple_memmory h2{
+    margin-top: 10px;
+    /* margin-bottom: 60px; */
+    font-size: 50px;
+    display: block;
+    font-style: normal;
+    font-weight: 100;
+    text-align: center;  
+    font-family: "Sail", system-ui;
+    font-style: normal;
+}
+/*couple_slide_img*/
 
-.info-title h3 {
-    padding: 90px 0px;
-    text-transform: uppercase;
-    font-family: 'Playfair Display';
-    font-weight: 400px;
-    color: var(--textcolor);
+.couple_slide_img{
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    background-color: #F1F3EE;
+    margin: 0;
+    overflow: hidden; 
+}
+@media (max-width: 480px) {
+  .couple_slide_img {
+    padding-bottom: 50px; 
+  }
+}
+/* --- Gallery Styling --- */
+.gallery-wrapper {
+    width: 90vw; /* Chiều rộng khung nhìn, ví dụ 90% chiều rộng viewport */
+    max-width: 1000px; /* Chiều rộng tối đa */
+    height: 300px; /* Chiều cao cố định cho khung ảnh */
+    overflow: hidden; /* chỉ hiển thị phần ảnh nằm trong khung */
     position: relative;
-    overflow: hidden;
-    width: max-content;
+    border-radius: 8px;
 }
 
-
-/* h3::before,
-h3::after {
-content: '';
-top: 0;
-right: 0;
-bottom: 0;
-left: 0;
-position: absolute;
+.gallery-track {
+    display: flex;
+    height: 100%; /* Track chiếm toàn bộ chiều cao của wrapper */
+    /* animation sẽ được áp dụng bằng JavaScript */
+    /* transition: transform 0.5s ease-out; */ /* Dùng cho trượt bằng nút, nhưng không dùng cho trượt tự động */
 }
 
-h3::before {
-animation: typing1 5s infinite ease-out;
-background: var(--graybg);
+.gallery-item {
+    height: 100%; /* Ảnh chiếm toàn bộ chiều cao của track */
+    width: auto; /* Chiều rộng tự động điều chỉnh */
+    object-fit: cover; /* ảnh lấp đầy khung mà không bị méo */
+    cursor: pointer;
+    flex-shrink: 0; /* Quan trọng: ngăn ảnh co lại */
+    margin-right: 10px; /* Khoảng cách giữa các ảnh */
+    /* border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); */
+}
+.gallery-item-container{
+  position: relative; /* Quan trọng để overlay và icon định vị tương đối */
+    height: 100%; /* Chiều cao của container bằng chiều cao của track */
+    width: auto; /* Chiều rộng sẽ được điều chỉnh bởi flex-shrink và margin */
+    flex-shrink: 0; /* Ngăn container co lại */
+    margin-right: 10px; /* Khoảng cách giữa các container */
+    border-radius: 5px;
+    overflow: hidden; /* Quan trọng để các hiệu ứng như scale không tràn ra ngoài */
+    cursor: pointer; /* Thay đổi con trỏ thành pointer */
+    /* box-shadow: 0 2px 5px rgba(0,0,0,0.1); */
+}
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Lớp phủ đen mờ */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0; /* Mặc định ẩn */
+    transition: opacity 0.3s ease;
 }
 
-h3::after {
-width: 1px;
-animation: typing1 5s infinite ease-out;
+.overlay i {
+    color: white; /* Màu icon */
+    font-size: 40px; /* Kích thước icon */
+    transform: scale(0.8); /* Icon hơi nhỏ khi không hover */
+    transition: transform 0.3s ease;
+}
+/* Hiệu ứng khi rê chuột vào gallery-item-container */
+.gallery-item-container:hover .gallery-item {
+    filter: brightness(0.7); /* Làm mờ ảnh */
+    transform: scale(1.05); /* Phóng to ảnh nhẹ */
 }
 
-@keyframes typing1 {
-to {
-left: 100%;
+.gallery-item-container:hover .overlay {
+    opacity: 1; /* Hiển thị overlay */
 }
-} */
 
+.gallery-item-container:hover .overlay i {
+    transform: scale(1); /* Phóng to icon về kích thước bình thường */
+}
+/* --- Animation cho trượt tự động --- */
+/* @keyframes sẽ được tạo động bằng JS hoặc bạn có thể định nghĩa với giá trị cố định nếu biết trước */
+/* Ví dụ:
+@keyframes slideLeft {
+    from { transform: translateX(0); }
+    to { transform: translateX(-1000px); } // Giá trị này phải thay đổi tùy vào tổng chiều rộng ảnh
+}
+.gallery-track.animating {
+    animation: slideLeft 20s linear infinite;
+}
+*/
+
+/* --- Lightbox Styling --- */
+.lightbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); /* Nền tối mờ hơn */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Đảm bảo nó nằm trên tất cả */
+    visibility: hidden; /* Mặc định ẩn */
+    opacity: 0; /* Mặc định trong suốt */
+    transition: visibility 0s, opacity 0.3s ease-in-out;
+}
+
+.lightbox-overlay.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.lightbox-image {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain; /* Đảm bảo ảnh vừa khung mà không bị cắt */
+    background-color: #ffffff; /* Nền ảnh */
+    padding: 10px;
+    border-radius: 5px;
+    /* box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); */
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 50px; /* To hơn để dễ bấm */
+    cursor: pointer;
+    z-index: 1001;
+    font-family: sans-serif; /* Để ký tự X đẹp hơn */
+    /* text-shadow: 0 0 5px rgba(0,0,0,0.5); */
+}
+
+.lightbox-nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    cursor: pointer;
+    font-size: 30px;
+    z-index: 1001;
+    border-radius: 50px;
+    opacity: 0.8;
+    transition: opacity 0.3s, background-color 0.3s;
+}
+
+.lightbox-nav-button:hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.0);
+}
+
+.lightbox-nav-button.prev-lightbox {
+    left: 20px;
+}
+
+.lightbox-nav-button.next-lightbox {
+    right: 20px;
+}
+/*end couple_side_img*/
 .underline {
     height: 3px;
     width: 60px;
@@ -2246,7 +2419,7 @@ left: 100%;
 .filmroll {
     height: 400px;
     width: auto;
-    background-image: url('../img/green.jpg.jpg');
+    background-image: url('..//img/rain.jpg');
     background-size: cover;
     margin: auto;
     filter: grayscale(80%);
