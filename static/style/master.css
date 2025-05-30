@@ -2255,7 +2255,7 @@ a.button:hover {
 .gallery-wrapper {
     width: 90vw; /* Chiều rộng khung nhìn, ví dụ 90% chiều rộng viewport */
     max-width: 1000px; /* Chiều rộng tối đa */
-    height: 300px; /* Chiều cao cố định cho khung ảnh */
+    height: 350px; /* Chiều cao cố định cho khung ảnh */
     overflow: hidden; /* chỉ hiển thị phần ảnh nằm trong khung */
     position: relative;
     border-radius: 8px;
@@ -2278,7 +2278,7 @@ a.button:hover {
     /* border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1); */
 }
-.gallery-item-container{
+.gallery-item-container {
   position: relative; /* Quan trọng để overlay và icon định vị tương đối */
     height: 100%; /* Chiều cao của container bằng chiều cao của track */
     width: auto; /* Chiều rộng sẽ được điều chỉnh bởi flex-shrink và margin */
@@ -2295,7 +2295,7 @@ a.button:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.4); /* Lớp phủ đen mờ */
+    background-color: rgba(0, 0, 0, 0.637); /* Lớp phủ đen mờ */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -2305,10 +2305,11 @@ a.button:hover {
 
 .overlay i {
     color: white; /* Màu icon */
-    font-size: 40px; /* Kích thước icon */
+    font-size: 30px; /* Kích thước icon */
     transform: scale(0.8); /* Icon hơi nhỏ khi không hover */
     transition: transform 0.3s ease;
 }
+
 /* Hiệu ứng khi rê chuột vào gallery-item-container */
 .gallery-item-container:hover .gallery-item {
     filter: brightness(0.7); /* Làm mờ ảnh */
@@ -2335,68 +2336,65 @@ a.button:hover {
 */
 
 /* --- Lightbox Styling --- */
-.lightbox-overlay {
+#lightbox {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.9); /* Nền tối mờ hơn */
+    background-color: #000000fb;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* Đảm bảo nó nằm trên tất cả */
-    visibility: hidden; /* Mặc định ẩn */
-    opacity: 0; /* Mặc định trong suốt */
-    transition: visibility 0s, opacity 0.3s ease-in-out;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    flex-direction: column; /* Để xếp ảnh, thông tin và thumbnails theo cột */
 }
 
-.lightbox-overlay.active {
-    visibility: visible;
+#lightbox.active {
     opacity: 1;
+    visibility: visible;
 }
 
-.lightbox-image {
-    max-width: 90%;
-    max-height: 90%;
-    object-fit: contain; /* Đảm bảo ảnh vừa khung mà không bị cắt */
-    background-color: #ffffff; /* Nền ảnh */
-    padding: 10px;
-    border-radius: 5px;
-    /* box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); */
+#lightbox-img {
+    max-width: 100%;
+    max-height: 80%; /* Giảm chiều cao để có chỗ cho info và thumbnails */
+    object-fit: contain;
+    cursor: grab;
+    border: 7px solid white;
+    touch-action: none; /* Quan trọng để ngăn cuộn/chụm mặc định  */
+    transition: transform 0.3s ease-out; /* Giữ transition cho zoom/kéo */
 }
 
 .lightbox-close {
     position: absolute;
     top: 20px;
     right: 30px;
-    color: white;
-    font-size: 50px; /* To hơn để dễ bấm */
+    color: #fff;
+    font-size: 40px;
     cursor: pointer;
     z-index: 1001;
-    font-family: sans-serif; /* Để ký tự X đẹp hơn */
-    /* text-shadow: 0 0 5px rgba(0,0,0,0.5); */
 }
 
 .lightbox-nav-button {
     position: absolute;
-    top: 50%;
+    /* top: 50%; */
     transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
     border: none;
-    padding: 15px 20px;
+    padding: 15px;
     cursor: pointer;
-    font-size: 30px;
+    font-size: 24px;
     z-index: 1001;
-    border-radius: 50px;
-    opacity: 0.8;
-    transition: opacity 0.3s, background-color 0.3s;
-}
-
-.lightbox-nav-button:hover {
-    opacity: 1;
-    background-color: rgba(0, 0, 0, 0.0);
+    /* border-radius: 50%; */
+    width: 50px;
+    /* height: 50px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .lightbox-nav-button.prev-lightbox {
@@ -2405,6 +2403,56 @@ a.button:hover {
 
 .lightbox-nav-button.next-lightbox {
     right: 20px;
+}
+
+/* STYLING CHO CÁC PHẦN TỬ MỚI */
+.lightbox-info {
+    color: #fff;
+    font-size: 18px;
+    margin-top: 10px; /* Khoảng cách từ ảnh chính */
+    text-align: center;
+}
+
+#lightbox-counter {
+    font-weight: bold;
+}
+
+.lightbox-thumbnails {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    /* position: fixed; */
+    margin-top: 10px; /* Khoảng cách từ info */
+    max-width: 80%; /* Giới hạn chiều rộng của thanh thumbnails */
+    overflow-x: auto; /* Cho phép cuộn ngang nếu có nhiều thumbnails */
+    -webkit-overflow-scrolling: touch; /* Cuộn mượt mà trên iOS */
+    gap: 10px; /* Khoảng cách giữa các thumbnail */
+
+ /* ẨN THANH CUỘN */
+    /* Dành cho Chrome, Safari, Edge, Opera */
+    &::-webkit-scrollbar {
+        display: none;
+        width: 0;
+        height: 0;
+    }
+/* Dành cho Firefox */
+    scrollbar-width: none; /* Ẩn thanh cuộn */
+}
+.lightbox-thumbnail-item {
+    width: 50px; /* Kích thước của thumbnail */
+    height: 50px;
+    object-fit: cover;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+    /* border-radius: 4px; */
+    /* position: fixed; */
+}
+
+.lightbox-thumbnail-item.active {
+    border-color: #fdfdfd; /* Màu viền cho thumbnail đang chọn */
+    transform: scale(1.1); /* Phóng to nhẹ thumbnail đang chọn */
 }
 /*end couple_side_img*/
 .underline {
