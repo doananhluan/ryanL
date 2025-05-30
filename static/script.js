@@ -1,352 +1,4 @@
 // document.addEventListener('DOMContentLoaded', () => {
-//     const carouselTrack = document.querySelector('.carousel-track');
-//     const carouselImages = document.querySelectorAll('.carousel-image');
-//     const prevButton = document.querySelector('.carousel-button.prev');
-//     const nextButton = document.querySelector('.carousel-button.next');
-//     const lightbox = document.getElementById('lightbox');
-//     const lightboxImg = document.getElementById('lightbox-img');
-//     const lightboxClose = document.querySelector('.lightbox-close');
-
-//     let currentIndex = 0;
-//     const imageWidth = carouselImages[0] ? carouselImages[0].clientWidth : 0; // Chiều rộng của một ảnh
-
-//     // Cập nhật vị trí trượt
-//     function updateCarousel() {
-//         carouselTrack.style.transform = `translateX(${-currentIndex * imageWidth}px)`;
-//     }
-
-//     // Xử lý nút Previous
-//     prevButton.addEventListener('click', () => {
-//         currentIndex = (currentIndex > 0) ? currentIndex - 1 : carouselImages.length - 1;
-//         updateCarousel();
-//     });
-
-//     // Xử lý nút Next
-//     nextButton.addEventListener('click', () => {
-//         currentIndex = (currentIndex < carouselImages.length - 1) ? currentIndex + 1 : 0;
-//         updateCarousel();
-//     });
-
-//     // Xử lý khi nhấp vào ảnh trong carousel
-//     carouselImages.forEach(image => {
-//         image.addEventListener('click', () => {
-//             lightboxImg.src = image.src; // Đặt ảnh vào lightbox
-//             lightbox.classList.add('active'); // Hiển thị lightbox
-//         });
-//     });
-
-//     // Xử lý đóng lightbox khi nhấp vào nút X
-//     lightboxClose.addEventListener('click', () => {
-//         lightbox.classList.remove('active');
-//     });
-
-//     // Xử lý đóng lightbox khi nhấp vào khoảng trống bên ngoài ảnh
-//     lightbox.addEventListener('click', (e) => {
-//         if (e.target.classList.contains('lightbox-overlay')) { // Chỉ đóng khi nhấp vào chính overlay, không phải ảnh
-//             lightbox.classList.remove('active');
-//         }
-//     });
-
-//     // Xử lý đóng lightbox khi nhấn phím ESC
-//     document.addEventListener('keydown', (e) => {
-//         if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-//             lightbox.classList.remove('active');
-//         }
-//     });
-
-//     // Cập nhật lại chiều rộng ảnh nếu trình duyệt thay đổi kích thước
-//     window.addEventListener('resize', () => {
-//         if (carouselImages[0]) { // Đảm bảo có ít nhất một ảnh
-//             const newImageWidth = carouselImages[0].clientWidth;
-//             // Nếu chiều rộng thay đổi, cập nhật lại transform
-//             if (newImageWidth !== imageWidth) {
-//                 // Bạn có thể cần cập nhật lại imageWidth ở đây nếu muốn chính xác hơn
-//                 // Ví dụ: imageWidth = newImageWidth;
-//                 updateCarousel();
-//             }
-//         }
-//     });
-
-//     // Khởi tạo carousel ở vị trí đầu tiên
-//     updateCarousel();
-// });
-
-
-// document.addEventListener('DOMContentLoaded', () => {
-//     const galleryTrack = document.getElementById('galleryTrack');
-//     let galleryItems = Array.from(document.querySelectorAll('.gallery-item')); 
-//     const lightbox = document.getElementById('lightbox');
-//     const lightboxImg = document.getElementById('lightbox-img'); // Ảnh trong lightbox
-//     const lightboxClose = document.querySelector('.lightbox-close');
-//     const lightboxPrevButton = document.querySelector('.lightbox-nav-button.prev-lightbox');
-//     const lightboxNextButton = document.querySelector('.lightbox-nav-button.next-lightbox');
-
-//     const scrollSpeed = 0.5; 
-//     let scrollInterval;
-//     let currentScroll = 0; // Vị trí scroll của carousel chính
-//     const originalGalleryItemsCount = galleryItems.length; 
-
-//     let galleryWrapperWidth = 0;
-//     let originalItemsFullWidth = 0; 
-//     let clonedItemsPrefixWidth = 0; 
-
-//     let lightboxCurrentIndex = 0; // Index của ảnh hiện tại trong lightbox
-//     let numClones = 0;
-
-//     // --- Biến cho chức năng KÉO TRONG LIGHTBOX ---
-//     let isDraggingLightbox = false;
-//     let startLightboxPosX = 0;
-//     let startLightboxImgPosX = 0; // Vị trí X của ảnh trong lightbox khi bắt đầu kéo
-//     let dragThresholdLightbox = 10; // Ngưỡng kéo tối thiểu
-//     let hasDraggedLightbox = false; // Cờ để phân biệt kéo và click (trong lightbox)
-
-//     // --- Khởi tạo và Nhân bản ảnh (Cloning) (giữ nguyên) ---
-//     function initializeGallery() {
-//         galleryWrapperWidth = document.querySelector('.gallery-wrapper').offsetWidth;
-
-//         originalItemsFullWidth = 0;
-//         galleryItems.forEach(item => {
-//             originalItemsFullWidth += item.offsetWidth + 10; 
-//         });
-
-//         numClones = Math.ceil(galleryWrapperWidth / (originalItemsFullWidth / originalGalleryItemsCount)) + 2; 
-
-//         Array.from(galleryTrack.children).forEach(child => {
-//             if (child.classList.contains('cloned')) {
-//                 galleryTrack.removeChild(child);
-//             }
-//         });
-
-//         for (let i = originalGalleryItemsCount - 1; i >= originalGalleryItemsCount - numClones; i--) {
-//             const actualIndex = (i < 0) ? (originalGalleryItemsCount + i) : i; 
-//             const clone = galleryItems[actualIndex].cloneNode(true);
-//             clone.classList.add('cloned');
-//             galleryTrack.prepend(clone);
-//         }
-
-//         for (let i = 0; i < numClones; i++) {
-//             const clone = galleryItems[i].cloneNode(true);
-//             clone.classList.add('cloned');
-//             galleryTrack.appendChild(clone);
-//         }
-
-//         galleryItems = Array.from(document.querySelectorAll('.gallery-item'));
-
-//         clonedItemsPrefixWidth = 0;
-//         for (let i = 0; i < numClones; i++) {
-//             clonedItemsPrefixWidth += galleryItems[i].offsetWidth + 10;
-//         }
-
-//         currentScroll = clonedItemsPrefixWidth;
-        
-//         galleryTrack.style.transition = 'none'; 
-//         galleryTrack.style.transform = `translateX(${-currentScroll}px)`;
-
-//         requestAnimationFrame(() => {
-//             requestAnimationFrame(() => {
-//                 galleryTrack.style.transition = 'transform 0.01s linear'; 
-//             });
-//         });
-
-//         startAutoScroll();
-//     }
-
-//     // --- Chức năng tự động cuộn (giữ nguyên) ---
-//     function startAutoScroll() {
-//         if (scrollInterval) clearInterval(scrollInterval);
-//         scrollInterval = setInterval(() => {
-//             currentScroll += scrollSpeed;
-//             galleryTrack.style.transform = `translateX(${-currentScroll}px)`;
-
-//             if (currentScroll >= (clonedItemsPrefixWidth + originalItemsFullWidth)) {
-//                 currentScroll = clonedItemsPrefixWidth; 
-                
-//                 galleryTrack.style.transition = 'none'; 
-//                 galleryTrack.style.transform = `translateX(${-currentScroll}px)`;
-                
-//                 requestAnimationFrame(() => {
-//                     requestAnimationFrame(() => {
-//                         galleryTrack.style.transition = 'transform 0.01s linear'; 
-//                     });
-//                 });
-//             }
-//         }, 1000 / 60);
-//     }
-
-//     function stopAutoScroll() {
-//         if (scrollInterval) clearInterval(scrollInterval);
-//     }
-
-//     // --- Xử lý rê chuột (hover) (giữ nguyên, nhưng không có logic kéo ở đây nữa) ---
-//     galleryTrack.addEventListener('mouseenter', stopAutoScroll);
-//     galleryTrack.addEventListener('mouseleave', () => {
-//         // Không cần kiểm tra isDragging ở đây nữa
-//         startAutoScroll();
-//     });
-
-//     // --- Xử lý Lightbox ---
-//     function updateLightboxImage() {
-//         lightboxImg.src = galleryItems[lightboxCurrentIndex % originalGalleryItemsCount].src;
-//     }
-
-//     // Event Delegation cho click vào ảnh carousel để mở lightbox (đã sửa)
-   
-//     galleryTrack.addEventListener('click', (e) => {
-//         if (e.target.classList.contains('gallery-item')) {
-//             stopAutoScroll(); 
-
-//             const clickedItem = e.target;
-//             let clickedIndex = -1;
-//             for (let i = 0; i < galleryItems.length; i++) {
-//                 if (galleryItems[i] === clickedItem) {
-//                     clickedIndex = i;
-//                     break;
-//                 }
-//             }
-            
-//             let originalIndex = (clickedIndex - numClones + originalGalleryItemsCount) % originalGalleryItemsCount;
-//             if (originalIndex < 0) originalIndex += originalGalleryItemsCount; 
-
-//             lightboxCurrentIndex = originalIndex; 
-//             updateLightboxImage();
-//             lightbox.classList.add('active'); 
-//         }
-//     });
-
-//     // Xử lý nút đóng lightbox (giữ nguyên)
-//     lightboxClose.addEventListener('click', () => {
-//         lightbox.classList.remove('active'); 
-//         startAutoScroll(); 
-//     });
-
-//     // Xử lý nhấp vào khoảng trống bên ngoài ảnh trong lightbox (giữ nguyên)
-//     lightbox.addEventListener('click', (e) => {
-//         // Chỉ đóng nếu click vào nền mờ hoặc nút đóng
-//         if (e.target === lightbox || e.target === lightboxClose) { 
-//             lightbox.classList.remove('active');
-//             startAutoScroll();
-//             // Đảm bảo dừng mọi thao tác kéo đang diễn ra trong lightbox khi thoát
-//             isDraggingLightbox = false;
-//             lightboxImg.style.transition = ''; // Bật lại transition nếu có
-//             lightboxImg.style.transform = 'translate(0,0)'; // Reset vị trí ảnh trong lightbox
-//         }
-//     });
-
-//     // Xử lý phím ESC để đóng lightbox (giữ nguyên)
-//     document.addEventListener('keydown', (e) => {
-//         if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-//             lightbox.classList.remove('active');
-//             startAutoScroll();
-//             // Đảm bảo dừng mọi thao tác kéo đang diễn ra trong lightbox khi thoát
-//             isDraggingLightbox = false;
-//             lightboxImg.style.transition = ''; // Bật lại transition nếu có
-//             lightboxImg.style.transform = 'translate(0,0)'; // Reset vị trí ảnh trong lightbox
-//         }
-//     });
-
-//     // Xử lý nút điều hướng trong lightbox (giữ nguyên)
-//     lightboxPrevButton.addEventListener('click', (e) => {
-//         e.stopPropagation();
-//         lightboxCurrentIndex = (lightboxCurrentIndex > 0) ? lightboxCurrentIndex - 1 : originalGalleryItemsCount - 1;
-//         updateLightboxImage();
-//         // Reset vị trí kéo ảnh khi chuyển ảnh trong lightbox
-//         lightboxImg.style.transition = 'none';
-//         lightboxImg.style.transform = 'translate(0,0)';
-//         requestAnimationFrame(() => {
-//             requestAnimationFrame(() => {
-//                 lightboxImg.style.transition = ''; // hoặc 'transform 0.2s ease-out'
-//             });
-//         });
-//     });
-
-//     lightboxNextButton.addEventListener('click', (e) => {
-//         e.stopPropagation();
-//         lightboxCurrentIndex = (lightboxCurrentIndex < originalGalleryItemsCount - 1) ? lightboxCurrentIndex + 1 : 0;
-//         updateLightboxImage();
-//         // Reset vị trí kéo ảnh khi chuyển ảnh trong lightbox
-//         lightboxImg.style.transition = 'none';
-//         lightboxImg.style.transform = 'translate(0,0)';
-//         requestAnimationFrame(() => {
-//             requestAnimationFrame(() => {
-//                 lightboxImg.style.transition = ''; // hoặc 'transform 0.2s ease-out'
-//             });
-//         });
-//     });
-
-//     // --- BẮT ĐẦU CHỨC NĂNG KÉO TRONG LIGHTBOX ---
-//     lightboxImg.addEventListener('mousedown', (e) => {
-//         if (e.button !== 0) return; // Chỉ xử lý click chuột trái
-//         isDraggingLightbox = true;
-//         startLightboxPosX = e.clientX;
-//         // Lấy vị trí transform X hiện tại của ảnh trong lightbox
-//         const transformMatrix = new WebKitCSSMatrix(window.getComputedStyle(lightboxImg).transform);
-//         startLightboxImgPosX = transformMatrix.m41; // m41 là giá trị translateX
-//         hasDraggedLightbox = false; // Reset cờ kéo
-//         lightboxImg.style.cursor = 'grabbing';
-//         lightboxImg.style.transition = 'none'; // Tắt transition khi kéo
-//         e.preventDefault(); // Ngăn kéo ảnh làm chọn văn bản
-//     });
-
-//     // Lắng nghe mousemove và mouseup trên document để đảm bảo bắt được sự kiện
-//     // ngay cả khi chuột ra ngoài ảnh trong lightbox khi đang kéo
-//     document.addEventListener('mousemove', (e) => {
-//         if (!isDraggingLightbox) return;
-
-//         const deltaX = e.clientX - startLightboxPosX;
-//         let newImgPosX = startLightboxImgPosX + deltaX;
-
-//         // Giới hạn kéo: Ngăn ảnh kéo ra ngoài khung nhìn của lightbox quá xa
-//         // Đây là phần phức tạp nhất, bạn cần tính toán dựa trên kích thước ảnh và lightbox
-//         // Nếu ảnh nhỏ hơn lightbox, không cho kéo.
-//         // Nếu ảnh lớn hơn, chỉ cho kéo trong giới hạn nhất định.
-//         // Hiện tại, chúng ta sẽ cho phép kéo tự do và sau đó tự động căn chỉnh.
-
-//         lightboxImg.style.transform = `translateX(${newImgPosX}px)`;
-
-//         if (Math.abs(deltaX) > dragThresholdLightbox) {
-//             hasDraggedLightbox = true;
-//         }
-//     });
-
-//     document.addEventListener('mouseup', () => {
-//         if (isDraggingLightbox) {
-//             isDraggingLightbox = false;
-//             lightboxImg.style.cursor = 'grab';
-//             lightboxImg.style.transition = 'transform 0.3s ease-out'; // Bật lại transition
-
-//             // --- Logic chuyển ảnh khi kéo và nhả chuột ---
-//             // Nếu có kéo đủ xa, chuyển ảnh
-//             const lightboxWidth = lightbox.offsetWidth;
-//             const currentImgPosX = new WebKitCSSMatrix(window.getComputedStyle(lightboxImg).transform).m41;
-
-//             if (hasDraggedLightbox) {
-//                 // Kéo sang phải đủ xa (để về ảnh trước)
-//                 if (currentImgPosX > lightboxWidth * 0.2) { // Kéo quá 20% chiều rộng lightbox
-//                     lightboxPrevButton.click(); // Giả lập click nút prev
-//                 } 
-//                 // Kéo sang trái đủ xa (để về ảnh sau)
-//                 else if (currentImgPosX < -lightboxWidth * 0.2) { // Kéo quá 20% chiều rộng lightbox
-//                     lightboxNextButton.click(); // Giả lập click nút next
-//                 } else {
-//                     // Nếu kéo không đủ xa để chuyển ảnh, trả ảnh về vị trí ban đầu
-//                     lightboxImg.style.transform = 'translateX(0)';
-//                 }
-//             } else {
-//                 // Nếu đây là click (không kéo), không làm gì thêm ở đây
-//             }
-//             hasDraggedLightbox = false; // Reset cờ kéo
-
-//             // Reset vị trí ảnh trong lightbox về giữa sau khi chuyển ảnh hoặc nếu không đủ kéo
-//             // (Hàm updateLightboxImage() và click nút prev/next đã xử lý phần này)
-//             // Nếu bạn muốn ảnh tự động căn giữa nếu không đủ kéo, thì đoạn else trên đã làm
-//         }
-//     });
-
-//     // --- Khởi chạy ---
-//     window.addEventListener('load', initializeGallery);
-// });
-
-// document.addEventListener('DOMContentLoaded', () => {
 //     const galleryTrack = document.getElementById('galleryTrack');
 //     // KHAI BÁO QUAN TRỌNG: galleryItemContainers sẽ chứa các DIV bọc ảnh
 //     let galleryItemContainers = Array.from(document.querySelectorAll('.gallery-item-container')); 
@@ -644,10 +296,9 @@
 //     window.addEventListener('load', initializeGallery);
 // });
 
+
 document.addEventListener('DOMContentLoaded', () => {
     const galleryTrack = document.getElementById('galleryTrack');
-    // KHAI BÁO QUAN TRỌNG: galleryItemContainers sẽ chứa các DIV bọc ảnh
-    // Ban đầu lấy tất cả các container gốc
     let galleryItemContainers = Array.from(document.querySelectorAll('.gallery-item-container')); 
     
     const lightbox = document.getElementById('lightbox');
@@ -656,183 +307,206 @@ document.addEventListener('DOMContentLoaded', () => {
     const lightboxPrevButton = document.querySelector('.lightbox-nav-button.prev-lightbox');
     const lightboxNextButton = document.querySelector('.lightbox-nav-button.next-lightbox');
 
-    const scrollSpeed = 0.5; // Tốc độ cuộn của carousel (pixels/frame)
-    let scrollInterval; // Biến lưu trữ interval của cuộn tự động
-    let currentScroll = 0; // Vị trí cuộn hiện tại của carousel chính
-    const originalGalleryItemsCount = galleryItemContainers.length; // Số lượng container ảnh gốc
+    // THÊM CÁC BIẾN MỚI
+    const lightboxCounter = document.getElementById('lightbox-counter');
+    const lightboxThumbnailsContainer = document.querySelector('.lightbox-thumbnails');
 
-    let galleryWrapperWidth = 0; // Chiều rộng của khung hiển thị carousel
-    let originalItemsFullWidth = 0; // Tổng chiều rộng của tất cả các ảnh gốc (bao gồm margin)
-    let clonedItemsPrefixWidth = 0; // Chiều rộng của các ảnh clone ở đầu track
+    const scrollSpeed = 0.5;
+    let scrollInterval;
+    let currentScroll = 0;
+    const originalGalleryItemsCount = galleryItemContainers.length; // Số lượng ảnh gốc trong gallery
 
-    let lightboxCurrentIndex = 0; // Index của ảnh hiện tại trong lightbox
-    let numClones = 0; // Số lượng ảnh được nhân bản ở mỗi bên
+    let galleryWrapperWidth = 0;
+    let originalItemsFullWidth = 0;
+    let clonedItemsPrefixWidth = 0;
 
-    // --- Biến cho chức năng KÉO TRONG LIGHTBOX ---
-    let isDraggingLightbox = false; // Cờ cho biết đang kéo ảnh trong lightbox
-    let startLightboxPosX = 0; // Vị trí X của chuột/ngón tay khi bắt đầu kéo trong lightbox
-    let startLightboxImgPosX = 0; // Vị trí transform X của ảnh trong lightbox khi bắt đầu kéo
-    let dragThresholdLightbox = 50; // NGƯỠNG KÉO TỐI THIỂU để kích hoạt chuyển ảnh (pixels) - Đã Tăng
-    let hasDraggedLightbox = false; // Cờ cho biết đã thực hiện hành động kéo trong lightbox (không chỉ click/tap)
+    let lightboxCurrentIndex = 0; // Index của ảnh hiện tại trong lightbox (trong số ảnh gốc)
+    let numClones = 0;
+
+    // --- Biến cho chức năng KÉO & ZOOM TRONG LIGHTBOX (Được đơn giản hóa) ---
+    let isDraggingLightbox = false;
+    let startLightboxPosX = 0;
+    let startLightboxPosY = 0; 
+    let startLightboxImgPosX = 0;
+    let startLightboxImgPosY = 0; 
+    let dragThresholdLightbox = 50;
+    let hasDraggedLightbox = false;
+
+    // Biến cho tính năng ZOOM (Nếu bạn không muốn zoom, các biến này sẽ ít quan trọng hơn)
+    let currentZoomLevel = 1; 
+    const maxZoomLevel = 1; // Đặt maxZoomLevel về 1 để vô hiệu hóa zoom
+    const minZoomLevel = 1; 
+    const zoomSensitivity = 0.1; 
+
+    // Biến cho Pinch-to-zoom trên di động (cũng sẽ bị vô hiệu hóa nếu maxZoomLevel = 1)
+    let initialPinchDistance = 0;
+    let isPinching = false;
 
     // --- Khởi tạo và Nhân bản ảnh (Cloning) ---
     function initializeGallery() {
         galleryWrapperWidth = document.querySelector('.gallery-wrapper').offsetWidth;
-        // console.log('initializeGallery: galleryWrapperWidth =', galleryWrapperWidth);
-
         originalItemsFullWidth = 0;
-        // Tính toán tổng chiều rộng của các container ảnh gốc
         galleryItemContainers.forEach(container => {
-            // Lấy chiều rộng thực tế của container + margin-right (10px)
             originalItemsFullWidth += container.offsetWidth + 10; 
         });
-        // console.log('initializeGallery: originalItemsFullWidth =', originalItemsFullWidth);
-
-        // Tính toán số lượng ảnh clone cần thiết để lấp đầy khung nhìn
-        // Đảm bảo rằng ít nhất một vòng lặp của ảnh có thể nhìn thấy
         numClones = Math.ceil(galleryWrapperWidth / (originalItemsFullWidth / originalGalleryItemsCount)) + 2; 
-        // +2 để đảm bảo có đủ ảnh mượt mà khi reset vị trí
-        // console.log('initializeGallery: numClones =', numClones);
 
-        // Xóa các clone cũ nếu có, để tránh nhân bản lặp lại khi hàm được gọi lại (ví dụ: resize)
         Array.from(galleryTrack.children).forEach(child => {
             if (child.classList.contains('cloned')) {
                 galleryTrack.removeChild(child);
             }
         });
 
-        // Clone các ảnh cuối cùng của danh sách gốc và thêm vào ĐẦU track
-        // Điều chỉnh vòng lặp để đảm bảo lấy đúng index và không bị lỗi nếu numClones lớn hơn originalGalleryItemsCount
         for (let i = 1; i <= numClones; i++) {
             const actualIndex = (originalGalleryItemsCount - i % originalGalleryItemsCount + originalGalleryItemsCount) % originalGalleryItemsCount;
-            const clone = galleryItemContainers[actualIndex].cloneNode(true); // Clone toàn bộ container
+            const clone = galleryItemContainers[actualIndex].cloneNode(true);
             clone.classList.add('cloned');
             galleryTrack.prepend(clone);
         }
 
-        // Clone các ảnh đầu tiên của danh sách gốc và thêm vào CUỐI track
         for (let i = 0; i < numClones; i++) {
-            const clone = galleryItemContainers[i % originalGalleryItemsCount].cloneNode(true); // Clone toàn bộ container
+            const clone = galleryItemContainers[i % originalGalleryItemsCount].cloneNode(true);
             clone.classList.add('cloned');
             galleryTrack.appendChild(clone);
         }
 
-        // Cập nhật lại danh sách galleryItemContainers sau khi clone đã được thêm vào DOM
-        // Quan trọng: Phải lấy lại toàn bộ các phần tử bao gồm cả clone
         galleryItemContainers = Array.from(document.querySelectorAll('.gallery-item-container'));
 
-        // Tính toán chiều rộng của các ảnh clone ở đầu track (các ảnh vừa được prepend)
         clonedItemsPrefixWidth = 0;
         for (let i = 0; i < numClones; i++) {
-            // Đảm bảo phần tử tồn tại trước khi truy cập offsetWidth
             if (galleryItemContainers[i]) {
                 clonedItemsPrefixWidth += galleryItemContainers[i].offsetWidth + 10;
             } else {
                 console.warn(`[initializeGallery] Phần tử galleryItemContainers[${i}] không tồn tại khi tính clonedItemsPrefixWidth.`);
             }
         }
-        // console.log('initializeGallery: clonedItemsPrefixWidth =', clonedItemsPrefixWidth);
 
-        // Đặt vị trí scroll ban đầu để bắt đầu từ ảnh gốc đầu tiên
         currentScroll = clonedItemsPrefixWidth;
         
-        // Tắt transition ngay lập tức để đặt vị trí ban đầu không bị giật
         galleryTrack.style.transition = 'none'; 
         galleryTrack.style.transform = `translateX(${-currentScroll}px)`;
-        // console.log('initializeGallery: Initial transform =', galleryTrack.style.transform);
 
-        // Sau khi đặt vị trí ban đầu, bật lại transition cho các cuộn mượt mà
-        // Sử dụng requestAnimationFrame lồng nhau để đảm bảo trình duyệt đã render lại trước khi bật transition
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
                 galleryTrack.style.transition = 'transform 0.01s linear'; 
-                // console.log('initializeGallery: Transition re-enabled.');
             });
         });
 
-        startAutoScroll(); // Bắt đầu cuộn tự động
+        startAutoScroll();
     }
 
     // --- Chức năng tự động cuộn ---
     function startAutoScroll() {
-        if (scrollInterval) clearInterval(scrollInterval); // Xóa interval cũ nếu có
+        if (scrollInterval) clearInterval(scrollInterval);
         scrollInterval = setInterval(() => {
-            currentScroll += scrollSpeed; // Tăng vị trí cuộn
+            currentScroll += scrollSpeed;
             galleryTrack.style.transform = `translateX(${-currentScroll}px)`;
 
-            // Nếu cuộn đến cuối danh sách ảnh gốc + clone ở cuối, reset về vị trí đầu ảnh gốc
-            // Logic reset: Nếu currentScroll vượt quá tổng chiều rộng của các ảnh gốc + clone ở đầu (phần mà bạn muốn hiển thị sau khi reset)
             if (currentScroll >= (originalItemsFullWidth + clonedItemsPrefixWidth)) {
                 currentScroll = clonedItemsPrefixWidth; 
                 
-                // Tắt transition để reset vị trí tức thì, tránh bị giật
                 galleryTrack.style.transition = 'none'; 
                 galleryTrack.style.transform = `translateX(${-currentScroll}px)`;
-                // console.log('AutoScroll: Resetting position to', -currentScroll);
                 
-                // Bật lại transition sau một khoảng thời gian ngắn
                 requestAnimationFrame(() => {
                     requestAnimationFrame(() => {
                         galleryTrack.style.transition = 'transform 0.01s linear'; 
                     });
                 });
             }
-        }, 1000 / 60); // Cập nhật khoảng 60 lần/giây để có chuyển động mượt
+        }, 1000 / 60);
     }
 
     function stopAutoScroll() {
-        if (scrollInterval) clearInterval(scrollInterval); // Dừng cuộn tự động
-        // console.log('AutoScroll: Stopped.');
+        if (scrollInterval) clearInterval(scrollInterval);
     }
 
     // --- Xử lý rê chuột (hover) trên carousel ---
-    galleryTrack.addEventListener('mouseenter', stopAutoScroll); // Dừng khi chuột vào
+    galleryTrack.addEventListener('mouseenter', stopAutoScroll);
     galleryTrack.addEventListener('mouseleave', () => {
-        startAutoScroll(); // Bắt đầu lại khi chuột rời đi
+        startAutoScroll();
     });
 
     // --- Xử lý Lightbox ---
     function updateLightboxImage() {
-        // Lấy đường dẫn và alt của ảnh từ thẻ img bên trong container tương ứng
-        // Sử dụng modulo originalGalleryItemsCount để chỉ lấy ảnh gốc
-        const newImgSrc = galleryItemContainers[numClones + (lightboxCurrentIndex % originalGalleryItemsCount)].querySelector('.gallery-item').src;
-        const newImgAlt = galleryItemContainers[numClones + (lightboxCurrentIndex % originalGalleryItemsCount)].querySelector('.gallery-item').alt;
+        const newImgSrc = galleryItemContainers[numClones + (lightboxCurrentIndex % originalGalleryItemsCount)].querySelector('.gallery-item').dataset.fullresSrc || galleryItemContainers[numClones + (lightboxCurrentIndex % originalGalleryItemsCount)].querySelector('.gallery-item').src;
+    const newImgAlt = galleryItemContainers[numClones + (lightboxCurrentIndex % originalGalleryItemsCount)].querySelector('.gallery-item').alt;
 
-        // Reset transform và opacity của ảnh trong lightbox trước khi tải ảnh mới
-        lightboxImg.style.transition = 'none'; // Tắt transition để tránh giật khi reset
-        lightboxImg.style.transform = 'translateX(0)'; // Đặt lại vị trí X về 0
-        lightboxImg.style.opacity = '0'; // Ẩn ảnh hiện tại để có hiệu ứng mượt khi tải ảnh mới
+        // Luôn reset vị trí và zoom khi chuyển ảnh trong lightbox
+        lightboxImg.style.transition = 'none'; // Tắt transition để reset ngay lập tức
+        lightboxImg.style.transform = 'translate(0px, 0px) scale(1)'; 
+        lightboxImg.style.opacity = '0'; 
 
-        // Gắn listener cho sự kiện tải ảnh hoàn tất
+        currentZoomLevel = 1; // Reset zoom level
+        startLightboxImgPosX = 0; // Reset vị trí dịch chuyển X
+        startLightboxImgPosY = 0; // Reset vị trí dịch chuyển Y
+
         lightboxImg.onload = () => {
-            lightboxImg.style.transition = 'opacity 0.3s ease, transform 0.3s ease-out'; // Bật lại transition
-            lightboxImg.style.opacity = '1'; // Hiển thị ảnh mới
-            lightboxImg.onload = null; // Gỡ bỏ listener để tránh lỗi lặp lại
+            lightboxImg.style.transition = 'opacity 0.3s ease, transform 0.3s ease-out';
+            lightboxImg.style.opacity = '1';
+            lightboxImg.onload = null;
         };
 
-        // Cập nhật src và alt cho ảnh trong lightbox
         lightboxImg.src = newImgSrc;
         lightboxImg.alt = newImgAlt;
 
-        // Nếu ảnh mới trùng với ảnh cũ (ví dụ: chuyển từ ảnh cuối về ảnh đầu), chỉ hiển thị lại
+        // Trường hợp ảnh đã được cache và không kích hoạt onload
         if (lightboxImg.src === newImgSrc && lightboxImg.style.opacity === '0') {
             lightboxImg.style.transition = 'opacity 0.3s ease, transform 0.3s ease-out';
             lightboxImg.style.opacity = '1';
         }
+
+        updateLightboxCounter(); // Cập nhật bộ đếm
+        updateLightboxThumbnails(); // Cập nhật thumbnails
     }
+
+    // THÊM HÀM CẬP NHẬT BỘ ĐẾM
+    function updateLightboxCounter() {
+        lightboxCounter.textContent = `${lightboxCurrentIndex + 1}/${originalGalleryItemsCount}`;
+    }
+
+    // THÊM HÀM CẬP NHẬT THUMBNAILS
+    function updateLightboxThumbnails() {
+        lightboxThumbnailsContainer.innerHTML = ''; // Xóa thumbnails cũ
+        galleryItemContainers.forEach((container, index) => {
+            // Chỉ lấy các ảnh gốc, bỏ qua ảnh cloned
+            if (index >= numClones && index < numClones + originalGalleryItemsCount) {
+                const originalIndex = (index - numClones) % originalGalleryItemsCount; // Index trong số ảnh gốc
+
+                const thumbImg = document.createElement('img');
+                thumbImg.src = container.querySelector('.gallery-item').src;
+                thumbImg.alt = `Thumbnail ${originalIndex + 1}`;
+                thumbImg.classList.add('lightbox-thumbnail-item');
+                
+                // Đánh dấu thumbnail đang active
+                if (originalIndex === lightboxCurrentIndex) {
+                    thumbImg.classList.add('active');
+                }
+
+                // Xử lý click vào thumbnail để chuyển ảnh
+                thumbImg.addEventListener('click', () => {
+                    lightboxCurrentIndex = originalIndex;
+                    updateLightboxImage();
+                });
+                lightboxThumbnailsContainer.appendChild(thumbImg);
+            }
+        });
+        // Cuộn thanh thumbnails để thumbnail active luôn hiển thị
+        const activeThumbnail = lightboxThumbnailsContainer.querySelector('.lightbox-thumbnail-item.active');
+        if (activeThumbnail) {
+            activeThumbnail.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+    }
+
 
     // Event Delegation cho click vào ảnh carousel để mở lightbox
     galleryTrack.addEventListener('click', (e) => {
-        // Sử dụng .closest() để tìm phần tử cha gần nhất có class 'gallery-item-container'
         const clickedContainer = e.target.closest('.gallery-item-container');
         
-        // Tránh mở lightbox nếu click vào các ảnh clone ở rìa (nếu bạn muốn chỉ mở ảnh gốc)
-        // Hoặc bạn có thể bỏ qua kiểm tra này nếu muốn mở lightbox cho cả clone
         if (clickedContainer && !clickedContainer.classList.contains('cloned')) { 
-            stopAutoScroll(); // Dừng cuộn tự động của carousel
+            stopAutoScroll();
 
             let clickedIndexInFullList = -1;
-            // Duyệt qua danh sách các container để tìm chỉ mục của container được click
             for (let i = 0; i < galleryItemContainers.length; i++) { 
                 if (galleryItemContainers[i] === clickedContainer) {
                     clickedIndexInFullList = i;
@@ -840,40 +514,44 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
             
-            // Tính toán chỉ mục của ảnh gốc trong mảng gốc
-            // Trừ đi numClones để loại bỏ các ảnh clone ở đầu
             let tempLightboxIndex = (clickedIndexInFullList - numClones + originalGalleryItemsCount) % originalGalleryItemsCount;
-            // Đảm bảo index không bị âm
             if (tempLightboxIndex < 0) tempLightboxIndex += originalGalleryItemsCount; 
 
-            // console.log('Clicked Original Index:', tempLightboxIndex);
-
-            lightboxCurrentIndex = tempLightboxIndex; // Cập nhật chỉ mục ảnh hiện tại cho lightbox
-            updateLightboxImage(); // Cập nhật ảnh trong lightbox
-            lightbox.classList.add('active'); // Hiển thị lightbox
+            lightboxCurrentIndex = tempLightboxIndex;
+            updateLightboxImage();
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden'; 
         }
     });
 
     // Xử lý nút đóng lightbox
     lightboxClose.addEventListener('click', () => {
-        lightbox.classList.remove('active'); // Ẩn lightbox
-        startAutoScroll(); // Khởi động lại cuộn tự động
-        // Reset trạng thái kéo và vị trí ảnh trong lightbox khi đóng
+        lightbox.classList.remove('active');
+        startAutoScroll();
+        // Reset tất cả trạng thái zoom và kéo khi đóng
         isDraggingLightbox = false;
+        currentZoomLevel = 1;
+        startLightboxImgPosX = 0;
+        startLightboxImgPosY = 0;
         lightboxImg.style.transition = 'none'; 
-        lightboxImg.style.transform = 'translateX(0)'; 
-        lightboxImg.style.opacity = '1'; // Đảm bảo ảnh hiển thị đầy đủ khi mở lại
+        lightboxImg.style.transform = 'translate(0px, 0px) scale(1)'; 
+        lightboxImg.style.opacity = '1';
+        document.body.style.overflow = ''; 
     });
 
     // Xử lý nhấp vào khoảng trống bên ngoài ảnh trong lightbox để đóng
     lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox || e.target === lightboxClose) { // Nếu click vào nền mờ hoặc nút đóng
+        if (e.target === lightbox || e.target === lightboxClose) {
             lightbox.classList.remove('active');
             startAutoScroll();
             isDraggingLightbox = false;
+            currentZoomLevel = 1; 
+            startLightboxImgPosX = 0;
+            startLightboxImgPosY = 0;
             lightboxImg.style.transition = 'none';
-            lightboxImg.style.transform = 'translateX(0)';
+            lightboxImg.style.transform = 'translate(0px, 0px) scale(1)';
             lightboxImg.style.opacity = '1';
+            document.body.style.overflow = ''; 
         }
     });
 
@@ -883,113 +561,735 @@ document.addEventListener('DOMContentLoaded', () => {
             lightbox.classList.remove('active');
             startAutoScroll();
             isDraggingLightbox = false;
+            currentZoomLevel = 1; 
+            startLightboxImgPosX = 0;
+            startLightboxImgPosY = 0;
             lightboxImg.style.transition = 'none';
-            lightboxImg.style.transform = 'translateX(0)';
+            lightboxImg.style.transform = 'translate(0px, 0px) scale(1)';
             lightboxImg.style.opacity = '1';
+            document.body.style.overflow = ''; 
         }
     });
 
     // Xử lý nút điều hướng "Previous" trong lightbox
     lightboxPrevButton.addEventListener('click', (e) => {
-        e.stopPropagation(); // Ngăn sự kiện click lan ra ngoài (ví dụ: đóng lightbox)
+        e.stopPropagation();
         lightboxCurrentIndex = (lightboxCurrentIndex > 0) ? lightboxCurrentIndex - 1 : originalGalleryItemsCount - 1;
-        updateLightboxImage(); // Cập nhật ảnh mới
+        updateLightboxImage();
     });
 
     // Xử lý nút điều hướng "Next" trong lightbox
     lightboxNextButton.addEventListener('click', (e) => {
-        e.stopPropagation(); // Ngăn sự kiện click lan ra ngoài
+        e.stopPropagation();
         lightboxCurrentIndex = (lightboxCurrentIndex < originalGalleryItemsCount - 1) ? lightboxCurrentIndex + 1 : 0;
-        updateLightboxImage(); // Cập nhật ảnh mới
+        updateLightboxImage();
     });
 
-    // --- CHỨC NĂNG KÉO (DRAG) TRONG LIGHTBOX (Bao gồm Touch Events) ---
-    lightboxImg.addEventListener('mousedown', startDragLightbox);
-    lightboxImg.addEventListener('touchstart', startDragLightbox); // Thêm touchstart
+    // --- CHỨC NĂNG KÉO (DRAG) TRONG LIGHTBOX (Zoom bị vô hiệu hóa) ---
+    function getTransformValues(element) {
+        const style = window.getComputedStyle(element);
+        const transform = style.transform || style.webkitTransform || style.mozTransform;
+        let translateX = 0, translateY = 0, scale = 1;
 
-    document.addEventListener('mousemove', dragLightbox);
-    // Sử dụng { passive: false } để có thể gọi preventDefault() trong touchmove
-    document.addEventListener('touchmove', dragLightbox, { passive: false }); 
+        if (transform !== 'none') {
+            const matrix = new WebKitCSSMatrix(transform);
+            translateX = matrix.m41;
+            translateY = matrix.m42;
+            scale = matrix.a; 
+        }
+        return { translateX, translateY, scale };
+    }
 
-    document.addEventListener('mouseup', endDragLightbox);
-    document.addEventListener('touchend', endDragLightbox); // Thêm touchend
+    function applyTransform() {
+        // Nếu zoom bị vô hiệu hóa (maxZoomLevel = 1), luôn đặt scale về 1
+        lightboxImg.style.transform = `translate(${startLightboxImgPosX}px, ${startLightboxImgPosY}px) scale(${currentZoomLevel})`;
+    }
 
     function startDragLightbox(e) {
-        // Chỉ xử lý click chuột trái hoặc một ngón chạm
         if (e.type === 'mousedown' && e.button !== 0) return; 
-        if (e.type === 'touchstart' && e.touches.length > 1) return; 
-
+        // if (isPinching) { // Không cần kiểm tra pinching nếu zoom bị vô hiệu hóa
+        //     isDraggingLightbox = false;
+        //     return;
+        // }
+        
         isDraggingLightbox = true;
+        hasDraggedLightbox = false; 
+
         startLightboxPosX = (e.type === 'mousedown') ? e.clientX : e.touches[0].clientX;
+        startLightboxPosY = (e.type === 'mousedown') ? e.clientY : e.touches[0].clientY;
         
-        const transformMatrix = new WebKitCSSMatrix(window.getComputedStyle(lightboxImg).transform);
-        startLightboxImgPosX = transformMatrix.m41; 
-        
-        hasDraggedLightbox = false; // Reset cờ kéo
-        lightboxImg.style.cursor = 'grabbing'; // Thay đổi con trỏ chuột
-        lightboxImg.style.transition = 'none'; // Tắt transition khi kéo để đảm bảo mượt mà
-        
+        const { translateX, translateY } = getTransformValues(lightboxImg); // Không cần scale nếu zoom bị vô hiệu hóa
+        startLightboxImgPosX = translateX;
+        startLightboxImgPosY = translateY;
+        currentZoomLevel = 1; // Luôn giữ 1 nếu zoom bị vô hiệu hóa
+
+        lightboxImg.style.cursor = 'grabbing';
+        lightboxImg.style.transition = 'none'; 
+
         if (e.type === 'touchstart') {
-            e.preventDefault(); // Ngăn cuộn trang khi bắt đầu chạm
+            e.preventDefault(); 
         }
     }
 
     function dragLightbox(e) {
-        if (!isDraggingLightbox) return;
+        if (!isDraggingLightbox /* || isPinching */) return; // Bỏ kiểm tra isPinching
 
         const currentClientX = (e.type === 'mousemove') ? e.clientX : e.touches[0].clientX;
+        const currentClientY = (e.type === 'mousemove') ? e.clientY : e.touches[0].clientY;
+
         const deltaX = currentClientX - startLightboxPosX;
-        let newImgPosX = startLightboxImgPosX + deltaX;
+        const deltaY = currentClientY - startLightboxPosY;
 
-        lightboxImg.style.transform = `translateX(${newImgPosX}px)`;
+        // Khi zoom bị vô hiệu hóa, ảnh luôn ở scale 1.
+        // Kéo ảnh chỉ dùng để chuyển ảnh, không để dịch chuyển tự do.
+        // Do đó, chúng ta chỉ cần cập nhật deltaX để kiểm tra ngưỡng chuyển ảnh.
+        // Vị trí Y không ảnh hưởng đến chuyển ảnh ngang.
+        // startLightboxImgPosX += deltaX; // Không cần cập nhật vị trí ảnh liên tục nếu chỉ để chuyển ảnh
 
-        // Đặt cờ hasDraggedLightbox nếu chuột/ngón tay di chuyển đủ xa
-        if (Math.abs(deltaX) > dragThresholdLightbox) {
+        // Để tạo cảm giác kéo nhưng vẫn căn giữa ảnh khi không zoom, 
+        // ta có thể cho phép dịch chuyển tạm thời rồi reset ở endDragLightbox.
+        let newPosX = startLightboxImgPosX + deltaX;
+        let newPosY = startLightboxImgPosY + deltaY;
+
+        // Nếu zoom bị vô hiệu hóa, không cần giới hạn kéo phức tạp
+        // mà chỉ cần cho phép kéo ngang để chuyển ảnh
+        startLightboxImgPosX = newPosX;
+        startLightboxImgPosY = newPosY;
+        applyTransform(); // Áp dụng để người dùng thấy ảnh dịch chuyển tạm thời
+
+        startLightboxPosX = currentClientX;
+        startLightboxPosY = currentClientY;
+
+        // Chỉ cần deltaX để kiểm tra kéo ngang chuyển ảnh
+        if (Math.abs(deltaX) > dragThresholdLightbox || Math.abs(deltaY) > dragThresholdLightbox) {
             hasDraggedLightbox = true;
         }
         if (e.type === 'touchmove') {
-            e.preventDefault(); // Ngăn cuộn trang khi đang kéo
+            e.preventDefault(); 
         }
     }
 
     function endDragLightbox(e) {
         if (isDraggingLightbox) {
-            isDraggingLightbox = false; // Kết thúc kéo
-            lightboxImg.style.cursor = 'grab'; // Trả lại con trỏ chuột
-            
-            // Bật lại transition sau khi kéo để có hiệu ứng trượt về vị trí mới
+            isDraggingLightbox = false;
+            lightboxImg.style.cursor = 'grab';
             lightboxImg.style.transition = 'transform 0.3s ease-out'; 
+            
+            // Khi zoom bị vô hiệu hóa (currentZoomLevel luôn là 1)
+            const lightboxWidth = lightbox.offsetWidth;
+            const currentImgPosX = getTransformValues(lightboxImg).translateX;
 
-            const lightboxWidth = lightbox.offsetWidth; // Chiều rộng của lightbox
-            // Lấy vị trí transform X cuối cùng của ảnh
-            const currentImgPosX = new WebKitCSSMatrix(window.getComputedStyle(lightboxImg).transform).m41;
-
-            if (hasDraggedLightbox) { // Nếu thực sự đã kéo (không phải click/tap nhẹ)
-                // Kéo sang phải đủ xa để chuyển về ảnh trước đó
-                if (currentImgPosX > lightboxWidth * 0.2) { 
-                    lightboxPrevButton.click(); // Giả lập click nút Prev
-                } 
-                // Kéo sang trái đủ xa để chuyển về ảnh tiếp theo
-                else if (currentImgPosX < -lightboxWidth * 0.2) { 
-                    lightboxNextButton.click(); // Giả lập click nút Next
-                } else {
-                    // Nếu kéo không đủ xa để chuyển ảnh, trả ảnh về vị trí ban đầu (0,0)
-                    lightboxImg.style.transform = 'translateX(0)';
+            if (hasDraggedLightbox && Math.abs(currentImgPosX) > lightboxWidth * 0.2) { 
+                if (currentImgPosX > 0) { // Kéo sang phải, chuyển về ảnh trước
+                    lightboxPrevButton.click();
+                } else { // Kéo sang trái, chuyển về ảnh sau
+                    lightboxNextButton.click();
                 }
             } else {
-                // Nếu đây chỉ là một click/tap (không kéo), đảm bảo ảnh trở về vị trí 0
-                lightboxImg.style.transform = 'translateX(0)'; 
-                // !!! QUAN TRỌNG: Nếu bạn có click listener trên lightboxImg
-                // để đóng lightbox khi click vào ảnh, bạn cần xem xét logic ở đây.
-                // Hiện tại, click vào ảnh trong lightbox sẽ không đóng nó.
+                // Nếu không kéo đủ xa hoặc không kéo, trả ảnh về vị trí ban đầu
+                lightboxImg.style.transform = 'translate(0px, 0px) scale(1)';
+                startLightboxImgPosX = 0;
+                startLightboxImgPosY = 0;
             }
-            hasDraggedLightbox = false; // Reset cờ kéo
+            hasDraggedLightbox = false;
         }
     }
 
-    // --- Khởi chạy khi trang tải xong và khi cửa sổ thay đổi kích thước ---
-    // Gọi initializeGallery khi DOM đã sẵn sàng
-    // và khi cửa sổ thay đổi kích thước để đảm bảo cloning và tính toán lại đúng
+    lightboxImg.addEventListener('mousedown', startDragLightbox);
+    lightboxImg.addEventListener('touchstart', startDragLightbox); 
+
+    document.addEventListener('mousemove', dragLightbox);
+    document.addEventListener('touchmove', dragLightbox, { passive: false }); 
+
+    document.addEventListener('mouseup', endDragLightbox);
+    document.addEventListener('touchend', endDragLightbox);
+
+    // --- Hàm xử lý CUỘN CHUỘT (Wheel Zoom) chung ---
+    // Đơn giản hóa: Chỉ ngăn cuộn trang, không thực hiện zoom
+    function handleWheelZoom(e) {
+        if (!lightbox.classList.contains('active')) {
+            return; 
+        }
+        
+        e.preventDefault(); 
+        e.stopPropagation(); 
+
+        // Không cần logic zoom phức tạp nếu maxZoomLevel = 1
+        // Nếu bạn muốn zoom, hãy mở lại logic từ phiên bản trước
+        // và đảm bảo các biến currentZoomLevel, startLightboxImgPosX, startLightboxImgPosY được cập nhật
+        // và applyTransform() được gọi.
+        // currentZoomLevel = 1; // Đảm bảo luôn là 1
+        // startLightboxImgPosX = 0;
+        // startLightboxImgPosY = 0;
+        // applyTransform();
+    }
+
+    // --- Gán listener cho sự kiện Wheel ---
+    lightboxImg.addEventListener('wheel', handleWheelZoom, { passive: false }); 
+    lightbox.addEventListener('wheel', handleWheelZoom, { passive: false }); 
+    document.addEventListener('wheel', handleWheelZoom, { passive: false }); 
+
+    // --- Xử lý PINCH-TO-ZOOM (Chụm/Mở trên di động) ---
+    // Sẽ bị vô hiệu hóa nếu maxZoomLevel = 1
+    lightboxImg.addEventListener('touchstart', (e) => {
+        if (!lightbox.classList.contains('active')) return;
+
+        if (e.touches.length === 2) { 
+            isPinching = true;
+            stopAutoScroll(); 
+            initialPinchDistance = Math.hypot(
+                e.touches[0].pageX - e.touches[1].pageX,
+                e.touches[0].pageY - e.touches[1].pageY
+            );
+
+            // currentZoomLevel = 1; // Luôn giữ 1 nếu zoom bị vô hiệu hóa
+            // startLightboxImgPosX = 0;
+            // startLightboxImgPosY = 0;
+            lightboxImg.style.transition = 'none'; 
+        } else if (e.touches.length === 1) {
+            startDragLightbox(e);
+        }
+    }, { passive: false }); 
+
+    lightboxImg.addEventListener('touchmove', (e) => {
+        if (!lightbox.classList.contains('active')) return;
+
+        if (e.touches.length === 2 && isPinching) {
+            e.preventDefault(); 
+            // Không thực hiện logic zoom nếu maxZoomLevel = 1
+            // Chỉ ngăn chặn hành vi cuộn/chụm mặc định
+        } else if (e.touches.length === 1) {
+            dragLightbox(e);
+        }
+    }, { passive: false }); 
+
+    lightboxImg.addEventListener('touchend', (e) => {
+        if (isPinching) {
+            isPinching = false;
+            // Reset nếu có bất kỳ dịch chuyển nào do pinch-zoom nhưng không zoom thực tế
+            currentZoomLevel = 1; 
+            startLightboxImgPosX = 0;
+            startLightboxImgPosY = 0;
+            lightboxImg.style.transition = 'transform 0.3s ease-out'; 
+        }
+        endDragLightbox(e);
+    });
+
     window.addEventListener('resize', initializeGallery);
-    initializeGallery(); // Gọi lần đầu khi DOMContentLoaded
+    initializeGallery();
 });
+
+
+// document.addEventListener('DOMContentLoaded', () => {
+//     const galleryTrack = document.getElementById('galleryTrack');
+//     let galleryItemContainers = Array.from(document.querySelectorAll('.gallery-item-container')); 
+
+//     const lightbox = document.getElementById('lightbox');
+//     const lightboxClose = document.querySelector('.lightbox-close');
+//     const lightboxPrevButton = document.querySelector('.lightbox-nav-button.prev-lightbox');
+//     const lightboxNextButton = document.querySelector('.lightbox-nav-button.next-lightbox');
+
+//     // THÊM CÁC BIẾN MỚI CHO HIỆU ỨNG TRƯỢT ẢNH
+//     const lightboxImageViewer = document.querySelector('.lightbox-image-viewer');
+//     const lightboxImageTrack = document.querySelector('.lightbox-image-track'); // Đây là phần tử sẽ được dịch chuyển
+
+//     const lightboxCounter = document.getElementById('lightbox-counter');
+//     const lightboxThumbnailsContainer = document.querySelector('.lightbox-thumbnails');
+
+//     const scrollSpeed = 0.5;
+//     let scrollInterval;
+//     let currentScroll = 0;
+//     const originalGalleryItemsCount = galleryItemContainers.length; 
+
+//     let galleryWrapperWidth = 0;
+//     let originalItemsFullWidth = 0;
+//     let clonedItemsPrefixWidth = 0;
+
+//     let lightboxCurrentIndex = 0; 
+//     let numClones = 0;
+
+//     // --- Biến cho chức năng KÉO & ZOOM TRONG LIGHTBOX ---
+//     let isDraggingLightbox = false;
+//     let startLightboxPosX = 0;
+//     let startLightboxPosY = 0; 
+//     // Vị trí ảnh trong track (không còn là lightboxImg)
+//     let currentImageTrackPosX = 0; 
+//     let dragThresholdLightbox = 50;
+//     let hasDraggedLightbox = false;
+
+//     // Biến cho tính năng ZOOM (Nếu bạn muốn zoom, các biến này sẽ ít quan trọng hơn)
+//     // Lưu ý: Nếu bạn muốn zoom, logic zoom sẽ phức tạp hơn vì nó cần áp dụng cho ảnh hiện tại
+//     // trong track, và phải reset khi chuyển ảnh. Tôi sẽ giữ nó đơn giản là không zoom.
+//     let currentZoomLevel = 1; 
+//     const maxZoomLevel = 1; 
+//     const minZoomLevel = 1; 
+//     const zoomSensitivity = 0.1; 
+
+//     let initialPinchDistance = 0;
+//     let isPinching = false;
+
+//     // --- Khởi tạo và Nhân bản ảnh (Cloning) ---
+//     function initializeGallery() {
+//         // ... (Giữ nguyên code này từ phiên bản trước) ...
+//         galleryWrapperWidth = document.querySelector('.gallery-wrapper').offsetWidth;
+//         originalItemsFullWidth = 0;
+//         galleryItemContainers.forEach(container => {
+//             originalItemsFullWidth += container.offsetWidth + 10; 
+//         });
+//         numClones = Math.ceil(galleryWrapperWidth / (originalItemsFullWidth / originalGalleryItemsCount)) + 2; 
+
+//         Array.from(galleryTrack.children).forEach(child => {
+//             if (child.classList.contains('cloned')) {
+//                 galleryTrack.removeChild(child);
+//             }
+//         });
+
+//         for (let i = 1; i <= numClones; i++) {
+//             const actualIndex = (originalGalleryItemsCount - i % originalGalleryItemsCount + originalGalleryItemsCount) % originalGalleryItemsCount;
+//             const clone = galleryItemContainers[actualIndex].cloneNode(true);
+//             clone.classList.add('cloned');
+//             galleryTrack.prepend(clone);
+//         }
+
+//         for (let i = 0; i < numClones; i++) {
+//             const clone = galleryItemContainers[i % originalGalleryItemsCount].cloneNode(true);
+//             clone.classList.add('cloned');
+//             galleryTrack.appendChild(clone);
+//         }
+
+//         galleryItemContainers = Array.from(document.querySelectorAll('.gallery-item-container'));
+
+//         clonedItemsPrefixWidth = 0;
+//         for (let i = 0; i < numClones; i++) {
+//             if (galleryItemContainers[i]) {
+//                 clonedItemsPrefixWidth += galleryItemContainers[i].offsetWidth + 10;
+//             } else {
+//                 console.warn(`[initializeGallery] Phần tử galleryItemContainers[${i}] không tồn tại khi tính clonedItemsPrefixWidth.`);
+//             }
+//         }
+
+//         currentScroll = clonedItemsPrefixWidth;
+
+//         galleryTrack.style.transition = 'none'; 
+//         galleryTrack.style.transform = `translateX(${-currentScroll}px)`;
+
+//         requestAnimationFrame(() => {
+//             requestAnimationFrame(() => {
+//                 galleryTrack.style.transition = 'transform 0.01s linear'; 
+//             });
+//         });
+
+//         startAutoScroll();
+//     }
+
+//     // --- Chức năng tự động cuộn ---
+//     function startAutoScroll() {
+//         if (scrollInterval) clearInterval(scrollInterval);
+//         scrollInterval = setInterval(() => {
+//             currentScroll += scrollSpeed;
+//             galleryTrack.style.transform = `translateX(${-currentScroll}px)`;
+
+//             if (currentScroll >= (originalItemsFullWidth + clonedItemsPrefixWidth)) {
+//                 currentScroll = clonedItemsPrefixWidth; 
+
+//                 galleryTrack.style.transition = 'none'; 
+//                 galleryTrack.style.transform = `translateX(${-currentScroll}px)`;
+
+//                 requestAnimationFrame(() => {
+//                     requestAnimationFrame(() => {
+//                         galleryTrack.style.transition = 'transform 0.01s linear'; 
+//                     });
+//                 });
+//             }
+//         }, 1000 / 60);
+//     }
+
+//     function stopAutoScroll() {
+//         if (scrollInterval) clearInterval(scrollInterval);
+//     }
+
+//     // --- Xử lý rê chuột (hover) trên carousel ---
+//     galleryTrack.addEventListener('mouseenter', stopAutoScroll);
+//     galleryTrack.addEventListener('mouseleave', () => {
+//         startAutoScroll();
+//     });
+
+//     // --- Xử lý Lightbox ---
+//     function updateLightboxImage(direction = 0) { // direction: 0 = current, -1 = prev, 1 = next
+//         // Reset trạng thái zoom/kéo cho ảnh hiện tại trước khi chuyển
+//         resetImageTransform();
+
+//         lightboxImageTrack.innerHTML = ''; // Xóa tất cả ảnh cũ trong track
+
+//         const viewerWidth = lightboxImageViewer.offsetWidth; // Lấy chiều rộng của viewer
+
+//         // Lấy ảnh trước, ảnh hiện tại, ảnh sau
+//         const prevIndex = (lightboxCurrentIndex - 1 + originalGalleryItemsCount) % originalGalleryItemsCount;
+//         const nextIndex = (lightboxCurrentIndex + 1) % originalGalleryItemsCount;
+
+//         const imagesToLoad = [
+//             { index: prevIndex, pos: -viewerWidth }, // Ảnh trước nằm ở bên trái
+//             { index: lightboxCurrentIndex, pos: 0 }, // Ảnh hiện tại nằm ở giữa
+//             { index: nextIndex, pos: viewerWidth } // Ảnh sau nằm ở bên phải
+//         ];
+
+//         imagesToLoad.forEach(item => {
+//             const imgElement = document.createElement('img');
+//             const originalGalleryItem = galleryItemContainers[numClones + item.index].querySelector('.gallery-item');
+//             imgElement.src = originalGalleryItem.dataset.fullresSrc || originalGalleryItem.src;
+//             imgElement.alt = originalGalleryItem.alt;
+//             imgElement.style.position = 'absolute'; // Đặt vị trí tuyệt đối trong track
+//             imgElement.style.left = `${item.pos}px`; // Đặt vị trí ban đầu
+//             imgElement.style.top = '0';
+//             imgElement.style.height = '100%'; // Chiều cao 100% của viewer
+//             imgElement.style.width = `${viewerWidth}px`; // Rộng bằng viewer để căn chỉnh dễ hơn
+//             imgElement.style.objectFit = 'contain'; // Chứa ảnh trong khung mà không bị cắt
+//             imgElement.dataset.originalIndex = item.index; // Lưu index gốc để dễ quản lý
+
+//             lightboxImageTrack.appendChild(imgElement);
+//         });
+
+//         // Đặt vị trí ban đầu của track để hiển thị ảnh hiện tại
+//         lightboxImageTrack.style.transition = 'none'; // Tắt transition để đặt vị trí ban đầu
+//         currentImageTrackPosX = -viewerWidth; // Bắt đầu ở vị trí ảnh trước
+//         lightboxImageTrack.style.transform = `translateX(${currentImageTrackPosX}px)`;
+
+//         requestAnimationFrame(() => {
+//             requestAnimationFrame(() => {
+//                 lightboxImageTrack.style.transition = 'transform 0.5s ease-in-out'; // Bật transition lại
+//                 currentImageTrackPosX = 0; // Trượt về vị trí ảnh hiện tại
+//                 lightboxImageTrack.style.transform = `translateX(${currentImageTrackPosX}px)`;
+//             });
+//         });
+
+//         updateLightboxCounter(); 
+//         updateLightboxThumbnails(); 
+//     }
+
+//     // Hàm reset transform của ảnh trong lightbox (quan trọng khi chuyển ảnh)
+//     function resetImageTransform() {
+//         // Ảnh hiện tại trong track là ảnh thứ 2 (index 1)
+//         const currentImgInTrack = lightboxImageTrack.children[1]; 
+//         if (currentImgInTrack) {
+//             currentImgInTrack.style.transform = 'translate(0px, 0px) scale(1)';
+//         }
+//         currentZoomLevel = 1;
+//         // startLightboxImgPosX và startLightboxImgPosY không còn trực tiếp điều khiển ảnh
+//         // mà là currentImageTrackPosX điều khiển toàn bộ track.
+//         // Nếu bạn muốn kéo/zoom ảnh riêng lẻ, bạn sẽ cần áp dụng transform cho từng img trong track.
+//         // Đối với mục đích hiện tại (chuyển ảnh mượt), chúng ta chỉ reset transform của ảnh cũ.
+//     }
+
+//     function updateLightboxCounter() {
+//         lightboxCounter.textContent = `<span class="math-inline">\{lightboxCurrentIndex \+ 1\}/</span>{originalGalleryItemsCount}`;
+//     }
+
+//     function updateLightboxThumbnails() {
+//         lightboxThumbnailsContainer.innerHTML = ''; 
+//         galleryItemContainers.forEach((container, index) => {
+//             if (index >= numClones && index < numClones + originalGalleryItemsCount) {
+//                 const originalIndex = (index - numClones) % originalGalleryItemsCount; 
+
+//                 const thumbImg = document.createElement('img');
+//                 thumbImg.src = container.querySelector('.gallery-item').src;
+//                 thumbImg.alt = `Thumbnail ${originalIndex + 1}`;
+//                 thumbImg.classList.add('lightbox-thumbnail-item');
+
+//                 if (originalIndex === lightboxCurrentIndex) {
+//                     thumbImg.classList.add('active');
+//                 }
+
+//                 thumbImg.addEventListener('click', () => {
+//                     if (lightboxCurrentIndex === originalIndex) return; // Nếu click vào chính thumbnail đó, không làm gì
+
+//                     // Tính toán hướng để tạo hiệu ứng trượt đúng
+//                     let direction = 0;
+//                     if (originalIndex > lightboxCurrentIndex) {
+//                         direction = 1; // Tiến
+//                     } else {
+//                         direction = -1; // Lùi
+//                     }
+//                     lightboxCurrentIndex = originalIndex;
+//                     updateLightboxImage(direction); // Gọi hàm updateLightboxImage với hướng
+//                 });
+//                 lightboxThumbnailsContainer.appendChild(thumbImg);
+//             }
+//         });
+//         const activeThumbnail = lightboxThumbnailsContainer.querySelector('.lightbox-thumbnail-item.active');
+//         if (activeThumbnail) {
+//             activeThumbnail.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+//         }
+//     }
+
+
+//     // Event Delegation cho click vào ảnh carousel để mở lightbox
+//     galleryTrack.addEventListener('click', (e) => {
+//         const clickedContainer = e.target.closest('.gallery-item-container');
+
+//         if (clickedContainer && !clickedContainer.classList.contains('cloned')) { 
+//             stopAutoScroll();
+
+//             let clickedIndexInFullList = -1;
+//             for (let i = 0; i < galleryItemContainers.length; i++) { 
+//                 if (galleryItemContainers[i] === clickedContainer) {
+//                     clickedIndexInFullList = i;
+//                     break;
+//                 }
+//             }
+
+//             let tempLightboxIndex = (clickedIndexInFullList - numClones + originalGalleryItemsCount) % originalGalleryItemsCount;
+//             if (tempLightboxIndex < 0) tempLightboxIndex += originalGalleryItemsCount; 
+
+//             lightboxCurrentIndex = tempLightboxIndex;
+//             updateLightboxImage(0); // Mở ảnh đầu tiên với direction = 0
+//             lightbox.classList.add('active');
+//             document.body.style.overflow = 'hidden'; 
+//         }
+//     });
+
+//     // Xử lý nút đóng lightbox
+//     lightboxClose.addEventListener('click', () => {
+//         lightbox.classList.remove('active');
+//         startAutoScroll();
+//         // Reset tất cả trạng thái zoom và kéo khi đóng
+//         isDraggingLightbox = false;
+//         currentZoomLevel = 1;
+//         currentImageTrackPosX = 0; // Reset vị trí track
+//         lightboxImageTrack.style.transition = 'none'; // Tắt transition
+//         lightboxImageTrack.style.transform = 'translateX(0px)'; // Reset transform track
+//         // Reset transform của ảnh trong track (nếu có)
+//         resetImageTransform();
+//         document.body.style.overflow = ''; 
+//     });
+
+//     // Xử lý nhấp vào khoảng trống bên ngoài ảnh trong lightbox để đóng
+//     lightbox.addEventListener('click', (e) => {
+//         if (e.target === lightbox || e.target === lightboxClose) {
+//             lightbox.classList.remove('active');
+//             startAutoScroll();
+//             isDraggingLightbox = false;
+//             currentZoomLevel = 1; 
+//             currentImageTrackPosX = 0;
+//             lightboxImageTrack.style.transition = 'none';
+//             lightboxImageTrack.style.transform = 'translateX(0px)';
+//             resetImageTransform();
+//             document.body.style.overflow = ''; 
+//         }
+//     });
+
+//     // Xử lý phím ESC để đóng lightbox
+//     document.addEventListener('keydown', (e) => {
+//         if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+//             lightbox.classList.remove('active');
+//             startAutoScroll();
+//             isDraggingLightbox = false;
+//             currentZoomLevel = 1; 
+//             currentImageTrackPosX = 0;
+//             lightboxImageTrack.style.transition = 'none';
+//             lightboxImageTrack.style.transform = 'translateX(0px)';
+//             resetImageTransform();
+//             document.body.style.overflow = ''; 
+//         }
+//     });
+
+//     // Xử lý nút điều hướng "Previous" trong lightbox
+//     lightboxPrevButton.addEventListener('click', (e) => {
+//         e.stopPropagation();
+//         lightboxCurrentIndex = (lightboxCurrentIndex > 0) ? lightboxCurrentIndex - 1 : originalGalleryItemsCount - 1;
+//         updateLightboxImage(-1); // Truyền hướng -1 (lùi)
+//     });
+
+//     // Xử lý nút điều hướng "Next" trong lightbox
+//     lightboxNextButton.addEventListener('click', (e) => {
+//         e.stopPropagation();
+//         lightboxCurrentIndex = (lightboxCurrentIndex < originalGalleryItemsCount - 1) ? lightboxCurrentIndex + 1 : 0;
+//         updateLightboxImage(1); // Truyền hướng 1 (tiến)
+//     });
+
+//     // --- CHỨC NĂNG KÉO (DRAG) TRONG LIGHTBOX (Zoom bị vô hiệu hóa) ---
+//     // Hàm này giờ áp dụng cho `.lightbox-image-track`
+//     function getTransformValues(element) {
+//         const style = window.getComputedStyle(element);
+//         const transform = style.transform || style.webkitTransform || style.mozTransform;
+//         let translateX = 0, translateY = 0, scale = 1;
+
+//         if (transform !== 'none') {
+//             const matrix = new WebKitCSSMatrix(transform);
+//             translateX = matrix.m41;
+//             translateY = matrix.m42;
+//             scale = matrix.a; 
+//         }
+//         return { translateX, translateY, scale };
+//     }
+
+//     function applyTransform(element, posX, posY, scale = 1) {
+//         element.style.transform = `translate(${posX}px, <span class="math-inline">\{posY\}px\) scale\(</span>{scale})`;
+//     }
+
+//     function startDragLightbox(e) {
+//         if (e.type === 'mousedown' && e.button !== 0) return; 
+
+//         isDraggingLightbox = true;
+//         hasDraggedLightbox = false; 
+
+//         startLightboxPosX = (e.type === 'mousedown') ? e.clientX : e.touches[0].clientX;
+//         // startLightboxPosY = (e.type === 'mousedown') ? e.clientY : e.touches[0].clientY; // Không cần thiết cho kéo ngang
+
+//         // Lấy vị trí track hiện tại
+//         currentImageTrackPosX = getTransformValues(lightboxImageTrack).translateX;
+
+//         lightboxImageTrack.style.transition = 'none'; // Tắt transition khi kéo
+//         if (e.type === 'touchstart') {
+//             e.preventDefault(); 
+//         }
+//     }
+
+//     function dragLightbox(e) {
+//         if (!isDraggingLightbox) return; 
+
+//         const currentClientX = (e.type === 'mousemove') ? e.clientX : e.touches[0].clientX;
+//         const deltaX = currentClientX - startLightboxPosX;
+
+//         // Dịch chuyển track theo deltaX
+//         let newPosX = currentImageTrackPosX + deltaX;
+//         applyTransform(lightboxImageTrack, newPosX, 0, 1); // Chỉ dịch chuyển ngang
+
+//         startLightboxPosX = currentClientX;
+
+//         if (Math.abs(deltaX) > dragThresholdLightbox) {
+//             hasDraggedLightbox = true;
+//         }
+//         if (e.type === 'touchmove') {
+//             e.preventDefault(); 
+//         }
+//     }
+
+//     function endDragLightbox(e) {
+//         if (isDraggingLightbox) {
+//             isDraggingLightbox = false;
+//             lightboxImageTrack.style.transition = 'transform 0.3s ease-in-out'; // Bật lại transition
+
+//             const viewerWidth = lightboxImageViewer.offsetWidth;
+//             const currentTrackX = getTransformValues(lightboxImageTrack).translateX;
+
+//             if (hasDraggedLightbox) {
+//                 if (currentTrackX > -viewerWidth * 0.8) { // Kéo đủ xa để chuyển về ảnh trước (ảnh trước nằm ở -viewerWidth)
+//                     lightboxPrevButton.click();
+//                 } else if (currentTrackX < -viewerWidth * 1.2) { // Kéo đủ xa để chuyển về ảnh sau
+//                     lightboxNextButton.click();
+//                 } else {
+//                     // Kéo không đủ xa, trả về ảnh hiện tại
+//                     lightboxImageTrack.style.transform = `translateX(${-viewerWidth}px)`;
+//                     currentImageTrackPosX = -viewerWidth;
+//                 }
+//             } else {
+//                 // Nếu không kéo (chỉ click/tap), đảm bảo ảnh nằm đúng vị trí
+//                 lightboxImageTrack.style.transform = `translateX(${-viewerWidth}px)`;
+//                 currentImageTrackPosX = -viewerWidth;
+//             }
+//             hasDraggedLightbox = false;
+//         }
+//     }
+
+//     // Gán listener cho track, không phải img riêng lẻ
+//     lightboxImageViewer.addEventListener('mousedown', startDragLightbox); 
+//     lightboxImageViewer.addEventListener('touchstart', startDragLightbox); 
+
+//     document.addEventListener('mousemove', dragLightbox);
+//     document.addEventListener('touchmove', dragLightbox, { passive: false }); 
+
+//     document.addEventListener('mouseup', endDragLightbox);
+//     document.addEventListener('touchend', endDragLightbox);
+
+//     // --- Hàm xử lý CUỘN CHUỘT (Wheel Zoom) chung ---
+//     // Vẫn chỉ ngăn cuộn trang
+//     function handleWheelZoom(e) {
+//         if (!lightbox.classList.contains('active')) {
+//             return; 
+//         }
+
+//         e.preventDefault(); 
+//         e.stopPropagation(); 
+//         // Nếu bạn muốn zoom, logic sẽ phức tạp hơn vì nó sẽ áp dụng cho ảnh hiện tại trong track.
+//         // Ở đây, chúng ta bỏ qua việc zoom.
+//     }
+
+//     // --- Gán listener cho sự kiện Wheel ---
+//     // Gán cho lightboxImageViewer hoặc lightbox để bắt sự kiện cuộn
+//     lightboxImageViewer.addEventListener('wheel', handleWheelZoom, { passive: false }); 
+//     lightbox.addEventListener('wheel', handleWheelZoom, { passive: false }); 
+//     document.addEventListener('wheel', handleWheelZoom, { passive: false }); 
+
+//     // --- Xử lý PINCH-TO-ZOOM (Chụm/Mở trên di động) ---
+//     // Cũng sẽ bỏ qua zoom nếu maxZoomLevel = 1
+//     lightboxImageViewer.addEventListener('touchstart', (e) => {
+//         if (!lightbox.classList.contains('active')) return;
+
+//         if (e.touches.length === 2) { 
+//             isPinching = true;
+//             stopAutoScroll(); 
+//             // Logic pinch-to-zoom sẽ ở đây nếu bạn muốn nó hoạt động
+//             // Nhưng hiện tại maxZoomLevel = 1, nên nó sẽ không có tác dụng
+//             initialPinchDistance = Math.hypot(
+//                 e.touches[0].pageX - e.touches[1].pageX,
+//                 e.touches[0].pageY - e.touches[1].pageY
+//             );
+//             // Bạn cần tham chiếu đến ảnh hiện tại trong track để zoom
+//             // const currentDisplayedImage = lightboxImageTrack.querySelector(`[data-original-index="${lightboxCurrentIndex}"]`);
+//             // if (currentDisplayedImage) {
+//             //     const { scale } = getTransformValues(currentDisplayedImage);
+//             //     currentZoomLevel = scale;
+//             // }
+//         } else if (e.touches.length === 1) {
+//             startDragLightbox(e);
+//         }
+//     }, { passive: false }); 
+
+//     lightboxImageViewer.addEventListener('touchmove', (e) => {
+//         if (!lightbox.classList.contains('active')) return;
+
+//         if (e.touches.length === 2 && isPinching) {
+//             e.preventDefault(); 
+//             // Logic pinch-to-zoom (nếu bạn muốn nó hoạt động)
+//             // const currentPinchDistance = Math.hypot(
+//             //     e.touches[0].pageX - e.touches[1].pageX,
+//             //     e.touches[0].pageY - e.touches[1].pageY
+//             // );
+//             // let scaleFactor = currentPinchDistance / initialPinchDistance;
+//             // let newZoomLevel = currentZoomLevel * scaleFactor;
+//             // newZoomLevel = Math.max(minZoomLevel, Math.min(maxZoomLevel, newZoomLevel));
+//             // if (newZoomLevel === currentZoomLevel) return;
+
+//             // const currentDisplayedImage = lightboxImageTrack.querySelector(`[data-original-index="${lightboxCurrentIndex}"]`);
+//             // if (currentDisplayedImage) {
+//             //    // Tính toán vị trí tâm pinch và áp dụng transform cho currentDisplayedImage
+//             // }
+//             // initialPinchDistance = currentPinchDistance;
+//         } else if (e.touches.length === 1) {
+//             dragLightbox(e);
+//         }
+//     }, { passive: false }); 
+
+//     lightboxImageViewer.addEventListener('touchend', (e) => {
+//         if (isPinching) {
+//             isPinching = false;
+//             // Reset zoom của ảnh hiện tại nếu bạn đã thử zoom
+//             // const currentDisplayedImage = lightboxImageTrack.querySelector(`[data-original-index="${lightboxCurrentIndex}"]`);
+//             // if (currentDisplayedImage) {
+//             //     currentDisplayedImage.style.transition = 'transform 0.3s ease-out';
+//             //     currentDisplayedImage.style.transform = 'translate(0px, 0px) scale(1)'; // Reset
+//             // }
+//         }
+//         endDragLightbox(e);
+//     });
+
+//     window.addEventListener('resize', initializeGallery);
+//     window.addEventListener('resize', () => {
+//         if (lightbox.classList.contains('active')) {
+//             // Nếu lightbox đang mở và kích thước màn hình thay đổi, cập nhật lại hiển thị ảnh
+//             updateLightboxImage(0); 
+//         }
+//     });
+//     initializeGallery();
+// });
+
