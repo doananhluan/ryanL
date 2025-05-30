@@ -346,9 +346,308 @@
 //     window.addEventListener('load', initializeGallery);
 // });
 
+// document.addEventListener('DOMContentLoaded', () => {
+//     const galleryTrack = document.getElementById('galleryTrack');
+//     // KHAI BÁO QUAN TRỌNG: galleryItemContainers sẽ chứa các DIV bọc ảnh
+//     let galleryItemContainers = Array.from(document.querySelectorAll('.gallery-item-container')); 
+    
+//     const lightbox = document.getElementById('lightbox');
+//     const lightboxImg = document.getElementById('lightbox-img');
+//     const lightboxClose = document.querySelector('.lightbox-close');
+//     const lightboxPrevButton = document.querySelector('.lightbox-nav-button.prev-lightbox');
+//     const lightboxNextButton = document.querySelector('.lightbox-nav-button.next-lightbox');
+
+//     const scrollSpeed = 0.5; // Tốc độ cuộn của carousel
+//     let scrollInterval; // Biến lưu trữ interval của cuộn tự động
+//     let currentScroll = 0; // Vị trí cuộn hiện tại của carousel chính
+//     const originalGalleryItemsCount = galleryItemContainers.length; // Số lượng container ảnh gốc
+
+//     let galleryWrapperWidth = 0; // Chiều rộng của khung hiển thị carousel
+//     let originalItemsFullWidth = 0; // Tổng chiều rộng của tất cả các ảnh gốc
+//     let clonedItemsPrefixWidth = 0; // Chiều rộng của các ảnh clone ở đầu track
+
+//     let lightboxCurrentIndex = 0; // Index của ảnh hiện tại trong lightbox
+//     let numClones = 0; // Số lượng ảnh được nhân bản ở mỗi bên
+
+//     // --- Biến cho chức năng KÉO TRONG LIGHTBOX ---
+//     let isDraggingLightbox = false; // Cờ cho biết đang kéo ảnh trong lightbox
+//     let startLightboxPosX = 0; // Vị trí X của chuột khi bắt đầu kéo trong lightbox
+//     let startLightboxImgPosX = 0; // Vị trí transform X của ảnh trong lightbox khi bắt đầu kéo
+//     let dragThresholdLightbox = 10; // Ngưỡng kéo tối thiểu để kích hoạt chuyển ảnh (pixels)
+//     let hasDraggedLightbox = false; // Cờ cho biết đã thực hiện hành động kéo trong lightbox
+
+//     // --- Khởi tạo và Nhân bản ảnh (Cloning) ---
+//     function initializeGallery() {
+//         galleryWrapperWidth = document.querySelector('.gallery-wrapper').offsetWidth;
+
+//         originalItemsFullWidth = 0;
+//         // Tính toán tổng chiều rộng của các container ảnh gốc
+//         galleryItemContainers.forEach(container => {
+//             originalItemsFullWidth += container.offsetWidth + 10; // +10 cho margin-right
+//         });
+
+//         // Tính toán số lượng ảnh clone cần thiết để lấp đầy khung nhìn
+//         numClones = Math.ceil(galleryWrapperWidth / (originalItemsFullWidth / originalGalleryItemsCount)) + 2; 
+
+//         // Xóa các clone cũ nếu có, để tránh nhân bản lặp lại
+//         Array.from(galleryTrack.children).forEach(child => {
+//             if (child.classList.contains('cloned')) {
+//                 galleryTrack.removeChild(child);
+//             }
+//         });
+
+//         // Clone các ảnh cuối cùng của danh sách gốc và thêm vào ĐẦU track
+//         for (let i = originalGalleryItemsCount - 1; i >= originalGalleryItemsCount - numClones; i--) {
+//             const actualIndex = (i < 0) ? (originalGalleryItemsCount + i) : i; 
+//             const clone = galleryItemContainers[actualIndex].cloneNode(true); // Clone toàn bộ container
+//             clone.classList.add('cloned');
+//             galleryTrack.prepend(clone);
+//         }
+
+//         // Clone các ảnh đầu tiên của danh sách gốc và thêm vào CUỐI track
+//         for (let i = 0; i < numClones; i++) {
+//             const clone = galleryItemContainers[i].cloneNode(true); // Clone toàn bộ container
+//             clone.classList.add('cloned');
+//             galleryTrack.appendChild(clone);
+//         }
+
+//         // Cập nhật lại danh sách galleryItemContainers sau khi clone đã được thêm vào DOM
+//         galleryItemContainers = Array.from(document.querySelectorAll('.gallery-item-container'));
+
+//         // Tính toán chiều rộng của các ảnh clone ở đầu track
+//         clonedItemsPrefixWidth = 0;
+//         for (let i = 0; i < numClones; i++) {
+//             clonedItemsPrefixWidth += galleryItemContainers[i].offsetWidth + 10;
+//         }
+
+//         // Đặt vị trí scroll ban đầu để bắt đầu từ ảnh gốc đầu tiên
+//         currentScroll = clonedItemsPrefixWidth;
+        
+//         // Tắt transition ngay lập tức để đặt vị trí ban đầu không bị giật
+//         galleryTrack.style.transition = 'none'; 
+//         galleryTrack.style.transform = `translateX(${-currentScroll}px)`;
+
+//         // Sau khi đặt vị trí ban đầu, bật lại transition cho các cuộn mượt mà
+//         requestAnimationFrame(() => {
+//             requestAnimationFrame(() => {
+//                 galleryTrack.style.transition = 'transform 0.01s linear'; 
+//             });
+//         });
+
+//         startAutoScroll(); // Bắt đầu cuộn tự động
+//     }
+
+//     // --- Chức năng tự động cuộn ---
+//     function startAutoScroll() {
+//         if (scrollInterval) clearInterval(scrollInterval); // Xóa interval cũ nếu có
+//         scrollInterval = setInterval(() => {
+//             currentScroll += scrollSpeed; // Tăng vị trí cuộn
+//             galleryTrack.style.transform = `translateX(${-currentScroll}px)`;
+
+//             // Nếu cuộn đến cuối danh sách ảnh gốc + clone ở cuối, reset về vị trí đầu ảnh gốc
+//             if (currentScroll >= (clonedItemsPrefixWidth + originalItemsFullWidth)) {
+//                 currentScroll = clonedItemsPrefixWidth; 
+                
+//                 // Tắt transition để reset vị trí tức thì, tránh bị giật
+//                 galleryTrack.style.transition = 'none'; 
+//                 galleryTrack.style.transform = `translateX(${-currentScroll}px)`;
+                
+//                 // Bật lại transition sau một khoảng thời gian ngắn
+//                 requestAnimationFrame(() => {
+//                     requestAnimationFrame(() => {
+//                         galleryTrack.style.transition = 'transform 0.01s linear'; 
+//                     });
+//                 });
+//             }
+//         }, 1000 / 60); // Cập nhật khoảng 60 lần/giây để có chuyển động mượt
+//     }
+
+//     function stopAutoScroll() {
+//         if (scrollInterval) clearInterval(scrollInterval); // Dừng cuộn tự động
+//     }
+
+//     // --- Xử lý rê chuột (hover) trên carousel ---
+//     galleryTrack.addEventListener('mouseenter', stopAutoScroll); // Dừng khi chuột vào
+//     galleryTrack.addEventListener('mouseleave', () => {
+//         startAutoScroll(); // Bắt đầu lại khi chuột rời đi
+//     });
+
+//     // --- Xử lý Lightbox ---
+//     function updateLightboxImage() {
+//         // Lấy đường dẫn và alt của ảnh từ thẻ img bên trong container tương ứng
+//         const newImgSrc = galleryItemContainers[lightboxCurrentIndex % originalGalleryItemsCount].querySelector('.gallery-item').src;
+//         const newImgAlt = galleryItemContainers[lightboxCurrentIndex % originalGalleryItemsCount].querySelector('.gallery-item').alt;
+
+//         // Reset transform và opacity của ảnh trong lightbox trước khi tải ảnh mới
+//         lightboxImg.style.transition = 'none'; // Tắt transition để tránh giật khi reset
+//         lightboxImg.style.transform = 'translateX(0)'; // Đặt lại vị trí X về 0
+//         lightboxImg.style.opacity = '0'; // Ẩn ảnh hiện tại để có hiệu ứng mượt khi tải ảnh mới
+
+//         // Gắn listener cho sự kiện tải ảnh hoàn tất
+//         lightboxImg.onload = () => {
+//             lightboxImg.style.transition = 'opacity 0.3s ease, transform 0.3s ease-out'; // Bật lại transition
+//             lightboxImg.style.opacity = '1'; // Hiển thị ảnh mới
+//             lightboxImg.onload = null; // Gỡ bỏ listener để tránh lỗi lặp lại
+//         };
+
+//         // Cập nhật src và alt cho ảnh trong lightbox
+//         lightboxImg.src = newImgSrc;
+//         lightboxImg.alt = newImgAlt;
+
+//         // Nếu ảnh mới trùng với ảnh cũ (ví dụ: chuyển từ ảnh cuối về ảnh đầu), chỉ hiển thị lại
+//         if (lightboxImg.src === newImgSrc && lightboxImg.style.opacity === '0') {
+//             lightboxImg.style.transition = 'opacity 0.3s ease, transform 0.3s ease-out';
+//             lightboxImg.style.opacity = '1';
+//         }
+//     }
+
+//     // Event Delegation cho click vào ảnh carousel để mở lightbox
+//     galleryTrack.addEventListener('click', (e) => {
+//         // Sử dụng .closest() để tìm phần tử cha gần nhất có class 'gallery-item-container'
+//         // Điều này đảm bảo click vào ảnh, overlay, hoặc icon đều hoạt động
+//         const clickedContainer = e.target.closest('.gallery-item-container');
+        
+//         if (clickedContainer) { // Nếu tìm thấy một container hợp lệ
+//             stopAutoScroll(); // Dừng cuộn tự động của carousel
+
+//             let clickedIndex = -1;
+//             // Duyệt qua danh sách các container để tìm chỉ mục của container được click
+//             for (let i = 0; i < galleryItemContainers.length; i++) { 
+//                 if (galleryItemContainers[i] === clickedContainer) {
+//                     clickedIndex = i;
+//                     break;
+//                 }
+//             }
+            
+//             // Tính toán chỉ mục của ảnh gốc (loại bỏ ảnh clone)
+//             let originalIndex = (clickedIndex - numClones + originalGalleryItemsCount) % originalGalleryItemsCount;
+//             if (originalIndex < 0) originalIndex += originalGalleryItemsCount; 
+
+//             lightboxCurrentIndex = originalIndex; // Đặt chỉ mục ảnh hiện tại cho lightbox
+//             updateLightboxImage(); // Cập nhật ảnh trong lightbox
+//             lightbox.classList.add('active'); // Hiển thị lightbox
+//         }
+//     });
+
+//     // Xử lý nút đóng lightbox
+//     lightboxClose.addEventListener('click', () => {
+//         lightbox.classList.remove('active'); // Ẩn lightbox
+//         startAutoScroll(); // Khởi động lại cuộn tự động
+//         // Reset trạng thái kéo và vị trí ảnh trong lightbox khi đóng
+//         isDraggingLightbox = false;
+//         lightboxImg.style.transition = 'none'; 
+//         lightboxImg.style.transform = 'translateX(0)'; 
+//         lightboxImg.style.opacity = '1'; // Đảm bảo ảnh hiển thị đầy đủ khi mở lại
+//     });
+
+//     // Xử lý nhấp vào khoảng trống bên ngoài ảnh trong lightbox để đóng
+//     lightbox.addEventListener('click', (e) => {
+//         if (e.target === lightbox || e.target === lightboxClose) { // Nếu click vào nền mờ hoặc nút đóng
+//             lightbox.classList.remove('active');
+//             startAutoScroll();
+//             isDraggingLightbox = false;
+//             lightboxImg.style.transition = 'none';
+//             lightboxImg.style.transform = 'translateX(0)';
+//             lightboxImg.style.opacity = '1';
+//         }
+//     });
+
+//     // Xử lý phím ESC để đóng lightbox
+//     document.addEventListener('keydown', (e) => {
+//         if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+//             lightbox.classList.remove('active');
+//             startAutoScroll();
+//             isDraggingLightbox = false;
+//             lightboxImg.style.transition = 'none';
+//             lightboxImg.style.transform = 'translateX(0)';
+//             lightboxImg.style.opacity = '1';
+//         }
+//     });
+
+//     // Xử lý nút điều hướng "Previous" trong lightbox
+//     lightboxPrevButton.addEventListener('click', (e) => {
+//         e.stopPropagation(); // Ngăn sự kiện click lan ra ngoài (ví dụ: đóng lightbox)
+//         lightboxCurrentIndex = (lightboxCurrentIndex > 0) ? lightboxCurrentIndex - 1 : originalGalleryItemsCount - 1;
+//         updateLightboxImage(); // Cập nhật ảnh mới
+//     });
+
+//     // Xử lý nút điều hướng "Next" trong lightbox
+//     lightboxNextButton.addEventListener('click', (e) => {
+//         e.stopPropagation(); // Ngăn sự kiện click lan ra ngoài
+//         lightboxCurrentIndex = (lightboxCurrentIndex < originalGalleryItemsCount - 1) ? lightboxCurrentIndex + 1 : 0;
+//         updateLightboxImage(); // Cập nhật ảnh mới
+//     });
+
+//     // --- CHỨC NĂNG KÉO (DRAG) TRONG LIGHTBOX ---
+//     lightboxImg.addEventListener('mousedown', (e) => {
+//         if (e.button !== 0) return; // Chỉ xử lý click chuột trái
+//         isDraggingLightbox = true;
+//         startLightboxPosX = e.clientX; // Lưu vị trí X ban đầu của chuột
+//         // Lấy vị trí transform X hiện tại của ảnh trong lightbox
+//         const transformMatrix = new WebKitCSSMatrix(window.getComputedStyle(lightboxImg).transform);
+//         startLightboxImgPosX = transformMatrix.m41; 
+//         hasDraggedLightbox = false; // Reset cờ kéo
+//         lightboxImg.style.cursor = 'grabbing'; // Thay đổi con trỏ chuột
+//         lightboxImg.style.transition = 'none'; // Tắt transition khi kéo để đảm bảo mượt mà
+//         e.preventDefault(); // Ngăn kéo ảnh làm chọn văn bản
+//     });
+
+//     // Lắng nghe mousemove trên document để bắt sự kiện ngay cả khi chuột ra ngoài ảnh
+//     document.addEventListener('mousemove', (e) => {
+//         if (!isDraggingLightbox) return; // Chỉ xử lý nếu đang kéo
+
+//         const deltaX = e.clientX - startLightboxPosX; // Độ lệch X của chuột
+//         let newImgPosX = startLightboxImgPosX + deltaX; // Vị trí X mới của ảnh
+
+//         lightboxImg.style.transform = `translateX(${newImgPosX}px)`; // Áp dụng transform
+
+//         // Đặt cờ hasDraggedLightbox nếu chuột di chuyển đủ xa
+//         if (Math.abs(deltaX) > dragThresholdLightbox) {
+//             hasDraggedLightbox = true;
+//         }
+//     });
+
+//     // Lắng nghe mouseup trên document để kết thúc kéo
+//     document.addEventListener('mouseup', () => {
+//         if (isDraggingLightbox) {
+//             isDraggingLightbox = false; // Kết thúc kéo
+//             lightboxImg.style.cursor = 'grab'; // Trả lại con trỏ chuột
+            
+//             // Bật lại transition sau khi kéo để có hiệu ứng trượt về vị trí mới
+//             lightboxImg.style.transition = 'transform 0.3s ease-out'; 
+
+//             const lightboxWidth = lightbox.offsetWidth; // Chiều rộng của lightbox
+//             // Lấy vị trí transform X cuối cùng của ảnh
+//             const currentImgPosX = new WebKitCSSMatrix(window.getComputedStyle(lightboxImg).transform).m41;
+
+//             if (hasDraggedLightbox) { // Nếu thực sự đã kéo (không phải click)
+//                 // Kéo sang phải đủ xa để chuyển về ảnh trước đó
+//                 if (currentImgPosX > lightboxWidth * 0.2) { 
+//                     lightboxPrevButton.click(); // Giả lập click nút Prev
+//                 } 
+//                 // Kéo sang trái đủ xa để chuyển về ảnh tiếp theo
+//                 else if (currentImgPosX < -lightboxWidth * 0.2) { 
+//                     lightboxNextButton.click(); // Giả lập click nút Next
+//                 } else {
+//                     // Nếu kéo không đủ xa để chuyển ảnh, trả ảnh về vị trí ban đầu (0,0)
+//                     lightboxImg.style.transform = 'translateX(0)';
+//                 }
+//             } else {
+//                 // Nếu đây chỉ là một click (không kéo), đảm bảo ảnh trở về vị trí 0
+//                 lightboxImg.style.transform = 'translateX(0)'; 
+//             }
+//             hasDraggedLightbox = false; // Reset cờ kéo
+//         }
+//     });
+
+//     // --- Khởi chạy khi trang tải xong ---
+//     window.addEventListener('load', initializeGallery);
+// });
+
 document.addEventListener('DOMContentLoaded', () => {
     const galleryTrack = document.getElementById('galleryTrack');
     // KHAI BÁO QUAN TRỌNG: galleryItemContainers sẽ chứa các DIV bọc ảnh
+    // Ban đầu lấy tất cả các container gốc
     let galleryItemContainers = Array.from(document.querySelectorAll('.gallery-item-container')); 
     
     const lightbox = document.getElementById('lightbox');
@@ -357,13 +656,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const lightboxPrevButton = document.querySelector('.lightbox-nav-button.prev-lightbox');
     const lightboxNextButton = document.querySelector('.lightbox-nav-button.next-lightbox');
 
-    const scrollSpeed = 0.5; // Tốc độ cuộn của carousel
+    const scrollSpeed = 0.5; // Tốc độ cuộn của carousel (pixels/frame)
     let scrollInterval; // Biến lưu trữ interval của cuộn tự động
     let currentScroll = 0; // Vị trí cuộn hiện tại của carousel chính
     const originalGalleryItemsCount = galleryItemContainers.length; // Số lượng container ảnh gốc
 
     let galleryWrapperWidth = 0; // Chiều rộng của khung hiển thị carousel
-    let originalItemsFullWidth = 0; // Tổng chiều rộng của tất cả các ảnh gốc
+    let originalItemsFullWidth = 0; // Tổng chiều rộng của tất cả các ảnh gốc (bao gồm margin)
     let clonedItemsPrefixWidth = 0; // Chiều rộng của các ảnh clone ở đầu track
 
     let lightboxCurrentIndex = 0; // Index của ảnh hiện tại trong lightbox
@@ -371,25 +670,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Biến cho chức năng KÉO TRONG LIGHTBOX ---
     let isDraggingLightbox = false; // Cờ cho biết đang kéo ảnh trong lightbox
-    let startLightboxPosX = 0; // Vị trí X của chuột khi bắt đầu kéo trong lightbox
+    let startLightboxPosX = 0; // Vị trí X của chuột/ngón tay khi bắt đầu kéo trong lightbox
     let startLightboxImgPosX = 0; // Vị trí transform X của ảnh trong lightbox khi bắt đầu kéo
-    let dragThresholdLightbox = 10; // Ngưỡng kéo tối thiểu để kích hoạt chuyển ảnh (pixels)
-    let hasDraggedLightbox = false; // Cờ cho biết đã thực hiện hành động kéo trong lightbox
+    let dragThresholdLightbox = 50; // NGƯỠNG KÉO TỐI THIỂU để kích hoạt chuyển ảnh (pixels) - Đã Tăng
+    let hasDraggedLightbox = false; // Cờ cho biết đã thực hiện hành động kéo trong lightbox (không chỉ click/tap)
 
     // --- Khởi tạo và Nhân bản ảnh (Cloning) ---
     function initializeGallery() {
         galleryWrapperWidth = document.querySelector('.gallery-wrapper').offsetWidth;
+        // console.log('initializeGallery: galleryWrapperWidth =', galleryWrapperWidth);
 
         originalItemsFullWidth = 0;
         // Tính toán tổng chiều rộng của các container ảnh gốc
         galleryItemContainers.forEach(container => {
-            originalItemsFullWidth += container.offsetWidth + 10; // +10 cho margin-right
+            // Lấy chiều rộng thực tế của container + margin-right (10px)
+            originalItemsFullWidth += container.offsetWidth + 10; 
         });
+        // console.log('initializeGallery: originalItemsFullWidth =', originalItemsFullWidth);
 
         // Tính toán số lượng ảnh clone cần thiết để lấp đầy khung nhìn
+        // Đảm bảo rằng ít nhất một vòng lặp của ảnh có thể nhìn thấy
         numClones = Math.ceil(galleryWrapperWidth / (originalItemsFullWidth / originalGalleryItemsCount)) + 2; 
+        // +2 để đảm bảo có đủ ảnh mượt mà khi reset vị trí
+        // console.log('initializeGallery: numClones =', numClones);
 
-        // Xóa các clone cũ nếu có, để tránh nhân bản lặp lại
+        // Xóa các clone cũ nếu có, để tránh nhân bản lặp lại khi hàm được gọi lại (ví dụ: resize)
         Array.from(galleryTrack.children).forEach(child => {
             if (child.classList.contains('cloned')) {
                 galleryTrack.removeChild(child);
@@ -397,8 +702,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Clone các ảnh cuối cùng của danh sách gốc và thêm vào ĐẦU track
-        for (let i = originalGalleryItemsCount - 1; i >= originalGalleryItemsCount - numClones; i--) {
-            const actualIndex = (i < 0) ? (originalGalleryItemsCount + i) : i; 
+        // Điều chỉnh vòng lặp để đảm bảo lấy đúng index và không bị lỗi nếu numClones lớn hơn originalGalleryItemsCount
+        for (let i = 1; i <= numClones; i++) {
+            const actualIndex = (originalGalleryItemsCount - i % originalGalleryItemsCount + originalGalleryItemsCount) % originalGalleryItemsCount;
             const clone = galleryItemContainers[actualIndex].cloneNode(true); // Clone toàn bộ container
             clone.classList.add('cloned');
             galleryTrack.prepend(clone);
@@ -406,19 +712,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Clone các ảnh đầu tiên của danh sách gốc và thêm vào CUỐI track
         for (let i = 0; i < numClones; i++) {
-            const clone = galleryItemContainers[i].cloneNode(true); // Clone toàn bộ container
+            const clone = galleryItemContainers[i % originalGalleryItemsCount].cloneNode(true); // Clone toàn bộ container
             clone.classList.add('cloned');
             galleryTrack.appendChild(clone);
         }
 
         // Cập nhật lại danh sách galleryItemContainers sau khi clone đã được thêm vào DOM
+        // Quan trọng: Phải lấy lại toàn bộ các phần tử bao gồm cả clone
         galleryItemContainers = Array.from(document.querySelectorAll('.gallery-item-container'));
 
-        // Tính toán chiều rộng của các ảnh clone ở đầu track
+        // Tính toán chiều rộng của các ảnh clone ở đầu track (các ảnh vừa được prepend)
         clonedItemsPrefixWidth = 0;
         for (let i = 0; i < numClones; i++) {
-            clonedItemsPrefixWidth += galleryItemContainers[i].offsetWidth + 10;
+            // Đảm bảo phần tử tồn tại trước khi truy cập offsetWidth
+            if (galleryItemContainers[i]) {
+                clonedItemsPrefixWidth += galleryItemContainers[i].offsetWidth + 10;
+            } else {
+                console.warn(`[initializeGallery] Phần tử galleryItemContainers[${i}] không tồn tại khi tính clonedItemsPrefixWidth.`);
+            }
         }
+        // console.log('initializeGallery: clonedItemsPrefixWidth =', clonedItemsPrefixWidth);
 
         // Đặt vị trí scroll ban đầu để bắt đầu từ ảnh gốc đầu tiên
         currentScroll = clonedItemsPrefixWidth;
@@ -426,11 +739,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Tắt transition ngay lập tức để đặt vị trí ban đầu không bị giật
         galleryTrack.style.transition = 'none'; 
         galleryTrack.style.transform = `translateX(${-currentScroll}px)`;
+        // console.log('initializeGallery: Initial transform =', galleryTrack.style.transform);
 
         // Sau khi đặt vị trí ban đầu, bật lại transition cho các cuộn mượt mà
+        // Sử dụng requestAnimationFrame lồng nhau để đảm bảo trình duyệt đã render lại trước khi bật transition
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
                 galleryTrack.style.transition = 'transform 0.01s linear'; 
+                // console.log('initializeGallery: Transition re-enabled.');
             });
         });
 
@@ -445,12 +761,14 @@ document.addEventListener('DOMContentLoaded', () => {
             galleryTrack.style.transform = `translateX(${-currentScroll}px)`;
 
             // Nếu cuộn đến cuối danh sách ảnh gốc + clone ở cuối, reset về vị trí đầu ảnh gốc
-            if (currentScroll >= (clonedItemsPrefixWidth + originalItemsFullWidth)) {
+            // Logic reset: Nếu currentScroll vượt quá tổng chiều rộng của các ảnh gốc + clone ở đầu (phần mà bạn muốn hiển thị sau khi reset)
+            if (currentScroll >= (originalItemsFullWidth + clonedItemsPrefixWidth)) {
                 currentScroll = clonedItemsPrefixWidth; 
                 
                 // Tắt transition để reset vị trí tức thì, tránh bị giật
                 galleryTrack.style.transition = 'none'; 
                 galleryTrack.style.transform = `translateX(${-currentScroll}px)`;
+                // console.log('AutoScroll: Resetting position to', -currentScroll);
                 
                 // Bật lại transition sau một khoảng thời gian ngắn
                 requestAnimationFrame(() => {
@@ -464,6 +782,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function stopAutoScroll() {
         if (scrollInterval) clearInterval(scrollInterval); // Dừng cuộn tự động
+        // console.log('AutoScroll: Stopped.');
     }
 
     // --- Xử lý rê chuột (hover) trên carousel ---
@@ -475,8 +794,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Xử lý Lightbox ---
     function updateLightboxImage() {
         // Lấy đường dẫn và alt của ảnh từ thẻ img bên trong container tương ứng
-        const newImgSrc = galleryItemContainers[lightboxCurrentIndex % originalGalleryItemsCount].querySelector('.gallery-item').src;
-        const newImgAlt = galleryItemContainers[lightboxCurrentIndex % originalGalleryItemsCount].querySelector('.gallery-item').alt;
+        // Sử dụng modulo originalGalleryItemsCount để chỉ lấy ảnh gốc
+        const newImgSrc = galleryItemContainers[numClones + (lightboxCurrentIndex % originalGalleryItemsCount)].querySelector('.gallery-item').src;
+        const newImgAlt = galleryItemContainers[numClones + (lightboxCurrentIndex % originalGalleryItemsCount)].querySelector('.gallery-item').alt;
 
         // Reset transform và opacity của ảnh trong lightbox trước khi tải ảnh mới
         lightboxImg.style.transition = 'none'; // Tắt transition để tránh giật khi reset
@@ -504,26 +824,31 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event Delegation cho click vào ảnh carousel để mở lightbox
     galleryTrack.addEventListener('click', (e) => {
         // Sử dụng .closest() để tìm phần tử cha gần nhất có class 'gallery-item-container'
-        // Điều này đảm bảo click vào ảnh, overlay, hoặc icon đều hoạt động
         const clickedContainer = e.target.closest('.gallery-item-container');
         
-        if (clickedContainer) { // Nếu tìm thấy một container hợp lệ
+        // Tránh mở lightbox nếu click vào các ảnh clone ở rìa (nếu bạn muốn chỉ mở ảnh gốc)
+        // Hoặc bạn có thể bỏ qua kiểm tra này nếu muốn mở lightbox cho cả clone
+        if (clickedContainer && !clickedContainer.classList.contains('cloned')) { 
             stopAutoScroll(); // Dừng cuộn tự động của carousel
 
-            let clickedIndex = -1;
+            let clickedIndexInFullList = -1;
             // Duyệt qua danh sách các container để tìm chỉ mục của container được click
             for (let i = 0; i < galleryItemContainers.length; i++) { 
                 if (galleryItemContainers[i] === clickedContainer) {
-                    clickedIndex = i;
+                    clickedIndexInFullList = i;
                     break;
                 }
             }
             
-            // Tính toán chỉ mục của ảnh gốc (loại bỏ ảnh clone)
-            let originalIndex = (clickedIndex - numClones + originalGalleryItemsCount) % originalGalleryItemsCount;
-            if (originalIndex < 0) originalIndex += originalGalleryItemsCount; 
+            // Tính toán chỉ mục của ảnh gốc trong mảng gốc
+            // Trừ đi numClones để loại bỏ các ảnh clone ở đầu
+            let tempLightboxIndex = (clickedIndexInFullList - numClones + originalGalleryItemsCount) % originalGalleryItemsCount;
+            // Đảm bảo index không bị âm
+            if (tempLightboxIndex < 0) tempLightboxIndex += originalGalleryItemsCount; 
 
-            lightboxCurrentIndex = originalIndex; // Đặt chỉ mục ảnh hiện tại cho lightbox
+            // console.log('Clicked Original Index:', tempLightboxIndex);
+
+            lightboxCurrentIndex = tempLightboxIndex; // Cập nhật chỉ mục ảnh hiện tại cho lightbox
             updateLightboxImage(); // Cập nhật ảnh trong lightbox
             lightbox.classList.add('active'); // Hiển thị lightbox
         }
@@ -578,37 +903,56 @@ document.addEventListener('DOMContentLoaded', () => {
         updateLightboxImage(); // Cập nhật ảnh mới
     });
 
-    // --- CHỨC NĂNG KÉO (DRAG) TRONG LIGHTBOX ---
-    lightboxImg.addEventListener('mousedown', (e) => {
-        if (e.button !== 0) return; // Chỉ xử lý click chuột trái
+    // --- CHỨC NĂNG KÉO (DRAG) TRONG LIGHTBOX (Bao gồm Touch Events) ---
+    lightboxImg.addEventListener('mousedown', startDragLightbox);
+    lightboxImg.addEventListener('touchstart', startDragLightbox); // Thêm touchstart
+
+    document.addEventListener('mousemove', dragLightbox);
+    // Sử dụng { passive: false } để có thể gọi preventDefault() trong touchmove
+    document.addEventListener('touchmove', dragLightbox, { passive: false }); 
+
+    document.addEventListener('mouseup', endDragLightbox);
+    document.addEventListener('touchend', endDragLightbox); // Thêm touchend
+
+    function startDragLightbox(e) {
+        // Chỉ xử lý click chuột trái hoặc một ngón chạm
+        if (e.type === 'mousedown' && e.button !== 0) return; 
+        if (e.type === 'touchstart' && e.touches.length > 1) return; 
+
         isDraggingLightbox = true;
-        startLightboxPosX = e.clientX; // Lưu vị trí X ban đầu của chuột
-        // Lấy vị trí transform X hiện tại của ảnh trong lightbox
+        startLightboxPosX = (e.type === 'mousedown') ? e.clientX : e.touches[0].clientX;
+        
         const transformMatrix = new WebKitCSSMatrix(window.getComputedStyle(lightboxImg).transform);
         startLightboxImgPosX = transformMatrix.m41; 
+        
         hasDraggedLightbox = false; // Reset cờ kéo
         lightboxImg.style.cursor = 'grabbing'; // Thay đổi con trỏ chuột
         lightboxImg.style.transition = 'none'; // Tắt transition khi kéo để đảm bảo mượt mà
-        e.preventDefault(); // Ngăn kéo ảnh làm chọn văn bản
-    });
+        
+        if (e.type === 'touchstart') {
+            e.preventDefault(); // Ngăn cuộn trang khi bắt đầu chạm
+        }
+    }
 
-    // Lắng nghe mousemove trên document để bắt sự kiện ngay cả khi chuột ra ngoài ảnh
-    document.addEventListener('mousemove', (e) => {
-        if (!isDraggingLightbox) return; // Chỉ xử lý nếu đang kéo
+    function dragLightbox(e) {
+        if (!isDraggingLightbox) return;
 
-        const deltaX = e.clientX - startLightboxPosX; // Độ lệch X của chuột
-        let newImgPosX = startLightboxImgPosX + deltaX; // Vị trí X mới của ảnh
+        const currentClientX = (e.type === 'mousemove') ? e.clientX : e.touches[0].clientX;
+        const deltaX = currentClientX - startLightboxPosX;
+        let newImgPosX = startLightboxImgPosX + deltaX;
 
-        lightboxImg.style.transform = `translateX(${newImgPosX}px)`; // Áp dụng transform
+        lightboxImg.style.transform = `translateX(${newImgPosX}px)`;
 
-        // Đặt cờ hasDraggedLightbox nếu chuột di chuyển đủ xa
+        // Đặt cờ hasDraggedLightbox nếu chuột/ngón tay di chuyển đủ xa
         if (Math.abs(deltaX) > dragThresholdLightbox) {
             hasDraggedLightbox = true;
         }
-    });
+        if (e.type === 'touchmove') {
+            e.preventDefault(); // Ngăn cuộn trang khi đang kéo
+        }
+    }
 
-    // Lắng nghe mouseup trên document để kết thúc kéo
-    document.addEventListener('mouseup', () => {
+    function endDragLightbox(e) {
         if (isDraggingLightbox) {
             isDraggingLightbox = false; // Kết thúc kéo
             lightboxImg.style.cursor = 'grab'; // Trả lại con trỏ chuột
@@ -620,7 +964,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Lấy vị trí transform X cuối cùng của ảnh
             const currentImgPosX = new WebKitCSSMatrix(window.getComputedStyle(lightboxImg).transform).m41;
 
-            if (hasDraggedLightbox) { // Nếu thực sự đã kéo (không phải click)
+            if (hasDraggedLightbox) { // Nếu thực sự đã kéo (không phải click/tap nhẹ)
                 // Kéo sang phải đủ xa để chuyển về ảnh trước đó
                 if (currentImgPosX > lightboxWidth * 0.2) { 
                     lightboxPrevButton.click(); // Giả lập click nút Prev
@@ -633,13 +977,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     lightboxImg.style.transform = 'translateX(0)';
                 }
             } else {
-                // Nếu đây chỉ là một click (không kéo), đảm bảo ảnh trở về vị trí 0
+                // Nếu đây chỉ là một click/tap (không kéo), đảm bảo ảnh trở về vị trí 0
                 lightboxImg.style.transform = 'translateX(0)'; 
+                // !!! QUAN TRỌNG: Nếu bạn có click listener trên lightboxImg
+                // để đóng lightbox khi click vào ảnh, bạn cần xem xét logic ở đây.
+                // Hiện tại, click vào ảnh trong lightbox sẽ không đóng nó.
             }
             hasDraggedLightbox = false; // Reset cờ kéo
         }
-    });
+    }
 
-    // --- Khởi chạy khi trang tải xong ---
-    window.addEventListener('load', initializeGallery);
+    // --- Khởi chạy khi trang tải xong và khi cửa sổ thay đổi kích thước ---
+    // Gọi initializeGallery khi DOM đã sẵn sàng
+    // và khi cửa sổ thay đổi kích thước để đảm bảo cloning và tính toán lại đúng
+    window.addEventListener('resize', initializeGallery);
+    initializeGallery(); // Gọi lần đầu khi DOMContentLoaded
 });
