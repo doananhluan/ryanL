@@ -1196,11 +1196,28 @@ a.button:hover {
 }
 
 .scrolltop.active {
-    bottom: 40px;
+    /* bottom: 40px; */
     visibility: visible;
     opacity: 0.8;
 }
+/* ẩn nút cuộn */
+.scrolltop.hide-on-mobile-image-view {
+    visibility: hidden !important; /* Đảm bảo ẩn */
+    opacity: 0 !important; /* Đảm bảo làm mờ */
+    pointer-events: none; /* Ngăn chặn sự kiện click khi ẩn */
+}
 
+/* Thêm media query để đảm bảo nó chỉ ẩn trên mobile */
+/* ẩn trên mọi thiết bị khi lightbox mở, bạn có thể bỏ phần này. */
+@media (max-width: 767px) {
+    /* Nếu bạn muốn nút scrolltop mặc định bị ẩn trên mobile
+       thì bạn có thể bỏ comment dòng dưới đây.
+       Tuy nhiên, hiện tại bạn đang muốn nó ẩn CHỈ KHI lightbox mở. */
+    /* .scrolltop:not(.active) {
+        visibility: hidden;
+        opacity: 0;
+    } */
+}
 
 /*end button_go-to-top*/
 
@@ -1208,14 +1225,17 @@ a.button:hover {
 /* Quote frame */
 
 .quote_frame {
-    /* background-color: var(--main-bg); */
-    background-image:url(../img/15695.jpg);
-    /* height: auto; */
-    border: none;
-    justify-content: center;
-    /* display: flex; */
+    background-color: var(--main-bg);
+    /* background-image:url(../img/quote_pic.jpg); */
+    /* background-size: 950px; */
+    background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
+    /* height: 100vh; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .note_quote h2 {
@@ -1237,11 +1257,50 @@ a.button:hover {
     margin-top: 50px;
     margin-bottom: 50px;
 }
+/* TIme count*/
+.timecount {
+  text-align: center;
+  font-family: 'Open sans", sans-serif';
+}
+
+/* h1 {
+  margin-bottom: 40px;
+  font-weight: normal;
+  font-size: 1.8rem;
+} */
+
+.timer-wrapper {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+}
+
+.time-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.number {
+  font-size: 35px;
+  font-weight: 500;
+}
+
+.label {
+  font-size: 20px;
+  /* margin-top: 4px; */
+  letter-spacing: 1px;
+}
 /* heartbeat animation */
 .heart{
     margin-bottom: 100px;
     /* background-color: var(--main-bg); */
     border: none;
+}
+@media (max-width: 768px) {
+  .heart{
+    margin-bottom: 20px;
+  }
 }
 .heartbeat-icon {
     font-size: 25px;
@@ -1292,6 +1351,15 @@ a.button:hover {
     width: auto;
     height: auto;
     margin: 80px auto 0;
+  /* display: block; */
+  text-align: center;
+  }
+}
+@media (max-width: 768px) {
+  .note_quote h2{
+    width: auto;
+    height: auto;
+    margin-top: 50px;
   /* display: block; */
   text-align: center;
   }
@@ -2367,7 +2435,9 @@ a.button:hover {
     touch-action: none; /* Quan trọng để ngăn cuộn/chụm mặc định  */
     transition: transform 0.3s ease-out; /* Giữ transition cho zoom/kéo */
 }
-
+#lightbox-img:active {
+    cursor: grabbing; /* Con trỏ khi đang kéo */
+}
 .lightbox-close {
     position: absolute;
     top: 20px;
