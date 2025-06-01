@@ -1196,7 +1196,7 @@ a.button:hover {
 }
 
 .scrolltop.active {
-    /* bottom: 40px; */
+    bottom: 40px;
     visibility: visible;
     opacity: 0.8;
 }
@@ -2525,6 +2525,9 @@ a.button:hover {
     transform: scale(1.1); /* Phóng to nhẹ thumbnail đang chọn */
 }
 /*end couple_side_img*/
+
+
+
 .underline {
     height: 3px;
     width: 60px;
