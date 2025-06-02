@@ -17,6 +17,7 @@ body {
 
 html {
     overflow-x: hidden;
+    /* overflow-y: scroll; */
 }
 
 
@@ -50,7 +51,7 @@ img {
     --graybg: #0d0d0d;
     /* --main-bg: #0d0d0d; */
     /* --main-bg: #ffffff; */
-    --main-bg:#F1F2F0;
+    --main-bg:#F1F3EE;
 }
 
 mark {
@@ -176,7 +177,7 @@ mark {
 }
 
 .main-bg {
-    background-color: #eeeae6;
+    background-color: #F1F3EE;
 }
 
 .deep_blue-bg {
@@ -2282,6 +2283,7 @@ a.button:hover {
     height: 100%;
     text-align: center; 
     padding: 100px 0px 0px 0px;
+    margin-bottom: 50px;
 }
 .couple_memmory span{
     font-size: 25px;
@@ -2293,7 +2295,7 @@ a.button:hover {
 .couple_memmory h2{
     margin-top: 10px;
     /* margin-bottom: 60px; */
-    font-size: 50px;
+    font-size: 45px;
     display: block;
     font-style: normal;
     font-weight: 100;
@@ -2301,25 +2303,26 @@ a.button:hover {
     font-family: "Sail", system-ui;
     font-style: normal;
 }
+
+
 /*couple_slide_img*/
 
-.couple_slide_img{
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* min-height: 50vh; */
-    background-color: #F1F3EE;
-    margin: 0;
-    overflow: hidden; 
-    padding: 80px 0 130px 0;
+.gallery-section {
+    margin: auto; /* Căn giữa section */
+    padding: 20px;
+    background-color: var(--main-bg);
+    border-radius: 12px;
+    /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); */
+    max-width: 1200px;
 }
-@media (max-width: 480px) {
-  .couple_slide_img {
-    padding-bottom: 100px; 
-  }
+
+.gallery-section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+    font-size: 2em;
 }
-/* --- Gallery Styling --- */
+
 .gallery-wrapper {
     width: 90vw; /* Chiều rộng khung nhìn, ví dụ 90% chiều rộng viewport */
     max-width: 1000px; /* Chiều rộng tối đa */
@@ -2327,13 +2330,27 @@ a.button:hover {
     overflow: hidden; /* chỉ hiển thị phần ảnh nằm trong khung */
     position: relative;
     border-radius: 8px;
+    margin: 0 auto; /* Căn giữa wrapper */
 }
 
 .gallery-track {
     display: flex;
     height: 100%; /* Track chiếm toàn bộ chiều cao của wrapper */
-    /* animation sẽ được áp dụng bằng JavaScript */
-    /* transition: transform 0.5s ease-out; */ /* Dùng cho trượt bằng nút, nhưng không dùng cho trượt tự động */
+    will-change: transform; /* Tối ưu hóa hiệu suất */
+    white-space: nowrap; /* Ngăn chặn các item xuống dòng */
+    transition: transform 0.05s linear; /* Transition nhẹ để tránh giật khi reset */
+}
+
+.gallery-item-container {
+    position: relative; /* Quan trọng để overlay và icon định vị tương đối */
+    height: 100%; /* Chiều cao của container bằng chiều cao của track */
+    width: auto; /* Chiều rộng sẽ được điều chỉnh bởi flex-shrink và margin */
+    flex-shrink: 0; /* Ngăn container co lại */
+    margin-right: 10px; /* Khoảng cách giữa các container */
+    border-radius: 5px;
+    overflow: hidden; /* Quan trọng để các hiệu ứng như scale không tràn ra ngoài */
+    cursor: pointer; /* Thay đổi con trỏ thành pointer */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Thêm box-shadow */
 }
 
 .gallery-item {
@@ -2342,22 +2359,12 @@ a.button:hover {
     object-fit: cover; /* ảnh lấp đầy khung mà không bị méo */
     cursor: pointer;
     flex-shrink: 0; /* Quan trọng: ngăn ảnh co lại */
-    margin-right: 10px; /* Khoảng cách giữa các ảnh */
-    /* border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); */
+    border-radius: 5px; /* Thêm border-radius */
+    transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out; /* Thêm transition cho filter */
+    pointer-events: none; /* Ngăn click trực tiếp vào ảnh, chỉ click vào overlay */
 }
-.gallery-item-container {
-  position: relative; /* Quan trọng để overlay và icon định vị tương đối */
-    height: 100%; /* Chiều cao của container bằng chiều cao của track */
-    width: auto; /* Chiều rộng sẽ được điều chỉnh bởi flex-shrink và margin */
-    flex-shrink: 0; /* Ngăn container co lại */
-    margin-right: 10px; /* Khoảng cách giữa các container */
-    border-radius: 5px;
-    overflow: hidden; /* Quan trọng để các hiệu ứng như scale không tràn ra ngoài */
-    cursor: pointer; /* Thay đổi con trỏ thành pointer */
-    /* box-shadow: 0 2px 5px rgba(0,0,0,0.1); */
-}
-.overlay {
+
+.gallery-item-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -2367,13 +2374,15 @@ a.button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    opacity: 0; /* Mặc định ẩn */
+    color: white; /* Màu icon */
+    font-size: 2em; /* Kích thước icon */
+    opacity: 0;
     transition: opacity 0.3s ease;
+    z-index: 1; /* Đảm bảo overlay nằm trên ảnh */
 }
 
-.overlay i {
-    color: white; /* Màu icon */
-    font-size: 30px; /* Kích thước icon */
+.gallery-item-overlay span {
+    font-weight: bold;
     transform: scale(0.8); /* Icon hơi nhỏ khi không hover */
     transition: transform 0.3s ease;
 }
@@ -2384,24 +2393,13 @@ a.button:hover {
     transform: scale(1.05); /* Phóng to ảnh nhẹ */
 }
 
-.gallery-item-container:hover .overlay {
+.gallery-item-container:hover .gallery-item-overlay {
     opacity: 1; /* Hiển thị overlay */
 }
 
-.gallery-item-container:hover .overlay i {
+.gallery-item-container:hover .gallery-item-overlay span {
     transform: scale(1); /* Phóng to icon về kích thước bình thường */
 }
-/* --- Animation cho trượt tự động --- */
-/* @keyframes sẽ được tạo động bằng JS hoặc bạn có thể định nghĩa với giá trị cố định nếu biết trước */
-/* Ví dụ:
-@keyframes slideLeft {
-    from { transform: translateX(0); }
-    to { transform: translateX(-1000px); } // Giá trị này phải thay đổi tùy vào tổng chiều rộng ảnh
-}
-.gallery-track.animating {
-    animation: slideLeft 20s linear infinite;
-}
-*/
 
 /* --- Lightbox Styling --- */
 #lightbox {
@@ -2412,13 +2410,16 @@ a.button:hover {
     height: 100%;
     background-color: #000000fb;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; /* Căn giữa ảnh */
+    align-items: center;     /* Căn giữa ảnh */
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
+    backdrop-filter: blur(5px); /* Hiệu ứng mờ nền */
     flex-direction: column; /* Để xếp ảnh, thông tin và thumbnails theo cột */
+    padding: 20px; /* Khoảng cách tổng thể từ cạnh màn hình */
+    box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước */
 }
 
 #lightbox.active {
@@ -2426,53 +2427,84 @@ a.button:hover {
     visibility: visible;
 }
 
+.lightbox-content {
+    position: relative;
+    width: 100%;
+    flex-grow: 1; /* Cho phép content chiếm hết không gian còn lại */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%; /* Ảnh có thể chiếm toàn bộ chiều rộng của lightbox (trừ padding) */
+    max-height: calc(100% - 140px); /* Giảm chiều cao để có thêm khoảng trống trên/dưới ảnh */
+    padding-top: 20px; /* Khoảng cách từ phía trên */
+    padding-bottom: 20px; /* Khoảng cách từ phía dưới */
+    box-sizing: border-box;
+}
+
 #lightbox-img {
     max-width: 100%;
-    max-height: 80%; /* Giảm chiều cao để có chỗ cho info và thumbnails */
+    max-height: 100%;
     object-fit: contain;
     cursor: grab;
     border: 7px solid white;
-    touch-action: none; /* Quan trọng để ngăn cuộn/chụm mặc định  */
-    transition: transform 0.3s ease-out; /* Giữ transition cho zoom/kéo */
+    touch-action: none;
+    transition: transform 0.3s ease-out;
 }
 #lightbox-img:active {
     cursor: grabbing; /* Con trỏ khi đang kéo */
 }
-.lightbox-close {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    color: #fff;
-    font-size: 40px;
-    cursor: pointer;
-    z-index: 1001;
-}
 
-.lightbox-nav-button {
-    position: absolute;
-    /* top: 50%; */
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
+.lightbox-close {
+    position: fixed; /* Đã là fixed để nằm ngoài cùng màn hình */
+    top: 20px; /* Điều chỉnh vị trí nút đóng */
+    right: 20px;
     color: #fff;
-    border: none;
-    padding: 15px;
+    font-size: 2.5em; /* Kích thước nhỏ hơn một chút */
     cursor: pointer;
-    font-size: 24px;
     z-index: 1001;
-    /* border-radius: 50%; */
-    width: 50px;
-    /* height: 50px; */
+    transition: color 0.2s, background-color 0.2s;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+.lightbox-close:hover {
+    color: #ccc;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.lightbox-nav-button {
+    position: fixed; /* Đã là fixed để nằm ngoài cùng màn hình */
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    padding: 10px 15px; /* Kích thước nhỏ hơn */
+    cursor: pointer;
+    font-size: 1.8em; /* Kích thước nhỏ hơn */
+    z-index: 1001;
+    border-radius: 8px; /* Thêm border-radius */
+    transition: background-color 0.2s;
+    display: flex; /* Để căn giữa icon/text */
+    justify-content: center;
+    align-items: center;
+}
+
 .lightbox-nav-button.prev-lightbox {
-    left: 20px;
+    left: 20px; /* Đã đặt ra ngoài cùng màn hình */
 }
 
 .lightbox-nav-button.next-lightbox {
-    right: 20px;
+    right: 20px; /* Đã đặt ra ngoài cùng màn hình */
+}
+
+.lightbox-nav-button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
 /* STYLING CHO CÁC PHẦN TỬ MỚI */
@@ -2485,6 +2517,10 @@ a.button:hover {
 
 #lightbox-counter {
     font-weight: bold;
+    color: #fff; /* Đảm bảo màu trắng */
+    font-size: 1.1em;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .lightbox-thumbnails {
@@ -2492,38 +2528,113 @@ a.button:hover {
     justify-content: center;
     align-items: center;
     padding: 10px 0;
-    /* position: fixed; */
-    margin-top: 10px; /* Khoảng cách từ info */
-    max-width: 80%; /* Giới hạn chiều rộng của thanh thumbnails */
+    margin-top: 10px; /* Khoảng cách từ counter */
+    max-width: 90%; /* Giới hạn chiều rộng của thanh thumbnails trong full screen */
     overflow-x: auto; /* Cho phép cuộn ngang nếu có nhiều thumbnails */
     -webkit-overflow-scrolling: touch; /* Cuộn mượt mà trên iOS */
-    gap: 10px; /* Khoảng cách giữa các thumbnail */
+    gap: 8px; /* Khoảng cách giữa các thumbnail */
 
- /* ẨN THANH CUỘN */
+    /* ẨN THANH CUỘN */
     /* Dành cho Chrome, Safari, Edge, Opera */
     &::-webkit-scrollbar {
         display: none;
         width: 0;
         height: 0;
     }
-/* Dành cho Firefox */
+    /* Dành cho Firefox */
     scrollbar-width: none; /* Ẩn thanh cuộn */
 }
 .lightbox-thumbnail-item {
-    width: 50px; /* Kích thước của thumbnail */
-    height: 50px;
+    flex-shrink: 0; /* Ngăn thumbnail co lại */
+    width: 60px; /* Kích thước vuông cho thumbnail */
+    height: 60px; /* Kích thước vuông cho thumbnail */
     object-fit: cover;
     border: 2px solid transparent;
     cursor: pointer;
     transition: border-color 0.2s ease, transform 0.2s ease;
-    /* border-radius: 4px; */
-    /* position: fixed; */
+    border-radius: 4px; /* Thêm border-radius */
 }
 
 .lightbox-thumbnail-item.active {
-    border-color: #fdfdfd; /* Màu viền cho thumbnail đang chọn */
+    border-color: #007bff; /* Màu viền cho thumbnail đang chọn */
     transform: scale(1.1); /* Phóng to nhẹ thumbnail đang chọn */
 }
+
+/* Scrolltop button CSS */
+/* .scrolltop {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    z-index: 999;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+} */
+
+.scrolltop.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.scrolltop.hide-on-mobile-image-view {
+    display: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+    .gallery-item-container {
+        width: 150px; /* Đảm bảo chiều rộng cố định cho container trên mobile */
+        height: 120px; /* ĐÃ THÊM: Đảm bảo chiều cao cố định cho container trên mobile */
+    }
+    .gallery-item {
+        width: 100%; /* ĐÃ ĐIỀU CHỈNH: Ảnh lấp đầy container */
+        height: 100%; /* ĐÃ ĐIỀU CHỈNH: Ảnh lấp đầy container */
+    }
+    .lightbox-content {
+        max-height: calc(100% - 100px); /* Điều chỉnh cho mobile */
+    }
+
+    .lightbox-nav-button {
+        padding: 8px 12px;
+        font-size: 1.2em;
+    }
+    .prev-lightbox {
+        left: 5px;
+    }
+    .next-lightbox {
+        right: 5px;
+    }
+    .lightbox-close {
+        font-size: 2em;
+        top: 5px;
+        right: 5px;
+        width: 35px;
+        height: 35px;
+    }
+    .lightbox-thumbnails {
+        gap: 5px;
+    }
+    .lightbox-thumbnail-item {
+        width: 50px; /* Kích thước vuông cho thumbnail trên mobile */
+        height: 50px; /* Kích thước vuông cho thumbnail trên mobile */
+    }
+    .gallery-wrapper{
+        height: 125px;
+    }
+}
+
 /*end couple_side_img*/
 
 
