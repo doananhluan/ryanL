@@ -84,15 +84,15 @@
     </div>
     <!-- end page loading -->
     <header>
-        <nav class="navbar header-nav header-white navbar-expand-lg">
+        <!-- <nav class="navbar header-nav header-white navbar-expand-lg">
             <div class="container">
-                <a class="navbar-brand" href="index.html">A | Luan<span class="theme-bg"></span></a>
-                <!-- Mobile Toggle -->
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-toggle">
+                <a class="navbar-brand" href="index.html">A | Luan<span class="theme-bg"></span></a> -->
+                <!-- Mobile menu -->
+                <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-toggle">
                     <i class="fas fa-bars" style="color: #fff"></i>                    
-                </button>
+                </button> -->
                 <!-- Top Menu -->
-                <div class="collapse navbar-collapse justify-content-end" id="navbar-collapse-toggle">
+                <!-- <div class="collapse navbar-collapse justify-content-end" id="navbar-collapse-toggle">
                     <ul class="navbar-nav">
                         <li><a class="nav-link active" href="#home">Home</a></li>
                         <li><a class="nav-link" href="#gallery">Gallery</a></li>
@@ -102,8 +102,36 @@
                         <li><a class="nav-link" href="#contact">Contact</a></li>
                     </ul>
                 </div>
+
+                <div class="menu-overlay" id="menu-overlay"></div>
             </div>
-        </nav>
+        </nav> -->
+
+
+        <nav class="navbar header-nav header-white navbar-expand-lg">
+        <div class="container">
+            <!-- <img src="static/img/rsvp-flower.png"></img> -->
+            <a class="navbar-brand" href="index.html">Shine<span class="theme-bg"></span></a>
+            <!-- Mobile menu -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-toggle">
+                <i class="fas fa-bars" style="color: #fff"></i>                    
+            </button>
+            <!-- Top Menu -->
+            <div class="collapse navbar-collapse justify-content-end" id="navbar-collapse-toggle">
+                <ul class="navbar-nav">
+                    <li><a class="nav-link active" href="#home">Home</a></li>
+                    <li><a class="nav-link" href="#gallery">Gallery</a></li>
+                    <li><a class="nav-link" href="#aboutme">Behind the lens</a></li>
+                    <li><a class="nav-link" href="#color">Simulation</a></li>
+                    <li><a class="nav-link" href="#blog">Blog</a></li>
+                    <li><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Menu Overlay -->
+            <div class="menu-overlay" id="menu-overlay"></div>
+        </div>
+    </nav>
     </header>
     <!-- Main -->
     <main>
@@ -432,7 +460,7 @@
                     <div class="gallery-item-overlay"><span>+</span></div>
                 </div>
                 <div class="gallery-item-container">
-                    <img class="gallery-item" src="static/img/download.jpg"  alt="Image 4" data-original-index="3">
+                    <img class="gallery-item" src="static/img/chill9.jpg"  alt="Image 4" data-original-index="3">
                     <div class="gallery-item-overlay"><span>+</span></div>
                 </div>
                 <div class="gallery-item-container">
@@ -456,7 +484,7 @@
                     <div class="gallery-item-overlay"><span>+</span></div>
                 </div>
                 <div class="gallery-item-container">
-                    <img class="gallery-item" src="static/img/rain.jpg" alt="Image B" data-original-index="7">
+                    <img class="gallery-item" src="static/img/chill10.jpg" alt="Image B" data-original-index="7">
                     <div class="gallery-item-overlay"><span>+</span></div>
                 </div>
                 <div class="gallery-item-container">
@@ -464,7 +492,7 @@
                     <div class="gallery-item-overlay"><span>+</span></div>
                 </div>
                 <div class="gallery-item-container">
-                    <img class="gallery-item" src="static/img/download.jpg" alt="Image B" data-original-index="9">
+                    <img class="gallery-item" src="static/img/chill8.jpg" alt="Image B" data-original-index="9">
                     <div class="gallery-item-overlay"><span>+</span></div>
                 </div>
                 <div class="gallery-item-container">
@@ -478,7 +506,7 @@
             </div>
         </div>
     </div>
-</section>
+    </section>
  <div class="lightbox" id="lightbox">
         <span class="lightbox-close">&times;</span> <button class="lightbox-nav-button prev-lightbox">&#10094;</button> <div class="lightbox-content">
             <img src="" alt="" id="lightbox-img">
@@ -690,5 +718,102 @@ function updateTimer() {
 setInterval(updateTimer, 1000);
 updateTimer();
  </script>
+
+
+<!-- menu -->
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleButton = document.querySelector('.navbar-toggler');
+    const menuCollapse = document.getElementById('navbar-collapse-toggle');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const navbar = document.querySelector('.header-nav');
+    
+    // Hàm mở menu
+    function openMenu() {
+        menuCollapse.classList.add('show');
+        menuOverlay.classList.add('show');
+        document.body.style.overflow = 'hidden'; // Ngăn scroll khi menu mở
+    }
+    
+    // Hàm đóng menu
+    function closeMenu() {
+        menuCollapse.classList.remove('show');
+        menuOverlay.classList.remove('show');
+        document.body.style.overflow = ''; // Cho phép scroll lại
+    }
+    
+    // Kiểm tra nếu các element tồn tại
+    if (toggleButton && menuCollapse && menuOverlay) {
+        
+        // Sự kiện click nút toggle
+        toggleButton.addEventListener('click', function(e) {
+            e.stopPropagation(); // Ngăn event bubbling
+            
+            if (menuCollapse.classList.contains('show')) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
+        });
+        
+        // Sự kiện click vào overlay (vùng ngoài menu)
+        menuOverlay.addEventListener('click', function() {
+            closeMenu();
+        });
+        
+        // Sự kiện click vào document để đóng menu khi click bên ngoài
+        document.addEventListener('click', function(e) {
+            // Kiểm tra nếu màn hình mobile
+            if (window.innerWidth <= 991) {
+                const isClickInsideMenu = menuCollapse.querySelector('.navbar-nav').contains(e.target);
+                const isClickOnToggleButton = toggleButton.contains(e.target);
+                const isClickOnNavbar = navbar.contains(e.target);
+                
+                // Nếu click bên ngoài menu và không phải nút toggle thì đóng menu
+                if (!isClickInsideMenu && !isClickOnToggleButton && menuCollapse.classList.contains('show')) {
+                    closeMenu();
+                }
+            }
+        });
+        
+        // Đóng menu khi nhấn phím ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && menuCollapse.classList.contains('show')) {
+                closeMenu();
+            }
+        });
+        
+        // Đóng menu khi click vào link trong menu (chỉ trên mobile)
+        const menuLinks = menuCollapse.querySelectorAll('.nav-link');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 991) {
+                    closeMenu();
+                }
+            });
+        });
+        
+        // Đóng menu khi resize window (từ mobile sang desktop)
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 991 && menuCollapse.classList.contains('show')) {
+                closeMenu();
+            }
+        });
+    }
+    
+    // Thêm class fixed-header khi scroll (tùy chọn)
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+            document.body.classList.add('fixed-header');
+        } else {
+            document.body.classList.remove('fixed-header');
+        }
+    });
+});
+</script>
+
+<!-- hết menu -->
+
 
 </html>
