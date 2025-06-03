@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================================
     // BIẾN VÀ HÀM CHO NÚT CUỘN LÊN ĐẦU TRANG (SCROLLTOP)
     // ==========================================================
-    const scrolltopButton = document.querySelector('.scrolltop');
+    const scrolltopButton = document.querySelector('.scrolltop'); // Chọn nút một lần
 
     function isMobileDevice() {
         return window.innerWidth <= 767;
@@ -142,6 +142,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const activeThumbnail = lightboxThumbnailsContainer.querySelector('.lightbox-thumbnail-item.active');
         if (activeThumbnail) {
             activeThumbnail.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+
+            // ĐÃ THÊM: Đảm bảo các thumbnails đầu tiên luôn hiển thị đầy đủ
+            // Nếu thumbnail đang chọn là một trong những thumbnail đầu tiên
+            // (ví dụ: index 0, 1, 2 - tùy thuộc vào số lượng hiển thị trên màn hình)
+            // thì cuộn về đầu để chúng không bị cắt.
+            if (lightboxCurrentIndex < 3) { // Ngưỡng 3 hình ảnh đầu tiên
+                lightboxThumbnailsContainer.scrollLeft = 0; // Đặt vị trí cuộn về 0
+            }
         }
     }
 
@@ -374,11 +382,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Ngăn chặn click vào lightboxContent (bao gồm ảnh) làm đóng lightbox
+    if (lightboxContent) {
+        lightboxContent.addEventListener('click', (e) => {
+            e.stopPropagation(); // Ngăn sự kiện click lan truyền lên phần tử lightbox
+        });
+    }
+
     lightbox.addEventListener('click', (e) => {
-        // Kiểm tra xem click có xảy ra trên bất kỳ phần tử con nào của lightboxContent không.
+        // Kiểm tra xem click có xảy ra trên bất kỳ phần tử con nào của lightbox hay không.
         // Nếu không, tức là click vào vùng trống (bao gồm cả vùng khung xanh).
         // hasDraggedLightbox để tránh đóng ngay sau khi kéo.
-        if (!hasDraggedLightbox && !lightboxContent.contains(e.target)) { // ĐÃ CẬP NHẬT ĐIỀU KIỆN
+        // Điều kiện này sẽ đóng lightbox nếu click không phải trên lightboxContent,
+        // cũng không phải trên lightboxClose, lightboxPrevButton, lightboxNextButton.
+        if (!hasDraggedLightbox && e.target === lightbox) {
             lightbox.classList.remove('active');
             isDraggingLightbox = false;
             currentZoomLevel = 1;
@@ -642,7 +659,7 @@ function scrolltotop() {
 }
 
 window.addEventListener('scroll', function() {
-    const scrolltopButton = document.querySelector('.scrolltop');
+    const scrolltopButton = document.querySelector('.scrolltop'); // Vẫn giữ selector này trong scroll listener
     if (scrolltopButton) {
         const lightbox = document.getElementById('lightbox');
 
