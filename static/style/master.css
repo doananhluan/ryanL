@@ -483,15 +483,16 @@ mark {
         left: 0;
         right: 0;
         z-index: 5;
+        background: rgb(0 0 0 / 98%);
     }
     .header-nav img{
     padding: 5px auto;
     width: 50px;
     height: 50px;
     }
-    .fixed-header .header-nav {
-        /* background: #000000; */
-    }
+   /* .fixed-header .header-nav {
+         background: #000000; 
+    }*/
     .header-nav .navbar-brand {
         font-weight: 600;
         font-size: 20px;
@@ -510,7 +511,7 @@ mark {
     }
     .header-nav .navbar-nav {
         padding: 44px;
-        background: rgb(0 0 0 / 98%);
+        /* background: rgb(0 0 0 / 98%); */
         width: auto;
         max-width: 400px;
         display: flex;
