@@ -461,6 +461,11 @@ mark {
         margin-top: -15px;
         transition: width 0.2s ease-out;
     }
+    .header-nav img{
+    padding: 5px auto;
+    width: 50px;
+    height: 50px;
+    }
     .navbar-nav .nav-link:hover::after {
         width: 100%;
         transition: width ease-out 0.2s, background-color ease-in 0.3s;
@@ -479,19 +484,23 @@ mark {
         right: 0;
         z-index: 5;
     }
+    .header-nav img{
+    padding: 5px auto;
+    width: 50px;
+    height: 50px;
+    }
     .fixed-header .header-nav {
-        background: #000000;
+        /* background: #000000; */
     }
     .header-nav .navbar-brand {
         font-weight: 600;
         font-size: 20px;
         color: var(--main-bg);
-        /* outline: 2px solid #ffff; */
         border-radius: 5px;
         padding: 0px 5px;
-    }
+    } 
     /* Logo mobile */
-    .header-nav.header-white .navbar-brand {
+     .header-nav.header-white .navbar-brand {
         color: #fff;
         font-family: "Playfair Display";
         font-weight: 100;
@@ -501,7 +510,7 @@ mark {
     }
     .header-nav .navbar-nav {
         padding: 44px;
-        background: rgb(0 0 0 / 90%);
+        background: rgb(0 0 0 / 98%);
         width: auto;
         max-width: 400px;
         display: flex;
@@ -529,7 +538,24 @@ mark {
         height: 5px;
     }
 }
+/* Overlay styles */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    /* width: 100%;
+    height: 100%; */
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 4;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
 
+.menu-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
 
 /*transition*/
 
@@ -2309,7 +2335,7 @@ a.button:hover {
 
 .gallery-section {
     margin: auto; /* Căn giữa section */
-    padding: 20px;
+    padding: 6px;
     background-color: var(--main-bg);
     border-radius: 12px;
     /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); */
@@ -2525,9 +2551,9 @@ a.button:hover {
 
 .lightbox-thumbnails {
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
-    padding: 10px 0;
+    padding: 3px 0;
     margin-top: 10px; /* Khoảng cách từ counter */
     max-width: 90%; /* Giới hạn chiều rộng của thanh thumbnails trong full screen */
     overflow-x: auto; /* Cho phép cuộn ngang nếu có nhiều thumbnails */
@@ -2556,7 +2582,7 @@ a.button:hover {
 }
 
 .lightbox-thumbnail-item.active {
-    border-color: #007bff; /* Màu viền cho thumbnail đang chọn */
+    border-color: #ffffff; /* Màu viền cho thumbnail đang chọn */
     transform: scale(1.1); /* Phóng to nhẹ thumbnail đang chọn */
 }
 
@@ -2592,7 +2618,7 @@ a.button:hover {
     display: none;
 }
 
-/* Responsive adjustments */
+/* Responsive điều chỉnh */
 @media (max-width: 767px) {
     .gallery-item-container {
         width: 150px; /* Đảm bảo chiều rộng cố định cho container trên mobile */
@@ -2617,10 +2643,10 @@ a.button:hover {
         right: 5px;
     }
     .lightbox-close {
-        font-size: 2em;
-        top: 5px;
+        font-size: 3em;
+        top: 30px;
         right: 5px;
-        width: 35px;
+        /* width: 35px; */
         height: 35px;
     }
     .lightbox-thumbnails {
@@ -2634,9 +2660,30 @@ a.button:hover {
         height: 125px;
     }
 }
-
+.lightbox-nav-button {
+    position: fixed; /* Đã là fixed để nằm ngoài cùng màn hình */
+    top: 65%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    padding: 10px 15px; /* Kích thước nhỏ hơn */
+    cursor: pointer;
+    font-size: 1.8em; /* Kích thước nhỏ hơn */
+    z-index: 1001;
+    border-radius: 8px; /* Thêm border-radius */
+    transition: background-color 0.2s;
+    display: flex; /* Để căn giữa icon/text */
+    justify-content: center;
+    align-items: center;
+}
+.lightbox-nav-button.next-lightbox {
+    height: 100px; 
+}
+.lightbox-nav-button.prev-lightbox{
+    height: 100px;
+}
 /*end couple_side_img*/
-
 
 
 .underline {
@@ -2690,7 +2737,6 @@ a.button:hover {
         background-repeat: no-repeat;
     }
 }
-
 
 /* frame_2 */
 
