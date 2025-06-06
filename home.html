@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hộp Thoại Tùy Chỉnh</title>
+    <!-- Tải Tailwind CSS từ CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Định nghĩa font Inter */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* CSS cho thông báo (notification) */
+        #notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100%); /* Bắt đầu ở phía trên màn hình */
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.5s ease-out; /* Hiệu ứng trượt và mờ dần */
+            white-space: nowrap; /* Ngăn không cho thông báo xuống dòng */
+            display: flex; /* Dùng flexbox để căn chỉnh nội dung và nút */
+            align-items: center; /* Căn giữa theo chiều dọc */
+            gap: 1rem; /* Khoảng cách giữa văn bản và nút */
+        }
+
+        #notification.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0); /* Trượt xuống vị trí hiển thị */
+        }
+
+        /* CSS cho nút Tiếp tục trong notification */
+        #continueBtn {
+            font-size: 0.9rem;
+            padding: 0.4rem 0.8rem;
+            background-color: #4CAF50; /* Màu xanh lá */
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #continueBtn:hover {
+            background-color: #45a049;
+        }
+
+
+        /* CSS cho modal (để xử lý transition opacity và scale) */
+        #dialogModal.hidden {
+            display: none; /* Ẩn hoàn toàn khi không active */
+        }
+
+        #dialogModal.show {
+            opacity: 1;
+        }
+
+        #dialogModal .modal-content.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* CSS cho phần nội dung cuộn trong modal */
+        .dialog-text-scrollable {
+            max-height: 200px; /* Chiều cao tối đa trước khi xuất hiện thanh cuộn */
+            overflow-y: auto; /* Hiển thị thanh cuộn dọc khi nội dung tràn */
+            padding-right: 10px; /* Khoảng cách để tránh chữ bị sát vào thanh cuộn */
+            margin-bottom: 16px; /* Khoảng cách với các nút */
+            text-align: left; /* Đổi căn giữa thành căn trái để đọc dễ hơn với đoạn dài */
+        }
+
+        /* Tùy chỉnh thanh cuộn cho Webkit (Chrome, Safari) */
+        .dialog-text-scrollable::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .dialog-text-scrollable::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .dialog-text-scrollable::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .dialog-text-scrollable::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Tùy chỉnh thanh cuộn cho Firefox */
+        .dialog-text-scrollable {
+            scrollbar-width: thin; /* "auto" hoặc "thin" */
+            scrollbar-color: #888 #f1f1f1; /* thumb color track color */
+        }
+
+        /* CSS cho nút đóng trong modal */
+        .modal-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem; /* Kích thước icon */
+            line-height: 1; /* Căn chỉnh theo chiều dọc */
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.2s ease-in-out;
+            padding: 5px; /* Vùng click rộng hơn */
+        }
+
+        .modal-close-btn:hover {
+            color: #333;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div id="app" class="flex flex-col items-center justify-center">
+        <h1 class="text-3xl font-bold text-gray-800 mb-8">Trang Web Của Bạn</h1>
+        <button id="openModalBtn" class="px-6 py-3 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+            Mở Hộp Thoại
+        </button>
+    </div>
+
+    <!-- Modal Overlay -->
+    <div id="dialogModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden opacity-0 transition-opacity duration-300">
+        <!-- Modal Content -->
+        <div class="modal-content bg-white p-8 rounded-xl shadow-2xl max-w-sm w-full mx-4 transform scale-95 opacity-0 transition-all duration-300 ease-out relative">
+            <span class="modal-close-btn" id="modalCloseBtn">&times;</span> <!-- Nút đóng mới -->
+            <h3 class="text-xl font-semibold text-gray-800 mb-4 text-center" id="dialogTitle">Xác Nhận Hành Động</h3>
+            <div class="dialog-text-scrollable text-gray-700"> <!-- Bỏ text-center ở đây -->
+                <p id="dialogMessage">
+                    Chào mừng bạn đến với hộp thoại tùy chỉnh của chúng tôi! Đây là một đoạn văn bản mẫu khá dài để minh họa chức năng cuộn khi nội dung vượt quá kích thước cho phép. Điều này đảm bảo rằng tất cả thông tin quan trọng sẽ luôn hiển thị đầy đủ cho người dùng, bất kể độ dài của đoạn hội thoại.
+                    <br><br>
+                    Trong nhiều trường hợp, bạn có thể cần hiển thị các điều khoản sử dụng, chính sách bảo mật, hoặc một mô tả chi tiết về một hành động nào đó. Việc có thanh cuộn tự động sẽ giúp trải nghiệm người dùng mượt mà hơn rất nhiều, tránh việc nội dung bị cắt cụt và buộc người dùng phải đoán hoặc tìm cách khác để đọc.
+                    <br><br>
+                    Hãy thử kéo thanh cuộn hoặc sử dụng con lăn chuột của bạn để xem toàn bộ nội dung. Bạn cũng có thể điều chỉnh chiều cao tối đa của vùng văn bản cuộn trong CSS (lớp \`.dialog-text-scrollable\`) để phù hợp với thiết kế tổng thể của ứng dụng hoặc trang web của bạn.
+                    <br><br>
+                    Ngoài ra, chúng tôi đã thêm một nút đóng rõ ràng ở góc trên bên phải của hộp thoại này để bạn có thể dễ dàng thoát khỏi nó. Đây là một yếu tố UI quan trọng giúp người dùng cảm thấy có quyền kiểm soát.
+                    <br><br>
+                    Cảm ơn bạn đã thử nghiệm! Chúng tôi hy vọng tính năng này hữu ích cho dự án của bạn.
+                </p>
+            </div>
+            <div class="flex justify-center space-x-4">
+                <button id="yesBtn" class="flex-1 px-5 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50">
+                    Có
+                </button>
+                <button id="noBtn" class="flex-1 px-5 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50">
+                    Không
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Message -->
+    <div id="notification">
+        <span id="notificationText"></span>
+        <button id="continueBtn" class="hidden">Tiếp tục</button> <!-- Nút Tiếp tục -->
+    </div>
+
+    <!-- Thẻ Audio cho nhạc nền -->
+    <audio id="backgroundMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" autoplay loop muted></audio>
+    <!-- Thay đổi "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" bằng URL của file nhạc MP3 của bạn -->
+    <!-- Thuộc tính 'muted' được thêm để đảm bảo tự động phát trên trình duyệt. Bạn có thể xóa nó nếu muốn âm thanh tự động phát (nhưng có thể bị trình duyệt chặn nếu không có tương tác người dùng). -->
+
+
+    <script>
+        // Lấy các phần tử DOM cần thiết
+        const openModalBtn = document.getElementById('openModalBtn');
+        const dialogModal = document.getElementById('dialogModal');
+        const modalContent = dialogModal.querySelector('.modal-content');
+        const dialogTitle = document.getElementById('dialogTitle');
+        const dialogMessage = document.getElementById('dialogMessage');
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const notification = document.getElementById('notification');
+        const notificationText = document.getElementById('notificationText'); // Phần tử text trong notification
+        const continueBtn = document.getElementById('continueBtn'); // Nút Tiếp tục
+        const modalCloseBtn = document.getElementById('modalCloseBtn'); // Nút đóng mới
+
+        let noClickCount = 0; // Biến đếm số lần click nút "Không"
+        let notificationTimeoutId; // Lưu ID của setTimeout để có thể xóa
+
+        // Nội dung mặc định ban đầu của đoạn hội thoại dài
+        const defaultLongMessage = `Chào mừng bạn đến với hộp thoại tùy chỉnh của chúng tôi! Đây là một đoạn văn bản mẫu khá dài để minh họa chức năng cuộn khi nội dung vượt quá kích thước cho phép. Điều này đảm bảo rằng tất cả thông tin quan trọng sẽ luôn hiển thị đầy đủ cho người dùng, bất kể độ dài của đoạn hội thoại.
+                    <br><br>
+                    Trong nhiều trường hợp, bạn có thể cần hiển thị các điều khoản sử dụng, chính sách bảo mật, hoặc một mô tả chi tiết về một hành động nào đó. Việc có thanh cuộn tự động sẽ giúp trải nghiệm người dùng mượt mà hơn rất nhiều, tránh việc nội dung bị cắt cụt và buộc người dùng phải đoán hoặc tìm cách khác để đọc.
+                    <br><br>
+                    Hãy thử kéo thanh cuộn hoặc sử dụng con lăn chuột của bạn để xem toàn bộ nội dung. Bạn cũng có thể điều chỉnh chiều cao tối đa của vùng văn bản cuộn trong CSS (lớp \`.dialog-text-scrollable\`) để phù hợp với thiết kế tổng thể của ứng dụng hoặc trang web của bạn.
+                    <br><br>
+                    Ngoài ra, chúng tôi đã thêm một nút đóng rõ ràng ở góc trên bên phải của hộp thoại này để bạn có thể dễ dàng thoát khỏi nó. Đây là một yếu tố UI quan trọng giúp người dùng cảm thấy có quyền kiểm soát.
+                    <br><br>
+                    Cảm ơn bạn đã thử nghiệm! Chúng tôi hy vọng tính năng này hữu ích cho dự án của bạn.`;
+
+
+        // Hàm hiển thị modal
+        function showModal(title = "Xác Nhận Hành Động", message = defaultLongMessage) { // Sử dụng defaultLongMessage làm mặc định
+            dialogTitle.textContent = title;
+            dialogMessage.innerHTML = message; // Dùng innerHTML để hiển thị <br>
+            dialogModal.classList.remove('hidden');
+            // Re-enable "No" button and reset its style when showing modal
+            noBtn.disabled = false;
+            noBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            noClickCount = 0; // Reset noClickCount here as well for a fresh start
+
+            setTimeout(() => {
+                dialogModal.classList.add('show');
+                modalContent.classList.add('show');
+            }, 10);
+        }
+
+        // Hàm ẩn modal
+        function hideModal() {
+            dialogModal.classList.remove('show');
+            modalContent.classList.remove('show');
+            setTimeout(() => {
+                dialogModal.classList.add('hidden');
+                noClickCount = 0; // Reset số lần click khi đóng modal
+                noBtn.disabled = false; // Re-enable "No" button
+                noBtn.classList.remove('opacity-50', 'cursor-not-allowed'); // Reset style
+                // Reset nội dung về ban đầu
+                dialogTitle.textContent = "Xác Nhận Hành Động";
+                dialogMessage.innerHTML = defaultLongMessage;
+            }, 300);
+        }
+
+        // Hàm hiển thị thông báo
+        function showNotification(message, showContinueBtn = false) {
+            if (notificationTimeoutId) {
+                clearTimeout(notificationTimeoutId); // Xóa timeout cũ nếu có
+            }
+            notificationText.textContent = message;
+            if (showContinueBtn) {
+                continueBtn.classList.remove('hidden'); // Hiển thị nút Tiếp tục
+            } else {
+                continueBtn.classList.add('hidden'); // Ẩn nút Tiếp tục
+            }
+
+            notification.classList.add('show');
+            if (!showContinueBtn) { // Nếu không có nút Tiếp tục, tự động ẩn
+                notificationTimeoutId = setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
+        }
+
+        // Lắng nghe sự kiện click vào nút "Mở Hộp Thoại"
+        openModalBtn.addEventListener('click', () => {
+            showModal(); // Mở hộp thoại với nội dung mặc định ban đầu (có đoạn dài)
+        });
+
+        // Lắng nghe sự kiện click vào nút "Có"
+        yesBtn.addEventListener('click', () => {
+            hideModal();
+            showNotification('Bạn đã chọn: Có! Nhấn Tiếp tục để đến trang mới.', true); // Hiển thị nút Tiếp tục
+        });
+
+        // Lắng nghe sự kiện click vào nút "Không"
+        noBtn.addEventListener('click', () => {
+            noClickCount++;
+            let currentDialogMessage = '';
+
+            if (noClickCount === 1) {
+                currentDialogMessage = 'Bạn đã chọn Không lần 1. Bạn có muốn suy nghĩ lại không?';
+            } else if (noClickCount === 2) {
+                currentDialogMessage = 'Bạn đã chọn Không lần 2. Quyết định cuối cùng chứ?';
+            } else if (noClickCount === 3) {
+                currentDialogMessage = 'Bạn đã chọn Không lần 3. Hãy cân nhắc kỹ!';
+            } else { // noClickCount >= 4
+                currentDialogMessage = `Bạn đã chọn Không ${noClickCount} lần. Nút "Không" đã bị vô hiệu hóa.`;
+            }
+
+            dialogMessage.textContent = currentDialogMessage; // Cập nhật nội dung đoạn thoại
+            showNotification(`Bạn đã chọn: Không! (Lần ${noClickCount})`); // Hiển thị thông báo (không có nút tiếp tục)
+
+            if (noClickCount >= 4) { // Check AFTER noClickCount is incremented
+                noBtn.disabled = true;
+                noBtn.classList.add('opacity-50', 'cursor-not-allowed'); // Apply Tailwind classes
+            }
+        });
+
+        // Lắng nghe sự kiện click vào nút "Tiếp tục" trong thông báo
+        continueBtn.addEventListener('click', () => {
+            notification.classList.remove('show'); // Ẩn thông báo
+            continueBtn.classList.add('hidden'); // Ẩn nút Tiếp tục
+            window.location.href = 'https://doananhluan.github.io/ryanL'; // Chuyển hướng tới trang web khác
+        });
+
+        // Lắng nghe sự kiện click vào nút đóng mới trong modal
+        modalCloseBtn.addEventListener('click', () => {
+            hideModal();
+        });
+
+        // Lắng nghe sự kiện click ra ngoài vùng nội dung modal để đóng modal
+        dialogModal.addEventListener('click', (e) => {
+            if (e.target === dialogModal) { // Chỉ đóng khi click trực tiếp vào overlay
+                hideModal();
+            }
+        });
+
+        // Lắng nghe sự kiện nhấn phím Escape để đóng modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && dialogModal.classList.contains('show')) {
+                hideModal();
+            }
+        });
+    </script>
+</body>
+</html>
