@@ -1837,6 +1837,44 @@ a.button:hover {
   overflow: visible;
   /* padding-bottom: 200px */
 }
+
+/* begin note */
+.floating-note {
+    position: fixed;
+    font-size: 20px;
+    color: rgba(15, 15, 15, 0.6);
+    animation: float 4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes float {
+    0%, 100% { 
+        transform: translateY(0px) rotate(0deg); 
+    }
+    50% { 
+        transform: translateY(-40px) rotate(5deg); 
+    }
+}
+
+.note-1 { 
+    top: 20%; 
+    left: 10%; 
+    animation-delay: 0s; 
+}
+
+.note-2 { 
+    top: 60%; 
+    right: 15%; 
+    animation-delay:1s; 
+}
+
+/* .note-3 { 
+    top: 40%; 
+    left: 40%; 
+    animation-delay: 2s; 
+} */
+/* end note */
+
 /* canh khoảng cách giữa các hình couple */
 .couple_story_section .couple_story_item {
   display: -webkit-box;
