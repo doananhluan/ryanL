@@ -5,7 +5,7 @@ body {
     font-family: "Playfair Display", serif;
     /* Các thuộc tính hình nền */
     background-color: rgba(0, 0, 0, 0.4);
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../ryanL/Images/sunshine_1.jpg'); /* THAY THẾ BẰNG URL HÌNH NỀN CỦA BẠN */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../ryanL/Images/train3.jpg'); /* THAY THẾ BẰNG URL HÌNH NỀN CỦA BẠN */
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -20,16 +20,26 @@ body {
     margin: 0; /* Đảm bảo không có margin mặc định */
     background-color: #f0f2f5; /* Màu nền dự phòng nếu ảnh không tải */
 }
-
+@media screen and (max-width: 768px) {
+    body {
+    background-color: rgba(0, 0, 0, 0.4);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../ryanL/Images/nature1.jpg'); /* THAY THẾ BẰNG URL HÌNH NỀN CỦA BẠN */
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    }
+}
 #app {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-bottom: 150px;
 }
 
 #app h1 {
-    font-size: 40px; /* text-3xl */
+    font-size: 50px; /* text-3xl */
     line-height: 2.25rem; /* text-3xl */
     font-weight: 700; /* font-bold */
     color: #ffffff; /* text-gray-800 */
