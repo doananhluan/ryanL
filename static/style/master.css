@@ -1234,6 +1234,11 @@ a.button:hover {
     opacity: 0 !important; /* Đảm bảo làm mờ */
     pointer-events: none; /* Ngăn chặn sự kiện click khi ẩn */
 }
+.scrolltop.hide-scrolltop-always {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none; /* Ngăn chặn click vào nút khi nó bị ẩn */
+}
 
 /* Thêm media query để đảm bảo nó chỉ ẩn trên mobile */
 /* ẩn trên mọi thiết bị khi lightbox mở, bạn có thể bỏ phần này. */
@@ -2340,7 +2345,7 @@ a.button:hover {
   position: relative;
   z-index: 1;
   overflow: visible;
-  padding-bottom: 100px
+  padding-bottom: 180px
 }
 .couple_memmory{
     /* margin-top: 5px; */
@@ -2664,7 +2669,7 @@ a.button:hover {
   position: relative;
   z-index: 1;
   overflow: visible;
-  padding-bottom:80px
+  padding-bottom:85px
 }
     .gallery-item-container {
         width: 150px; /* Đảm bảo chiều rộng cố định cho container trên mobile */
@@ -2743,7 +2748,7 @@ a.button:hover {
 /* filmroll frame */
 
 .filmroll {
-    height: 400px;
+    height: 600px;
     width: auto;
     background-image: url('../img/rain.jpg');
     background-size: cover;
@@ -2764,12 +2769,13 @@ a.button:hover {
 
 @media (max-width: 1024px) {
     .filmroll {
-        height: 800px;
+        height: 600px;
         max-width: 100%;
-        background-image: url('../img/14.jpg');
+        background-image: url('../img/rain.jpg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
+        filter: grayscale(0%);
     }
 }
 
@@ -2777,10 +2783,11 @@ a.button:hover {
     .filmroll {
         height: 450px;
         width: auto;
-        background-image: url('../img/14.jpg');
+        background-image: url('../img/rain.jpg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
+        filter: grayscale(0%);
     }
 }
 
