@@ -757,6 +757,21 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <!-- hết menu -->
+ <!-- Thẻ Audio cho nhạc nền -->
+    <audio id="bgm" src="static/img/sound.mp3" preload="auto"></audio>
 
+  <script>
+    const bgm = document.getElementById("bgm");
+
+    function playMusic() {
+      bgm.play().catch(error => {
+        console.error("Playback failed:", error);
+      });
+      // Chỉ cần chạy 1 lần
+      document.removeEventListener("click", playMusic);
+    }
+
+    document.addEventListener("click", playMusic);
+  </script>
 
 </html>
