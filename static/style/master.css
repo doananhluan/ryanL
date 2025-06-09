@@ -1425,7 +1425,7 @@ a.button:hover {
 .couple_shape img {
     max-width: 300px;
     height: auto;
-    opacity: 0.3;
+    opacity: 0.5;
 }
 
 .groom_brial_section .groom_brial_item {
@@ -2340,7 +2340,7 @@ a.button:hover {
   position: relative;
   z-index: 1;
   overflow: visible;
-  /* padding-bottom: 200px */
+  padding-bottom: 100px
 }
 .couple_memmory{
     /* margin-top: 5px; */
@@ -2659,6 +2659,13 @@ a.button:hover {
 
 /* Responsive điều chỉnh */
 @media (max-width: 767px) {
+    .couple_memmory_section {
+  background: #F1F3EE;
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+  padding-bottom:80px
+}
     .gallery-item-container {
         width: 150px; /* Đảm bảo chiều rộng cố định cho container trên mobile */
         height: 120px; /* ĐÃ THÊM: Đảm bảo chiều cao cố định cho container trên mobile */
