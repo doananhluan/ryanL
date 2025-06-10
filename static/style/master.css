@@ -1128,7 +1128,16 @@ filter: grayscale(20%); */
     /* font-family: 'Playfair Display', serif; */
     font-family: "Sail", system-ui;
 }
-
+@media (max-width: 480px) {
+  .image-data h2 {
+    font-size: 60px;
+    font-weight: 200;
+    letter-spacing: 3px;
+    color: #fff;
+    /* font-family: 'Playfair Display', serif; */
+    font-family: "Sail", system-ui;
+}
+}
 a.button {
     display: inline-block;
     padding: 10px 20px;
@@ -2756,11 +2765,55 @@ a.button:hover {
     margin-bottom: 20px;
 }
 
+/* filmroll-top*/
+.filmroll-top {
+    height: 500px;
+    width: auto;
+    background-image: url('../img/zhen-yao-W_OWCTyLGHM-unsplash.jpg');
+    background-size: cover;
+    margin: auto;
+    filter: grayscale(80%);
+    transition: filter 1.3s ease-in-out;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
 
-/* filmroll frame */
+.filmroll-top:hover {
+    transition: transform .5s, filter 1.5s ease-in-out;
+    filter: grayscale(10%);
+    cursor: pointer;
+    /* transform: scale(1.2); */
+}
 
-.filmroll {
-    height: 600px;
+@media (max-width: 1024px) {
+    .filmroll-top {
+        height: 600px;
+        max-width: 100%;
+        background-image: url('../img/chill14.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        filter: grayscale(0%);
+    }
+}
+
+@media (max-width: 767px) {
+    .filmroll-top {
+        height: 400px;
+        width: auto; 
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        filter: grayscale(0%);
+    }
+}
+/* filmroll bottom */
+
+.filmroll-bottom {
+    height: 500px;
     width: auto;
     background-image: url('../img/rain.jpg');
     background-size: cover;
@@ -2772,7 +2825,7 @@ a.button:hover {
     background-attachment: fixed;
 }
 
-.filmroll:hover {
+.filmroll-bottom:hover {
     transition: transform .5s, filter 1.5s ease-in-out;
     filter: grayscale(10%);
     cursor: pointer;
@@ -2780,7 +2833,7 @@ a.button:hover {
 }
 
 @media (max-width: 1024px) {
-    .filmroll {
+    .filmroll-bottom {
         height: 600px;
         max-width: 100%;
         background-image: url('../img/rain.jpg');
@@ -2793,10 +2846,10 @@ a.button:hover {
 }
 
 @media (max-width: 767px) {
-    .filmroll {
+    .filmroll-bottom {
         height: 400px;
-        width: auto;
-        background-image: url('../img/rain.jpg');
+        width: auto; 
+        background-image: url('../img/chill7.jpg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -2804,6 +2857,7 @@ a.button:hover {
         filter: grayscale(0%);
     }
 }
+
 
 /* frame_2 */
 
@@ -2910,8 +2964,15 @@ a.button:hover {
 .gallery-frame {
     background: var(--main-bg);
     text-align: center;
+    height: 700px;
 }
-
+@media (max-width: 767px) {
+    .gallery-frame {
+    background: var(--main-bg);
+    text-align: center;
+    height: 700px;
+}
+}
 .gallery-tittle h3 {
     font-size: 30px;
     padding: 90px 0px 0px 0px;
