@@ -2899,6 +2899,7 @@ a.button:hover {
 }
 
 .gallery-tittle h3 {
+    font-size: 30px;
     padding: 90px 0px 0px 0px;
     text-transform: uppercase;
     font-family: 'Playfair Display';
@@ -2909,7 +2910,16 @@ a.button:hover {
     text-align: center;
     
 }
-
+.gallery-tittle span {
+    font-size: 20px;
+    font-family: 'Playfair Display';
+    font-weight: 400px;
+    color: var(--textcolor);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    
+}
 
 /* contact-frame */
 
