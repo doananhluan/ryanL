@@ -2895,6 +2895,7 @@ a.button:hover {
 
 .gallery-frame {
     background: var(--main-bg);
+    text-align: center;
 }
 
 .gallery-tittle h3 {
@@ -2905,7 +2906,8 @@ a.button:hover {
     color: var(--textcolor);
     position: relative;
     overflow: hidden;
-    width: max-content;
+    text-align: center;
+    
 }
 
 
