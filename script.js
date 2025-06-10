@@ -135,7 +135,7 @@ continueBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     notification.classList.remove('show');
     continueBtn.classList.add('hidden');
-    window.location.href = 'https://doananhluan.github.io/ryanL/home.html';
+    window.location.href = 'https://doananhluan.github.io/ryanL/home';
 });
 
 modalCloseBtn.addEventListener('click', (e) => {
