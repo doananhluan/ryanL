@@ -518,6 +518,7 @@ mark {
         flex-direction: column;
         text-align: center;
         border-radius: 10px;
+        margin: 0 auto;
     }
     .header-nav .navbar-nav>li+li .nav-link {
         border-top: none;
@@ -2768,7 +2769,7 @@ a.button:hover {
 /* filmroll-top*/
 .filmroll-top {
     height: 500px;
-    width: auto;
+    width: 100%;
     background-image: url('../img/zhen-yao-W_OWCTyLGHM-unsplash.jpg');
     background-size: cover;
     margin: auto;
@@ -2789,7 +2790,7 @@ a.button:hover {
 @media (max-width: 1024px) {
     .filmroll-top {
         height: 600px;
-        max-width: 100%;
+        width: 100%;
         background-image: url('../img/chill14.jpg');
         background-size: cover;
         background-position: center;
@@ -2802,7 +2803,7 @@ a.button:hover {
 @media (max-width: 767px) {
     .filmroll-top {
         height: 400px;
-        width: auto; 
+        width: 100%; 
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
