@@ -167,3 +167,23 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("Autoplay of background music failed, likely due to browser policy:", error);
     });
 });
+
+
+// Loading page
+ 
+    window.addEventListener('load', function() {
+    const loaderWrapper = document.getElementById('loader-wrapper');
+
+    // Đường dẫn đến trang web của bạn sau khi tải xong
+    const yourWebsiteURL = 'https://doananhluan.github.io/ryanL/index.html'; 
+
+    // Mô phỏng thời gian tải (có thể là tải dữ liệu, API calls, v.v.)
+    setTimeout(function() {
+        loaderWrapper.classList.add('hidden'); // Kích hoạt hiệu ứng fade-out cho loader
+
+        // Sau khi hiệu ứng fade-out hoàn tất, chuyển hướng
+        setTimeout(function() {
+            window.location.href = yourWebsiteURL; // Chuyển hướng trình duyệt đến URL mới
+        }, 500); // Thời gian này phải bằng hoặc lớn hơn transition của hidden class (0.5s)
+    }, 2000); // Mô phỏng thời gian tải trang là 2 giây
+});
