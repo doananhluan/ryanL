@@ -1895,11 +1895,6 @@ a.button:hover {
     animation-delay:1s; 
 }
 
-/* .note-3 { 
-    top: 40%; 
-    left: 40%; 
-    animation-delay: 2s; 
-} */
 /* end note */
 
 /* canh khoảng cách giữa các hình couple */
@@ -1910,12 +1905,13 @@ a.button:hover {
   -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-  padding-top: 120px;
+  /* padding-top: 120px; */
+  padding: 80px 60px;
 }
 
 @media (max-width: 1199px) {
   .couple_story_section .couple_story_item {
-    padding-top: 60px;
+    padding: 50px 10px;
   }
 }
 
@@ -1923,13 +1919,13 @@ a.button:hover {
   .couple_story_section .couple_story_item {
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
-    padding-top: 60px;
+    padding: 50px 10px;
   }
 }
 
 @media (max-width: 575px) {
   .couple_story_section .couple_story_item {
-    padding-top: 50px;
+    padding: 50px 10px;
   }
 }
 
@@ -2000,6 +1996,7 @@ a.button:hover {
   width: 100%;
   left: 50%;
   top: 50%;
+  height: max-content;
   z-index: -11;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
@@ -2858,7 +2855,47 @@ a.button:hover {
         filter: grayscale(0%);
     }
 }
+/* filmroll thank you */
+.filmroll-thank {
+    position: relative;
+    height: 700px;
+    width: auto;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.712), rgba(0, 0, 0, 0.712)), url('../img/couple.jpg');
+    background-size: cover;
+    margin: auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-size: 60px;
+    color: #fff;
+    font-family: "Sail", system-ui;
+    text-align: center;
+    display: grid; /* Biến container thành grid container */
+    place-items: center; /* Căn giữa cả chiều ngang và dọc trong một dòng */
+}
+@media (max-width: 1024px) {
+    .filmroll-thank {
+        height: 600px;
+        max-width: 100%;
+        background-image: linear-gradient(rgba(0, 0, 0, 0.712), rgba(0, 0, 0, 0.712)), url('../img/couple.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+}
 
+@media (max-width: 767px) {
+    .filmroll-thank {
+        height: 600px;
+        width: auto; 
+        background-image: linear-gradient(rgba(0, 0, 0, 0.712), rgba(0, 0, 0, 0.712)), url('../img/couple.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+}
 
 /* frame_2 */
 
