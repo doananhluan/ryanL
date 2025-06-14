@@ -1226,6 +1226,27 @@ a.button:hover {
     margin-top: 50px;
     margin-bottom: 50px;
 }
+@media (max-width: 768px) {
+    .note_quote h2 {
+    font-family: 'Cormorant", sans-serif';
+    font-size: 35px;
+    text-align: center;
+    letter-spacing: 3px;
+    color: #131313;
+    margin-top: 100px;
+    }
+}
+@media (max-width: 768px) {
+    .note_quote h3 {
+    font-family: "muli", sans-serif;
+    font-size: 18px;
+    text-align: center;
+    letter-spacing: 3px;
+    color: #131313;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+}
 /* TIme count*/
 .timecount {
   text-align: center;
@@ -1616,7 +1637,7 @@ a.button:hover {
 
 @media (max-width: 575px) {
   .groom_brial_section .groom_brial_item:first-child {
-    padding-top: 80px;
+    padding-top: 60px;
   }
 }
 .groom_brial_section .groom_brial_item:nth-child(even) .groom_brial_img-wrap {
@@ -2798,10 +2819,11 @@ a.button:hover {
     text-align: center;
     display: grid; /* Biến container thành grid container */
     place-items: center; /* Căn giữa cả chiều ngang và dọc trong một dòng */
+    letter-spacing: 2px;
 }
 @media (max-width: 1024px) {
     .filmroll-thank {
-        height: 600px;
+        height: 800px;
         max-width: 100%;
         background-image: linear-gradient(rgba(0, 0, 0, 0.712), rgba(0, 0, 0, 0.712)), url('../img/couple.jpg');
         background-size: cover;
@@ -2972,7 +2994,7 @@ a.button:hover {
     .gallery-frame {
     background: var(--main-bg);
     text-align: center;
-    height: 700px;
+    height: 100%;
 }
 .gallery-tittle span {
     margin-top: 40px;
@@ -2984,8 +3006,7 @@ a.button:hover {
     
 }
 .gallery-tittle img {
-    margin-top: 40px;
-    
+    margin-top: 50px;  
 }
 }
 
