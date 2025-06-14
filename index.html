@@ -1,86 +1,38 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SunShine</title>
-    <!-- Liên kết đến file CSS riêng -->
     <link rel="stylesheet" href="style.css">
-    <link rel="https://fontawesome.com/v5.15/icons?d=gallery&p=2&m=free">
-    
 </head>
 <body>
-    <!-- page loading -->
+
     <div id="loader-wrapper">
         <div class="loader"></div>
-        <!-- <p>Chờ xíu nha</p> -->
+        <!-- <p>Đang tải...</p> -->
     </div>
-    <!-- end page loading -->
-     
-    <div id="app">
-        <h1>SunShine</h1>
-        <button id="openModalBtn">
-            Mở Hộp Thoại
-        </button>
-    </div>
-
-    <!-- Modal Overlay -->
-    <div id="dialogModal" class="hidden">
-        <!-- Modal Content -->
-        <div class="modal-content">
-            <span class="modal-close-btn" id="modalCloseBtn">&times;</span>
-            <h3 id="dialogTitle">Xác Nhận Hành Động</h3>
-            <div class="dialog-text-scrollable">
-                <p id="dialogMessage">
-                    Chào mừng bạn đến với hộp thoại tùy chỉnh của chúng tôi<br>
-                     Đây là một đoạn văn bản mẫu khá dài để minh họa chức năng cuộn khi nội dung vượt quá kích thước cho phép. Điều này đảm bảo rằng tất cả thông tin quan trọng sẽ luôn hiển thị đầy đủ cho người dùng, bất kể độ dài của đoạn hội thoại.
-                    <br><br>
-                    Trong nhiều trường hợp, bạn có thể cần hiển thị các điều khoản sử dụng, chính sách bảo mật, hoặc một mô tả chi tiết về một hành động nào đó. Việc có thanh cuộn tự động sẽ giúp trải nghiệm người dùng mượt mà hơn rất nhiều, tránh việc nội dung bị cắt cụt và buộc người dùng phải đoán hoặc tìm cách khác để đọc.
-                    <br><br>
-                    Hãy thử kéo thanh cuộn hoặc sử dụng con lăn chuột của bạn để xem toàn bộ nội dung. Bạn cũng có thể điều chỉnh chiều cao tối đa của vùng văn bản cuộn trong CSS (lớp \`.dialog-text-scrollable\`) để phù hợp với thiết kế tổng thể của ứng dụng hoặc trang web của bạn.
-                    <br><br>
-                    Ngoài ra, chúng tôi đã thêm một nút đóng rõ ràng ở góc trên bên phải của hộp thoại này để bạn có thể dễ dàng thoát khỏi nó. Đây là một yếu tố UI quan trọng giúp người dùng cảm thấy có quyền kiểm soát.
-                    <br><br>
-                    Cảm ơn bạn đã thử nghiệm! Chúng tôi hy vọng tính năng này hữu ích cho dự án của bạn.
-                </p>
-            </div>
-            <div class="flex-buttons">
-                <button id="yesBtn">
-                    Có
-                </button>
-                <button id="noBtn">
-                    Không
-                </button>
-                <button id="backBtn" class="hidden">
-                    Quay lại
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Notification Message -->
-    <div id="notification">
-        <span id="notificationText"></span>
-        <button id="continueBtn" class="hidden">Tiếp tục</button>
-    </div>
-
-    <!-- Thẻ Audio cho nhạc nền -->
-    <audio id="bgm" src="static/img/sound.mp3" preload="auto"></audio>
-
-  <script>
-    const bgm = document.getElementById("bgm");
-
-    function playMusic() {
-      bgm.play().catch(error => {
-        console.error("Playback failed:", error);
-      });
-      // Chỉ cần chạy 1 lần
-      document.removeEventListener("click", playMusic);
-    }
-
-    document.addEventListener("click", playMusic);
-  </script>
-  <!-- Liên kết đến file JavaScript riêng -->
     <script src="script.js"></script>
 </body>
 </html>
+
+<script>
+    // Loading page
+ 
+    window.addEventListener('load', function() {
+    const loaderWrapper = document.getElementById('loader-wrapper');
+
+    // Đường dẫn đến trang web của bạn sau khi tải xong
+    const yourWebsiteURL = 'https://doananhluan.github.io/ryanL/main.html'; 
+
+    // Mô phỏng thời gian tải (có thể là tải dữ liệu, API calls, v.v.)
+    setTimeout(function() {
+        loaderWrapper.classList.add('hidden'); // Kích hoạt hiệu ứng fade-out cho loader
+
+        // Sau khi hiệu ứng fade-out hoàn tất, chuyển hướng
+        setTimeout(function() {
+            window.location.href = yourWebsiteURL; // Chuyển hướng trình duyệt đến URL mới
+        }, 500); // Thời gian này phải bằng hoặc lớn hơn transition của hidden class (0.5s)
+    }, 2000); // Mô phỏng thời gian tải trang là 2 giây
+});
+</script>
