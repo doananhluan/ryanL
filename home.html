@@ -76,14 +76,9 @@
 <!-- Body Start -->
 
 <body data-spy="scroll" data-target="#navbar-collapse-toggle" data-offset="70">
-    <!-- page loading -->
-    <div id="loader-wrapper">
-        <div class="loader"></div>
-        <!-- <p>Chờ xíu nha</p> -->
-    </div>
-    <!-- end page loading -->
-    <header>
-        
+    
+
+    <header>       
         <nav class="navbar header-nav header-white navbar-expand-lg">
         <div class="container">
             <!-- <img src="static/img/rsvp-flower.png"></img> -->
@@ -504,25 +499,7 @@
  
 <script src="static/js/swiper-bundle.min.js"></script>
 
-<!-- Loading page-->
- <script>
-    window.addEventListener('load', function() {
-    const loaderWrapper = document.getElementById('loader-wrapper');
 
-    // Đường dẫn đến trang web của bạn sau khi tải xong
-    const yourWebsiteURL = 'https://doananhluan.github.io/ryanL/home.html'; 
-
-    // Mô phỏng thời gian tải (có thể là tải dữ liệu, API calls, v.v.)
-    setTimeout(function() {
-        loaderWrapper.classList.add('hidden'); // Kích hoạt hiệu ứng fade-out cho loader
-
-        // Sau khi hiệu ứng fade-out hoàn tất, chuyển hướng
-        setTimeout(function() {
-            window.location.href = yourWebsiteURL; // Chuyển hướng trình duyệt đến URL mới
-        }, 500); // Thời gian này phải bằng hoặc lớn hơn transition của hidden class (0.5s)
-    }, 2000); // Mô phỏng thời gian tải trang là 2 giây
-});
- </script>
  
 <!-- Initialize Swiper -->
 <script>
