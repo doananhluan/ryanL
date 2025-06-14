@@ -88,51 +88,6 @@ mark {
 }
 
 
-/*Loading*/
-
-#loader-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgb(255, 255, 255); /* Nền trắng hơi trong suốt */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999; /* Đảm bảo nó luôn nằm trên cùng */
-}
-
-.loader {
-    border: 8px solid #f3f3f3; /* Light grey */
-    border-top: 8px solid #0596cf; /* Blue */
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 1s linear infinite; /* Hiệu ứng xoay */
-    margin-bottom: 20px;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-#loader-wrapper p {
-    font-size: 1.2em;
-    color: #555;
-}
-
-/* Thêm hiệu ứng fade-out cho loader khi tải xong (tùy chọn) */
-#loader-wrapper.hidden {
-    opacity: 0;
-    transition: opacity 0.5s ease-out;
-    pointer-events: none; /* Ngăn chặn tương tác khi ẩn */
-}
-
-/* end loading */
-
 /* Background color */
 
 .theme-bg {
