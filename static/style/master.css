@@ -1027,6 +1027,8 @@ filter: grayscale(20%); */
     height: 100%;
     width: 100%;
     object-fit: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .slide .image-data {
@@ -1064,6 +1066,65 @@ filter: grayscale(20%); */
     /* font-family: 'Playfair Display', serif; */
     font-family: "Sail", system-ui;
 }
+}
+/* Mặc định, ẩn hình ảnh dành cho di động */
+.image-mobile1 {
+    display: none;
+}
+.image-mobile2 {
+    display: none;
+}
+.image-mobile3 {
+    display: none;
+}
+/* Media query cho màn hình có chiều rộng tối đa 767px (điện thoại) */
+@media (max-width: 767px) {
+    .image-desktop1 {
+        display: none; /* Ẩn hình ảnh desktop trên điện thoại */
+    }
+    .image-mobile1 {
+        display: block; /* Hiển thị hình ảnh điện thoại */
+    }
+}
+@media (max-width: 1365px){
+    .image-desktop1 {
+        display: none; /* Ẩn hình ảnh desktop trên điện thoại */
+    }
+    .image-mobile1 {
+        display: block; /* Hiển thị hình ảnh điện thoại */
+    }
+}
+@media (max-width: 767px) {
+    .image-desktop2 {
+        display: none; /* Ẩn hình ảnh desktop trên điện thoại */
+    }
+    .image-mobile2 {
+        display: block; /* Hiển thị hình ảnh điện thoại */
+    }
+}
+@media (max-width: 1365px){
+    .image-desktop2 {
+        display: none; /* Ẩn hình ảnh desktop trên điện thoại */
+    }
+    .image-mobile2 {
+        display: block; /* Hiển thị hình ảnh điện thoại */
+    }
+}
+@media (max-width: 767px) {
+    .image-desktop3 {
+        display: none; /* Ẩn hình ảnh desktop trên điện thoại */
+    }
+    .image-mobile3 {
+        display: block; /* Hiển thị hình ảnh điện thoại */
+    }
+}
+@media (max-width: 1365px){
+    .image-desktop3 {
+        display: none; /* Ẩn hình ảnh desktop trên điện thoại */
+    }
+    .image-mobile3 {
+        display: block; /* Hiển thị hình ảnh điện thoại */
+    }
 }
 a.button {
     display: inline-block;
@@ -1292,7 +1353,7 @@ a.button:hover {
 }
 .number {
   font-size: 25px;
-  font-weight: 300;
+  font-weight: 400;
 }
 }
 /* heartbeat animation */
