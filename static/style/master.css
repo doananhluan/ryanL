@@ -1050,7 +1050,7 @@ filter: grayscale(20%); */
 }
 
 .image-data h2 {
-    font-size: 80px;
+    font-size: 50px;
     font-weight: 400;
     letter-spacing: 3px;
     color: #fff;
@@ -1059,7 +1059,7 @@ filter: grayscale(20%); */
 }
 @media (max-width: 480px) {
   .image-data h2 {
-    font-size: 60px;
+    font-size: 1.7rem;
     font-weight: 200;
     letter-spacing: 3px;
     color: #fff;
@@ -1195,6 +1195,15 @@ a.button:hover {
         visibility: visible;
     }
 }
+@media (max-width: 1365px) {
+    .swiper-button-next {
+    visibility: hidden;
+}
+
+.swiper-button-prev {
+   visibility: hidden;
+}
+}
 
 
 /*End slide_wrap */
@@ -1290,7 +1299,7 @@ a.button:hover {
 @media (max-width: 768px) {
     .note_quote h2 {
     font-family: 'Cormorant", sans-serif';
-    font-size: 2rem;
+    font-size: 1.8rem;
     text-align: center;
     letter-spacing: 3px;
     color: #131313;
