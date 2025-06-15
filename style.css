@@ -149,6 +149,8 @@ body {
     opacity: 0;
     transition: transform 0.3s ease-out, opacity 0.3s ease-out; /* transition-all duration-300 ease-out */
     position: relative; /* relative */
+    letter-spacing:0.8px;
+    line-height: 1.5rem;
 }
 #dialogModal .modal-content.show {
     opacity: 1;
