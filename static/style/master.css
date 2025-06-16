@@ -1450,8 +1450,8 @@ a.button:hover {
   text-align: center;
   }
 }
-/* groom brial_picture*/
-.groom_brial_section {
+/* groom bridal_picture*/
+.groom_bridal_section {
   background: #F1F3EE;
   position: relative;
   z-index: 1;
@@ -1459,14 +1459,14 @@ a.button:hover {
   padding-bottom: 80px;
 }
 @media (max-width: 768px) {
-  .groom_brial_section {
+  .groom_bridal_section {
     padding-bottom: 40px;
   }
 }
 
 /* Media Query cho màn hình rất nhỏ (chỉ điện thoại) */
 @media (max-width: 480px) {
-  .groom_brial_section {
+  .groom_bridal_section {
     padding-bottom: 20px; 
   }
 }
@@ -1486,7 +1486,7 @@ a.button:hover {
     opacity: 0.5;
 }
 
-.groom_brial_section .groom_brial_item {
+.groom_bridal_section .groom_bridal_item {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1497,13 +1497,13 @@ a.button:hover {
 }
 
 @media (max-width: 1199px) {
-  .groom_brial_section .groom_brial_item {
+  .groom_bridal_section .groom_bridal_item {
     padding-top: 100px;
   }
 }
 
 @media (max-width: 991px) {
-  .groom_brial_section .groom_brial_item {
+  .groom_bridal_section .groom_bridal_item {
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
     padding-top: 100px;
@@ -1511,12 +1511,12 @@ a.button:hover {
 }
 
 @media (max-width: 575px) {
-  .groom_brial_section .groom_brial_item {
+  .groom_bridal_section .groom_bridal_item {
     padding-top: 50px;
   }
 }
 
-.groom_brial_section .groom_brial_item .groom_brial_img-wrap {
+.groom_bridal_section .groom_bridal_item .groom_bridal_img-wrap {
   position: relative;
   z-index: 1;
   -ms-flex-preferred-size: 60%;
@@ -1526,21 +1526,21 @@ a.button:hover {
 }
 
 @media (max-width: 1399px) {
-  .groom_brial_section .groom_brial_item .groom_brial_img-wrap {
+  .groom_bridal_section .groom_bridal_item .groom_bridal_img-wrap {
     -ms-flex-preferred-size: 50%;
         flex-basis: 50%;
   }
 }
 
 @media (max-width: 1199px) {
-  .groom_brial_section .groom_brial_item .groom_brial_img-wrap {
+  .groom_bridal_section .groom_bridal_item .groom_bridal_img-wrap {
     -ms-flex-preferred-size: 45%;
         flex-basis: 45%;
   }
 }
 
 @media (max-width: 991px) {
-  .groom_brial_section .groom_brial_item .groom_brial_img-wrap {
+  .groom_bridal_section .groom_bridal_item .groom_bridal_img-wrap {
     -ms-flex-preferred-size: 100%;
         flex-basis: 100%;
     max-width: 600px;
@@ -1549,13 +1549,13 @@ a.button:hover {
 }
 
 @media (max-width: 575px) {
-  .groom_brial_section .groom_brial_item .groom_brial_img-wrap {
+  .groom_bridal_section .groom_bridal_item .groom_bridal_img-wrap {
     max-width: 400px;
   }
 }
 
 
-.groom_brial_section .groom_brial_item .groom_brial_img-wrap .groom_brial_story_img {
+.groom_bridal_section .groom_bridal_item .groom_bridal_img-wrap .groom_bridal_story_img {
   padding: 10px; 
   margin: 0 auto;
   background: #fff;
@@ -1563,12 +1563,12 @@ a.button:hover {
 }
 
 @media (max-width: 1199px) {
-  .groom_brial_section .groom_brial_item .groom_brial_img-wrap .groom_brial_story_img {
+  .groom_bridal_section .groom_bridal_item .groom_bridal_img-wrap .groom_bridal_story_img {
     max-width: 100%;
   }
 }
 
-/* .groom_brial_section .groom_brial_item .groom_brial_img-wrap .clip-shape1 {
+/* .groom_bridal_section .groom_bridal_item .groom_bridal_img-wrap .clip-shape1 {
   position: absolute;
   left: 50%;
   -webkit-transform: translateX(-50%);
@@ -1577,7 +1577,7 @@ a.button:hover {
   z-index: -1;
 } */
 
-.groom_brial_section .groom_brial_item .groom_brial_img-wrap .couple_img_shape {
+.groom_bridal_section .groom_bridal_item .groom_bridal_img-wrap .couple_img_shape {
   position: absolute;
   width: 60%;
   left: 50%;
@@ -1588,7 +1588,7 @@ a.button:hover {
 }
 
 @media (max-width: 991px) {
-  .groom_brial_section .groom_brial_item .groom_brial_img-wrap .couple_img_shape {
+  .groom_bridal_section .groom_bridal_item .groom_bridal_img-wrap .couple_img_shape {
     width: 105%;
     max-width: 450px;
     /* margin: 0 auto; */
@@ -1596,12 +1596,12 @@ a.button:hover {
 }
 
 @media (max-width: 450px) {
-  .groom_brial_section .groom_brial_item .groom_brial_img-wrap .couple_img_shape {
+  .groom_bridal_section .groom_bridal_item .groom_bridal_img-wrap .couple_img_shape {
     width: 130%;
   }
 }
 
-.groom_brial_section .groom_brial_item .groom_brial_content {
+.groom_bridal_section .groom_bridal_item .groom_bridal_content {
   -ms-flex-preferred-size: 50%;
       flex-basis: 50%;
   position: relative;
@@ -1609,7 +1609,7 @@ a.button:hover {
 }
 
 @media (max-width: 991px) {
-  .groom_brial_section .groom_brial_item .groom_brial_content {
+  .groom_bridal_section .groom_bridal_item .groom_bridal_content {
     padding-left: 0px;
     margin-left: 0;
     text-align: center;
@@ -1623,22 +1623,22 @@ a.button:hover {
 }
 
 @media (max-width: 575px) {
-  .groom_brial_section .groom_brial_item .groom_brial_content {
+  .groom_bridal_section .groom_bridal_item .groom_bridal_content {
     margin-top: 30px;
   }
 }
 
 @media (max-width: 575px) {
-  .groom_brial_section .groom_brial_item .groom_brial_content {
+  .groom_bridal_section .groom_bridal_item .groom_bridal_content {
     padding: 10px;
   }
 }
 
-.groom_brial_section .groom_brial_item .groom_brial_content .groom_brial_content_inner {
+.groom_bridal_section .groom_bridal_item .groom_bridal_content .groom_bridal_content_inner {
   position: relative;
 }
 
-.groom_brial_section .groom_brial_item .groom_brial_content .groom_brial_content_inner h2 {
+.groom_bridal_section .groom_bridal_item .groom_bridal_content .groom_bridal_content_inner h2 {
   font-size: 40px;
   font-style: normal;
   font-weight: 400;
@@ -1646,7 +1646,7 @@ a.button:hover {
 }
 
 @media (max-width: 1199px) {
-  .groom_brial_section .groom_brial_item .groom_brial_content .groom_brial_content_inner h2 {
+  .groom_bridal_section .groom_bridal_item .groom_bridal_content .groom_bridal_content_inner h2 {
     margin-bottom: 20px;
     font-size: 25px;
     line-height: 36px;
@@ -1654,13 +1654,13 @@ a.button:hover {
 }
 
 @media (max-width: 575px) {
-  .groom_brial_section .groom_brial_item .groom_brial_content .groom_brial_content_inner h2 {
+  .groom_bridal_section .groom_bridal_item .groom_bridal_content .groom_bridal_content_inner h2 {
     font-size: 25px;
     margin-bottom: 10px;
   }
 }
 
-.groom_brial_section .groom_brial_item .groom_brial_content .groom_brial_content_inner span {
+.groom_bridal_section .groom_bridal_item .groom_bridal_content .groom_bridal_content_inner span {
   font-style: normal;
   font-size: 18px;
   font-style: normal;
@@ -1671,18 +1671,18 @@ a.button:hover {
 }
 
 @media (max-width: 1199px) {
-  .groom_brial_section .groom_brial_item .groom_brial_content .groom_brial_content_inner span {
+  .groom_bridal_section .groom_bridal_item .groom_bridal_content .groom_bridal_content_inner span {
     margin-bottom: 10px;
   }
 }
 
 @media (max-width: 575px) {
-  .groom_brial_section .groom_brial_item .groom_brial_content .groom_brial_content_inner span {
+  .groom_bridal_section .groom_bridal_item .groom_bridal_content .groom_bridal_content_inner span {
     font-size: 18px;
   }
 }
 
-.groom_brial_section .groom_brial_item .groom_brial_content .groom_brial_content_inner p {
+.groom_bridal_section .groom_bridal_item .groom_bridal_content .groom_bridal_content_inner p {
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
@@ -1692,39 +1692,39 @@ a.button:hover {
 }
 
 @media (max-width: 1399px) {
-  .groom_brial_section .groom_brial_item .groom_brial_content .groom_brial_content_inner p {
+  .groom_bridal_section .groom_bridal_item .groom_bridal_content .groom_bridal_content_inner p {
     font-size: 18px;
   }
 }
 
 @media (max-width: 575px) {
-  .groom_brial_section .groom_brial_item .groom_brial_content .groom_brial_content_inner p {
+  .groom_bridal_section .groom_bridal_item .groom_bridal_content .groom_bridal_content_inner p {
     font-size: 17px;
   }
 }
 
-.groom_brial_section .groom_brial_item:first-child {
+.groom_bridal_section .groom_bridal_item:first-child {
   padding-top: 120px;
 }
 
  @media (max-width: 1199px) {
-  .groom_brial_section .groom_brial_item:first-child {
+  .groom_bridal_section .groom_bridal_item:first-child {
     padding-top: 80px;
   }
 } 
 
 @media (max-width: 991px) {
-  .groom_brial_section .groom_brial_item:first-child {
+  .groom_bridal_section .groom_bridal_item:first-child {
     padding-top: 50px;
   }
 } 
 
 @media (max-width: 575px) {
-  .groom_brial_section .groom_brial_item:first-child {
+  .groom_bridal_section .groom_bridal_item:first-child {
     padding-top: 60px;
   }
 }
-.groom_brial_section .groom_brial_item:nth-child(even) .groom_brial_img-wrap {
+.groom_bridal_section .groom_bridal_item:nth-child(even) .groom_bridal_img-wrap {
   -webkit-box-ordinal-group: 3;
       -ms-flex-order: 2;
           order: 2;
@@ -1733,7 +1733,7 @@ a.button:hover {
 }
 
 @media (max-width: 991px) {
-  .groom_brial_section .groom_brial_item:nth-child(even) .groom_brial_img-wrap {
+  .groom_bridal_section .groom_bridal_item:nth-child(even) .groom_bridal_img-wrap {
     -webkit-box-ordinal-group: unset;
         -ms-flex-order: unset;
             order: unset;
@@ -1742,7 +1742,7 @@ a.button:hover {
   }
 }
 
-.groom_brial_frame {
+.groom_bridal_frame {
    background: #F1F3EE;
   position: relative;
   z-index: 1;
@@ -1798,7 +1798,7 @@ a.button:hover {
     font-family: "open sans"sans-serif;
 }
 
-.brial_pic {
+.bridal_pic {
     position: relative;
     width: 100%;
     height: 450px;
@@ -1822,7 +1822,7 @@ a.button:hover {
     overflow: hidden; */
 }
 
-.brial_info {
+.bridal_info {
     /* margin-top: 5px;  */
     width: 100%;
     height: 100%;
@@ -1830,7 +1830,7 @@ a.button:hover {
     padding: 10px 0px;
 }
 
-.brial_tittle h2 {
+.bridal_tittle h2 {
     /* margin-top: 200px; */
     font-family: "Playfair Display";
     font-size: 30px;
@@ -1838,7 +1838,7 @@ a.button:hover {
     font-weight: 500;
     text-align: left;
 }
-.brial_text p {
+.bridal_text p {
     margin-top: 20px;
     text-align: left;
     line-height: 2;
